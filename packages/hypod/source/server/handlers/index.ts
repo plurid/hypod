@@ -1,3 +1,5 @@
+import multer from 'multer';
+
 import PluridServer from '@plurid/plurid-react-server';
 
 import setupGraphQLServer from './graphql';
@@ -19,8 +21,8 @@ export const setRouteHandlers = (
         );
     });
 
-    handler.post('*', (request, response, next) => {
-        console.log(request);
+    instance.post('*', (request, response, next) => {
+        console.log(request.body);
 
         response.setHeader('Content-Type', 'application/json');
         response.end(

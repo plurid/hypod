@@ -107,13 +107,13 @@ const pluridServer = new PluridServer({
 });
 
 
-// handle non-GET or custom routes (such as API requests, or anything else)
-setRouteHandlers(pluridServer);
-
-
 pluridServer.instance().use(
     bodyParser.json(),
 );
+
+
+// handle non-GET or custom routes (such as API requests, or anything else)
+setRouteHandlers(pluridServer);
 
 
 
