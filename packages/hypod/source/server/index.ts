@@ -39,7 +39,7 @@ const port = process.env.PORT || 56065;
 
 
 /** CONSTANTS */
-const applicationRoot = 'performer-application';
+const applicationRoot = 'hypod-application';
 const openAtStart = watchMode
     ? false
     : isProduction

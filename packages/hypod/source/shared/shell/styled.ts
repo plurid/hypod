@@ -30,7 +30,7 @@ export const GlobalStyle = createGlobalStyle`
         text-decoration: none;
     }
 
-    #plurid-app {
+    #hypod-application {
         height: 100%;
         overflow: auto;
     }

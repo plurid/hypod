@@ -10,10 +10,10 @@ import Client from './Client';
 //     navigator.serviceWorker.register('/service-worker.js');
 // }
 
-const performerApp = document.getElementById('performer-application');
+const hypodApplication = document.getElementById('hypod-application');
 
 
 ReactDOM.hydrate(
     <Client />,
-    performerApp,
+    hypodApplication,
 );
