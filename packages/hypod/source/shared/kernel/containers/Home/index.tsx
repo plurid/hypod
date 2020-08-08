@@ -20,10 +20,9 @@ import {
 
 import Head from '#kernel-components/Head';
 
-import client from '#kernel-services/graphql/client';
-import {
-    GET_SETUP,
-} from '#kernel-services/graphql/query';
+// import client from '#kernel-services/graphql/client';
+// import {
+// } from '#kernel-services/graphql/query';
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -40,12 +39,6 @@ export interface HomeStateProperties {
 }
 
 export interface HomeDispatchProperties {
-    dispatchSetActiveProviderID: typeof actions.data.setActiveProviderID;
-    dispatchSetProviders: typeof actions.data.setProviders;
-    dispatchSetRepositories: typeof actions.data.setRepositories;
-    dispatchSetWebhooks: typeof actions.data.setWebhooks;
-    dispatchSetTriggers: typeof actions.data.setTriggers;
-    dispatchSetBuilds: typeof actions.data.setBuilds;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -62,51 +55,7 @@ const Home: React.FC<HomeProperties> = (
         // stateInteractionTheme,
 
         /** dispatch */
-        dispatchSetActiveProviderID,
-        dispatchSetProviders,
-        dispatchSetRepositories,
-        dispatchSetWebhooks,
-        dispatchSetTriggers,
-        dispatchSetBuilds,
     } = properties;
-
-
-    /** effects */
-    useEffect(() => {
-        const getSetup = async () => {
-            const setupQuery = await client.query({
-                query: GET_SETUP,
-            });
-
-            const response = setupQuery.data.getSetup;
-
-            if (!response.status) {
-                return;
-            }
-
-            const {
-                providers,
-                repositories,
-                webhooks,
-                triggers,
-                builds,
-            } = graphql.deleteTypenames(response.data);
-
-            if (providers.length > 0) {
-                dispatchSetActiveProviderID(
-                    providers[0].id,
-                );
-            }
-
-            dispatchSetProviders(providers);
-            dispatchSetRepositories(repositories);
-            dispatchSetWebhooks(webhooks);
-            dispatchSetTriggers(triggers);
-            dispatchSetBuilds(builds);
-        }
-
-        getSetup();
-    }, []);
 
 
     /** render */
@@ -129,36 +78,6 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): HomeDispatchProperties => ({
-    dispatchSetActiveProviderID: (
-        providerID,
-    ) => dispatch(
-        actions.data.setActiveProviderID(providerID),
-    ),
-    dispatchSetProviders: (
-        providers,
-    ) => dispatch(
-        actions.data.setProviders(providers),
-    ),
-    dispatchSetRepositories: (
-        repositories,
-    ) => dispatch(
-        actions.data.setRepositories(repositories),
-    ),
-    dispatchSetWebhooks: (
-        webhooks,
-    ) => dispatch(
-        actions.data.setWebhooks(webhooks),
-    ),
-    dispatchSetTriggers: (
-        triggers,
-    ) => dispatch(
-        actions.data.setTriggers(triggers),
-    ),
-    dispatchSetBuilds: (
-        builds,
-    ) => dispatch(
-        actions.data.setBuilds(builds),
-    ),
 });
 
 

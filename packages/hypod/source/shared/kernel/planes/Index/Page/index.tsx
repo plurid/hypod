@@ -13,10 +13,6 @@ import selectors from '#kernel-services/state/selectors';
 import actions from '#kernel-services/state/actions';
 
 import {
-    ClientProvider,
-} from '#server/data/interfaces';
-
-import {
     StyledPage,
 } from './styled';
 
@@ -26,7 +22,6 @@ export interface PageOwnProperties {
 }
 
 export interface PageStateProperties {
-    stateProviders: ClientProvider[];
 }
 
 export interface PageDispatchProperties {
@@ -40,12 +35,11 @@ const Page: React.FC<PageProperties> = (
     properties,
 ) => {
     /** properties */
-    const {
-        // plurid,
+    // const {
+    //     // plurid,
 
-        /** state */
-        stateProviders,
-    } = properties;
+    //     /** state */
+    // } = properties;
 
 
     /** state */
@@ -53,18 +47,6 @@ const Page: React.FC<PageProperties> = (
         view,
         setView,
     ] = useState('');
-
-
-    /** effect */
-    useEffect(() => {
-        if (stateProviders.length > 0) {
-            setView('general');
-        } else {
-            setView('initial');
-        }
-    }, [
-        stateProviders,
-    ]);
 
 
     /** render */
@@ -84,7 +66,6 @@ const Page: React.FC<PageProperties> = (
 const mapStateToProperties = (
     state: AppState,
 ): PageStateProperties => ({
-    stateProviders: selectors.data.getProviders(state),
 });
 
 
