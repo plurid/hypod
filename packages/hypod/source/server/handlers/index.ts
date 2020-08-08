@@ -5,6 +5,10 @@ import PluridServer from '@plurid/plurid-react-server';
 import setupGraphQLServer from './graphql';
 
 
+const upload = multer(
+    { dest: __dirname + '/uploads/' }
+);
+
 
 export const setRouteHandlers = (
     server: PluridServer,
@@ -21,8 +25,24 @@ export const setRouteHandlers = (
         );
     });
 
-    instance.post('*', (request, response, next) => {
+    // instance.post('*', (request, response, next) => {
+    //     console.log(request.body);
+
+    //     response.setHeader('Content-Type', 'application/json');
+    //     response.end(
+    //         JSON.stringify(
+    //             { status: true },
+    //         ),
+    //     );
+    // });
+
+    instance.post('*', upload.single('hypod'), (request, response, next) => {
+        console.log(request);
+        console.log('-------')
         console.log(request.body);
+        console.log('-------')
+        console.log(request.file);
+        console.log('-------')
 
         response.setHeader('Content-Type', 'application/json');
         response.end(
