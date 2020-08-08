@@ -19,5 +19,16 @@ export const setRouteHandlers = (
         );
     });
 
+    handler.post('*', (request, response, next) => {
+        console.log(request);
+
+        response.setHeader('Content-Type', 'application/json');
+        response.end(
+            JSON.stringify(
+                { status: true },
+            ),
+        );
+    });
+
     setupGraphQLServer(instance);
 }

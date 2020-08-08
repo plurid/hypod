@@ -22,7 +22,7 @@ const setupGraphQLServer = async (
 ) => {
     const playground = {
         faviconUrl: '/favicon.ico',
-        title: 'API · performer',
+        title: 'API · hypod',
     };
 
     const graphQLServer = new ApolloServer({
@@ -45,7 +45,7 @@ const setupGraphQLServer = async (
 
     graphQLServer.applyMiddleware({
         app: instance,
-        path: '/perform',
+        path: '/graphql',
     });
 }
 

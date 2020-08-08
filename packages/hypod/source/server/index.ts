@@ -81,7 +81,7 @@ const options: PluridServerPartialOptions = {
     open: openAtStart,
     debug,
     ignore: [
-        '/perform',
+        '/graphql',
     ],
 };
 
