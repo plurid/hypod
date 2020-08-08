@@ -37,6 +37,26 @@ export const setRouteHandlers = (
     // });
 
     instance.post('*', upload.single('hypod'), (request, response, next) => {
+        console.log('-------')
+        console.log('POST');
+        console.log(request);
+        console.log('-------')
+        console.log(request.body);
+        console.log('-------')
+        console.log(request.file);
+        console.log('-------')
+
+        response.setHeader('Content-Type', 'application/json');
+        response.end(
+            JSON.stringify(
+                { status: true },
+            ),
+        );
+    });
+
+    instance.put('*', upload.single('hypod'), (request, response, next) => {
+        console.log('-------')
+        console.log('PUT');
         console.log(request);
         console.log('-------')
         console.log(request.body);
