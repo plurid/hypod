@@ -32,7 +32,7 @@ const endpointApiGetAll = (
     const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsDigest = url.match(DOCKER_RE_NAME_BLOBS_DIGEST);
-    const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
+    const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
     
     if (matchNameTagsList) {
         dockerLogic.getNameTagsList(
@@ -61,11 +61,11 @@ const endpointApiGetAll = (
         return;
     }
 
-    if (matchNameBlobsUploads) {
-        dockerLogic.getNameBlobsUploads(
+    if (matchNameBlobsUploadsUuid) {
+        dockerLogic.getNameBlobsUploadsUuid(
             request,
             response,
-            matchNameBlobsUploads,
+            matchNameBlobsUploadsUuid,
         );
         return;
     }
@@ -82,7 +82,7 @@ const endpointApiPostAll = (
     const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
 
     if (matchNameBlobsUploads) {
-        dockerLogic.getNameBlobsUploads(
+        dockerLogic.postNameBlobsUploads(
             request,
             response,
             matchNameBlobsUploads,

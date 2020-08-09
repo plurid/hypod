@@ -1,5 +1,9 @@
 import express from 'express';
 
+import {
+    getFromMatch,
+} from './utilities';
+
 
 
 export const getNameTagsList = async (
@@ -7,11 +11,16 @@ export const getNameTagsList = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
 
+    console.log(name);
     console.log(request.originalUrl);
     console.log(match);
     response.status(200).end();
-    
 }
 
 
@@ -20,7 +29,19 @@ export const getNameManifestsReference = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const reference = getFromMatch(match, 'reference');
+    if (!reference) {
+        response.status(400).end();
+        return;
+    }
 
+    console.log(name);
+    console.log(reference);
     console.log(request.originalUrl);
     console.log(match);
     response.status(200).end();
@@ -33,6 +54,16 @@ export const getNameBlobsDigest = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const digest = getFromMatch(match, 'digest');
+    if (!digest) {
+        response.status(400).end();
+        return;
+    }
 
     console.log(request.originalUrl);
     console.log(match);
@@ -41,11 +72,21 @@ export const getNameBlobsDigest = async (
 }
 
 
-export const getNameBlobsUploads = async (
+export const getNameBlobsUploadsUuid = async (
     request: express.Request,
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const uuid = getFromMatch(match, 'uuid');
+    if (!uuid) {
+        response.status(400).end();
+        return;
+    }
 
     console.log(request.originalUrl);
     console.log(match);
@@ -62,7 +103,12 @@ export const postNameBlobsUploads = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+   
     console.log(request.originalUrl);
     console.log(match);
     response.status(200).end();
@@ -78,6 +124,16 @@ export const putNameManifestsReference = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const reference = getFromMatch(match, 'reference');
+    if (!reference) {
+        response.status(400).end();
+        return;
+    }
 
     console.log(request.originalUrl);
     console.log(match);
@@ -91,6 +147,16 @@ export const putNameBlobsUploadsUuid = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const uuid = getFromMatch(match, 'uuid');
+    if (!uuid) {
+        response.status(400).end();
+        return;
+    }
 
     console.log(request.originalUrl);
     console.log(match);
@@ -107,6 +173,16 @@ export const patchNameBlobsUploadsUuid = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const uuid = getFromMatch(match, 'uuid');
+    if (!uuid) {
+        response.status(400).end();
+        return;
+    }
 
     console.log(request.originalUrl);
     console.log(match);
@@ -123,6 +199,16 @@ export const deleteNameManifestsReference = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const reference = getFromMatch(match, 'reference');
+    if (!reference) {
+        response.status(400).end();
+        return;
+    }
 
     console.log(request.originalUrl);
     console.log(match);
@@ -135,9 +221,18 @@ export const deleteNameBlobsUploadsUuid = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const uuid = getFromMatch(match, 'uuid');
+    if (!uuid) {
+        response.status(400).end();
+        return;
+    }
 
     console.log(request.originalUrl);
     console.log(match);
     response.status(200).end();
-
 }
