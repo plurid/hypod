@@ -82,6 +82,7 @@ const options: PluridServerPartialOptions = {
     debug,
     ignore: [
         '/graphql',
+        '/v2/*',
     ],
 };
 
