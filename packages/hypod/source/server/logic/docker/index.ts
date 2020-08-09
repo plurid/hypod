@@ -6,6 +6,7 @@ import {
 
 
 
+/** GET */
 export const getNameTagsList = async (
     request: express.Request,
     response: express.Response,
@@ -97,7 +98,6 @@ export const getNameBlobsUploadsUuid = async (
 
 
 /** POST */
-
 export const postNameBlobsUploads = async (
     request: express.Request,
     response: express.Response,
@@ -118,7 +118,6 @@ export const postNameBlobsUploads = async (
 
 
 /** PUT */
-
 export const putNameManifestsReference = async (
     request: express.Request,
     response: express.Response,
@@ -167,7 +166,6 @@ export const putNameBlobsUploadsUuid = async (
 
 
 /** PATCH */
-
 export const patchNameBlobsUploadsUuid = async (
     request: express.Request,
     response: express.Response,
@@ -193,7 +191,6 @@ export const patchNameBlobsUploadsUuid = async (
 
 
 /** DELETE */
-
 export const deleteNameManifestsReference = async (
     request: express.Request,
     response: express.Response,
@@ -215,6 +212,7 @@ export const deleteNameManifestsReference = async (
     response.status(200).end();
 
 }
+
 
 export const deleteNameBlobsUploadsUuid = async (
     request: express.Request,
