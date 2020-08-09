@@ -4,14 +4,21 @@ import {
     DOCKER_ENDPOINT_API_VERSION_CHECK,
     DOCKER_ENDPOINT_API_CATALOG,
     DOCKER_ENDPOINT_API_ALL,
+    
+    DOCKER_RE_NAME_TAGS_LIST,
+    DOCKER_RE_NAME_MANIFESTS_REFERENCE,
+    DOCKER_RE_NAME_BLOBS_DIGEST,
+    DOCKER_RE_NAME_BLOBS_UPLOADS,
+    DOCKER_RE_NAME_BLOBS_UPLOADS_UUID,
 } from '#server/data/constants';
+
+import * as dockerLogic from '#server/logic/docker';
 
 
 
 const endpointApiVersionCheck = (
     request: express.Request,
     response: express.Response,
-    next: express.NextFunction,
 ) => {
     response.status(200).end();
 }
@@ -19,51 +26,151 @@ const endpointApiVersionCheck = (
 const endpointApiGetAll = (
     request: express.Request,
     response: express.Response,
-    next: express.NextFunction,
 ) => {
-    console.log(request.originalUrl);
+    const url = request.originalUrl;
 
-    response.status(200).end();
+    const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
+    const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
+    const matchNameBlobsDigest = url.match(DOCKER_RE_NAME_BLOBS_DIGEST);
+    const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
+    
+    if (matchNameTagsList) {
+        dockerLogic.getNameTagsList(
+            request,
+            response,
+            matchNameTagsList,
+        );
+        return;
+    }
+    
+    if (matchNameManifestsReference) {
+        dockerLogic.getNameManifestsReference(
+            request,
+            response,
+            matchNameManifestsReference,
+        );
+        return;
+    }
+  
+    if (matchNameBlobsDigest) {
+        dockerLogic.getNameBlobsDigest(
+            request,
+            response,
+            matchNameBlobsDigest,
+        );
+        return;
+    }
+
+    if (matchNameBlobsUploads) {
+        dockerLogic.getNameBlobsUploads(
+            request,
+            response,
+            matchNameBlobsUploads,
+        );
+        return;
+    }
+
+    response.status(404).end();
 }
 
 const endpointApiPostAll = (
     request: express.Request,
     response: express.Response,
-    next: express.NextFunction,
 ) => {
-    console.log(request.originalUrl);
+    const url = request.originalUrl;
 
-    response.status(200).end();
+    const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
+
+    if (matchNameBlobsUploads) {
+        dockerLogic.getNameBlobsUploads(
+            request,
+            response,
+            matchNameBlobsUploads,
+        );
+        return;
+    }
+
+    response.status(404).end();
 }
 
 const endpointApiPutAll = (
     request: express.Request,
     response: express.Response,
-    next: express.NextFunction,
 ) => {
-    console.log(request.originalUrl);
+    const url = request.originalUrl;
 
-    response.status(200).end();
+    const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
+    const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
+
+    if (matchNameManifestsReference) {
+        dockerLogic.putNameManifestsReference(
+            request,
+            response,
+            matchNameManifestsReference,
+        );
+        return;
+    }
+
+    if (matchNameBlobsUploadsUuid) {
+        dockerLogic.putNameBlobsUploadsUuid(
+            request,
+            response,
+            matchNameBlobsUploadsUuid,
+        );
+        return;
+    }
+  
+    response.status(404).end();
 }
 
 const endpointApiPatchAll = (
     request: express.Request,
     response: express.Response,
-    next: express.NextFunction,
 ) => {
-    console.log(request.originalUrl);
+    const url = request.originalUrl;
 
-    response.status(200).end();
+    const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
+
+    if (matchNameBlobsUploadsUuid) {
+        dockerLogic.patchNameBlobsUploadsUuid(
+            request,
+            response,
+            matchNameBlobsUploadsUuid,
+        );
+        return;
+    }
+  
+    response.status(404).end();
 }
 
 const endpointApiDeleteAll = (
     request: express.Request,
     response: express.Response,
-    next: express.NextFunction,
 ) => {
-    console.log(request.originalUrl);
+    const url = request.originalUrl;
 
-    response.status(200).end();
+    const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
+    const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
+
+    if (matchNameManifestsReference) {
+        dockerLogic.deleteNameManifestsReference(
+            request,
+            response,
+            matchNameManifestsReference,
+        );
+        return;
+    }
+  
+    if (matchNameBlobsUploadsUuid) {
+        dockerLogic.deleteNameBlobsUploadsUuid(
+            request,
+            response,
+            matchNameBlobsUploadsUuid,
+        );
+        return;
+    }
+  
+    response.status(404).end();
 }
 
 
