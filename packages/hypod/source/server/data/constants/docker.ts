@@ -26,8 +26,8 @@ export const DOCKER_ENDPOINT_API_ALL = '/v2/*';
 export const DOCKER_ENDPOINT_IGNORE = '/v2/*';
 
 
-export const DOCKER_RE_NAME_TAGS_LIST = /^\/v2\/(.*)\/tags\/list$/;
+export const DOCKER_RE_NAME_TAGS_LIST = /^\/v2\/(.*)\/tags\/list\/?$/;
 export const DOCKER_RE_NAME_MANIFESTS_REFERENCE = /^\/v2\/(.*)\/manifests\/(.*)$/;
 export const DOCKER_RE_NAME_BLOBS_DIGEST = /^\/v2\/(.*)\/blobs\/(?!uploads)(.*)$/;
 export const DOCKER_RE_NAME_BLOBS_UPLOADS_UUID = /^\/v2\/(.*)\/blobs\/uploads\/(.*)$/;
-export const DOCKER_RE_NAME_BLOBS_UPLOADS = /^\/v2\/(.*)\/blobs\/uploads$/;
+export const DOCKER_RE_NAME_BLOBS_UPLOADS = /^\/v2\/(.*)\/blobs\/uploads\/?$/;

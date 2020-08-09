@@ -28,7 +28,7 @@ const endpointApiGetCatalog = (
     request: express.Request,
     response: express.Response,
 ) => {
-
+    console.log('endpointApiGetCatalog');
 }
 
 
@@ -37,6 +37,7 @@ const endpointApiGetAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
+    console.log('endpointApiGetAll', url);
 
     const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
@@ -88,14 +89,25 @@ const endpointApiPostAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
+    console.log('endpointApiPostAll', url);
 
     const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
+    const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
     if (matchNameBlobsUploads) {
         dockerLogic.postNameBlobsUploads(
             request,
             response,
             matchNameBlobsUploads,
+        );
+        return;
+    }
+
+    if (matchNameBlobsUploadsUuid) {
+        dockerLogic.postNameBlobsUploadsUuid(
+            request,
+            response,
+            matchNameBlobsUploadsUuid,
         );
         return;
     }
@@ -109,6 +121,7 @@ const endpointApiPutAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
+    console.log('endpointApiPutAll', url);
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
@@ -140,6 +153,7 @@ const endpointApiPatchAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
+    console.log('endpointApiPatchAll', url);
 
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
@@ -161,6 +175,7 @@ const endpointApiDeleteAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
+    console.log('endpointApiDeleteAll', url);
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
