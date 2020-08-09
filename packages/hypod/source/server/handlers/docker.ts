@@ -4,7 +4,7 @@ import {
     DOCKER_ENDPOINT_API_VERSION_CHECK,
     DOCKER_ENDPOINT_API_CATALOG,
     DOCKER_ENDPOINT_API_ALL,
-    
+
     DOCKER_RE_NAME_TAGS_LIST,
     DOCKER_RE_NAME_MANIFESTS_REFERENCE,
     DOCKER_RE_NAME_BLOBS_DIGEST,
@@ -45,7 +45,7 @@ const endpointApiGetAll = (
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsDigest = url.match(DOCKER_RE_NAME_BLOBS_DIGEST);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
-    
+
     if (matchNameTagsList) {
         dockerLogic.getNameTagsList(
             request,
@@ -54,7 +54,7 @@ const endpointApiGetAll = (
         );
         return;
     }
-    
+
     if (matchNameManifestsReference) {
         dockerLogic.getNameManifestsReference(
             request,
@@ -63,7 +63,7 @@ const endpointApiGetAll = (
         );
         return;
     }
-  
+
     if (matchNameBlobsDigest) {
         dockerLogic.getNameBlobsDigest(
             request,
@@ -139,7 +139,7 @@ const endpointApiPutAll = (
         );
         return;
     }
-  
+
     response.status(404).end();
 }
 
@@ -165,7 +165,7 @@ const endpointApiPatchAll = (
         );
         return;
     }
-  
+
     response.status(404).end();
 }
 
@@ -190,7 +190,7 @@ const endpointApiDeleteAll = (
         );
         return;
     }
-  
+
     if (matchNameBlobsUploadsUuid) {
         dockerLogic.deleteNameBlobsUploadsUuid(
             request,
@@ -199,7 +199,7 @@ const endpointApiDeleteAll = (
         );
         return;
     }
-  
+
     response.status(404).end();
 }
 

@@ -243,7 +243,10 @@ export const patchNameBlobsUploadsUuid = async (
     console.log('request.query', request.query);
     console.log(JSON.stringify(request.headers));
     // console.log('bufferData', bufferData);
+    const contentType = request.header('Content-Type');
+    console.log('contentType', contentType);
     console.log('------------------');
+
 
 
     // if (true) {
@@ -331,7 +334,7 @@ export const putNameBlobsUploadsUuid = async (
 
     const location = request.originalUrl;
     const digest = request.query.digest as string || '';
-    
+
     if (!digest) {
         response.status(400).end();
         return;
@@ -343,6 +346,8 @@ export const putNameBlobsUploadsUuid = async (
     console.log('request.query', request.query);
     console.log('digest', digest);
     console.log(JSON.stringify(request.headers));
+    const contentType = request.header('Content-Type');
+    console.log('contentType', contentType);
     console.log('------------------');
     const bufferData = Buffer.from(request.body.toString('binary'), 'binary');
 
