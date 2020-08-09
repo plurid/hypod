@@ -23,6 +23,15 @@ const endpointApiVersionCheck = (
     response.status(200).end();
 }
 
+
+const endpointApiGetCatalog = (
+    request: express.Request,
+    response: express.Response,
+) => {
+
+}
+
+
 const endpointApiGetAll = (
     request: express.Request,
     response: express.Response,
@@ -73,6 +82,7 @@ const endpointApiGetAll = (
     response.status(404).end();
 }
 
+
 const endpointApiPostAll = (
     request: express.Request,
     response: express.Response,
@@ -92,6 +102,7 @@ const endpointApiPostAll = (
 
     response.status(404).end();
 }
+
 
 const endpointApiPutAll = (
     request: express.Request,
@@ -123,6 +134,7 @@ const endpointApiPutAll = (
     response.status(404).end();
 }
 
+
 const endpointApiPatchAll = (
     request: express.Request,
     response: express.Response,
@@ -142,6 +154,7 @@ const endpointApiPatchAll = (
   
     response.status(404).end();
 }
+
 
 const endpointApiDeleteAll = (
     request: express.Request,
@@ -184,7 +197,7 @@ const dockerHandlers = (
 
     instance.get(
         DOCKER_ENDPOINT_API_CATALOG,
-        endpointApiGetAll,
+        endpointApiGetCatalog,
     );
 
     instance.get(

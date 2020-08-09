@@ -27,7 +27,7 @@ import {
 import setup from './setup';
 
 import {
-    DOCKER_ENDPOINT_API_ALL,
+    DOCKER_ENDPOINT_IGNORE,
 } from './data/constants';
 
 
@@ -86,7 +86,7 @@ const options: PluridServerPartialOptions = {
     debug,
     ignore: [
         '/graphql',
-        DOCKER_ENDPOINT_API_ALL,
+        DOCKER_ENDPOINT_IGNORE,
     ],
 };
 
