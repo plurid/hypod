@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser';
+import compression from 'compression';
 
 import PluridServer, {
     PluridServerMiddleware,
@@ -113,6 +114,8 @@ const pluridServer = new PluridServer({
 
 
 pluridServer.instance().use(
+    compression(),
+    bodyParser.raw(),
     bodyParser.json(),
 );
 

@@ -1,3 +1,10 @@
+import syncFs, {
+    promises as fs,
+} from 'fs';
+
+import path from 'path';
+import crypto from 'crypto';
+
 import express from 'express';
 
 import {
@@ -8,6 +15,11 @@ import {
     getFromMatch,
 } from './utilities';
 
+import Storage from '#server/logic/storage';
+
+
+
+const storage = new Storage('filesystem');
 
 
 /** GET */
@@ -22,10 +34,16 @@ export const getNameTagsList = async (
         return;
     }
 
-    console.log('getNameTagsList', name);
-    console.log(request.originalUrl);
+    // console.log('getNameTagsList', name);
+    // console.log(request.originalUrl);
 
-    response.status(200).end();
+    const tags: any[] = [];
+
+    const responseData = {
+        name,
+        tags,
+    };
+    response.status(200).send(JSON.stringify(responseData));
 }
 
 
@@ -47,8 +65,15 @@ export const getNameManifestsReference = async (
 
     console.log('getNameManifestsReference', name, reference);
     console.log(request.originalUrl);
-    
-    response.status(200).end();
+
+    const responseData = {
+        name,
+        tag: reference,
+        fsLayers: [],
+        history: '',
+        signature: '',
+    };
+    response.status(200).send(JSON.stringify(responseData));
 }
 
 
@@ -69,9 +94,26 @@ export const getNameBlobsDigest = async (
     }
 
     console.log('getNameBlobsDigest', name, digest);
-    console.log(request.originalUrl);
+    // console.log(request.originalUrl);
+    console.log('------------------');
 
-    response.status(404).end();
+    const file = await storage.download(digest.replace(':', '-'));
+    // console.log('file', file);
+
+    if (!file) {
+        response.status(404).end();
+        return;
+    }
+
+    response.setHeader(
+        'Content-Length',
+        file.length,
+    );
+    response.setHeader(
+        'Docker-Content-Digest',
+        digest,
+    );
+    response.status(200).end();
 }
 
 
@@ -94,7 +136,25 @@ export const getNameBlobsUploadsUuid = async (
     console.log('getNameBlobsUploadsUuid', name, uuid);
     console.log(request.originalUrl);
 
-    response.status(200).end();
+    const location = `/v2/${name}/blobs/uploads/${uuid}`;
+
+    response.setHeader(
+        'Location',
+        location,
+    );
+    response.setHeader(
+        'Range',
+        'bytes=0-1000',
+    );
+    response.setHeader(
+        'Content-Length',
+        '0',
+    );
+    response.setHeader(
+        'Docker-Upload-UUID',
+        uuid,
+    );
+    response.status(204).end();
 }
 
 
@@ -111,15 +171,31 @@ export const postNameBlobsUploads = async (
         return;
     }
 
+
     const blobUuid = uuid.generate() + uuid.generate();
     const location = `/v2/${name}/blobs/uploads/${blobUuid}`;
 
     console.log('postNameBlobsUploads', name);
-    console.log(request.originalUrl);
+    // console.log(request.originalUrl);
+    // console.log('request.query', request.query);
+    // console.log(JSON.stringify(request.headers));
+    console.log('------------------');
 
     response.setHeader(
         'Location',
         location,
+    );
+    response.setHeader(
+        'Range',
+        '0-0',
+    );
+    response.setHeader(
+        'Content-Length',
+        '0',
+    );
+    response.setHeader(
+        'Docker-Upload-UUID',
+        blobUuid,
     );
     response.status(202).end();
 }
@@ -143,9 +219,10 @@ export const postNameBlobsUploadsUuid = async (
 
     console.log('postNameBlobsUploadsUuid', name, uuid);
     console.log(request.originalUrl);
-
+    console.log(JSON.stringify(request.headers));
+    console.log('------------------');
     
-    response.status(200).end();
+    response.status(202).end();
 }
 
 
@@ -170,7 +247,14 @@ export const putNameManifestsReference = async (
     console.log('putNameManifestsReference', name, reference);
     console.log(request.originalUrl);
 
-    response.status(200).end();
+    const responseData = {
+        name,
+        tag: reference,
+        fsLayers: [],
+        history: '',
+        signature: '',
+    };
+    response.status(200).send(JSON.stringify(responseData));
 }
 
 
@@ -190,10 +274,37 @@ export const putNameBlobsUploadsUuid = async (
         return;
     }
 
+    const location = request.originalUrl;
+
     console.log('putNameBlobsUploadsUuid', name, uuid);
     console.log(request.originalUrl);
+    console.log('request.body', request.body);
+    console.log('request.query', request.query);
+    console.log(JSON.stringify(request.headers));
+    const bufferData = Buffer.from(request.body.toString('binary'), 'binary');
 
-    response.status(200).end();
+    await storage.upload(
+        uuid,
+        bufferData,
+    );
+
+    response.setHeader(
+        'Location',
+        location,
+    );
+    response.setHeader(
+        'Range',
+        '0-1000',
+    );
+    response.setHeader(
+        'Content-Length',
+        '1000',
+    );
+    response.setHeader(
+        'Docker-Upload-UUID',
+        uuid,
+    );
+    response.status(202).end();
 }
 
 
@@ -215,10 +326,64 @@ export const patchNameBlobsUploadsUuid = async (
         return;
     }
 
+    const location = request.originalUrl;
+    // const bufferData = Buffer.from(request.body.toString('binary'), 'binary');
+
+    // await storage.upload(
+    //     uuid,
+    //     bufferData,
+    // );
+
+    // const blobFilePath = path.join(
+    //     __dirname,
+    //     uuid,
+    // );
+
+    // await fs.appendFile(blobFilePath, bufferData.toString('binary'), 'utf-8');
+
     console.log('patchNameBlobsUploadsUuid', name, uuid);
     console.log(request.originalUrl);
+    // console.log(request);
+    // console.log('blobFilePath', blobFilePath);
+    console.log('request.body', request.body);
+    console.log('request.query', request.query);
+    console.log(JSON.stringify(request.headers));
+    // console.log('bufferData', bufferData);
+    console.log('------------------');
 
-    response.status(200).end();
+
+    // if (true) {
+    //     const errorResponse = {
+    //         errors: [
+    //             {
+    //                 code: "UNAUTHORIZED",
+    //                 message: "Unauthorized",
+    //                 detail: "Log in."
+    //             },
+    //         ],
+    //     };
+
+    //     response.status(400).send(JSON.stringify(errorResponse));
+    //     return;
+    // }
+
+    response.setHeader(
+        'Location',
+        location,
+    );
+    response.setHeader(
+        'Range',
+        `0-1000`,
+    );
+    response.setHeader(
+        'Content-Length',
+        `1000`,
+    );
+    response.setHeader(
+        'Docker-Upload-UUID',
+        uuid,
+    );
+    response.status(202).end();
 }
 
 

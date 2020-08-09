@@ -16,9 +16,9 @@ const storageDownload = async (
         case 'filesystem':
             return filesystemStorage.download(filename);
         case 'amazon':
-            break;
+            return;
         case 'google':
-            break;
+            return;
     }
 }
 
@@ -26,10 +26,14 @@ const storageDownload = async (
 const storageUpload = async (
     type: StorageType,
     filename: string,
+    data: Buffer,
 ) => {
     switch (type) {
         case 'filesystem':
-            return filesystemStorage.upload(filename);
+            return filesystemStorage.upload(
+                filename,
+                data,
+            );
         case 'amazon':
             break;
         case 'google':
@@ -65,7 +69,7 @@ class Storage {
     public async download(
         filename: string,
     ) {
-        await storageDownload(
+        return storageDownload(
             this.type,
             filename,
         );
@@ -73,17 +77,19 @@ class Storage {
 
     public async upload(
         filename: string,
+        data: Buffer,
     ) {
-        await storageUpload(
+        return storageUpload(
             this.type,
             filename,
+            data,
         );
     }
 
     public async obliterate(
         filename: string,
     ) {
-        await storageObliterate(
+        return storageObliterate(
             this.type,
             filename,
         );

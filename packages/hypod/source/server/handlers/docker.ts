@@ -37,7 +37,9 @@ const endpointApiGetAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiGetAll', url);
+    // console.log('endpointApiGetAll', url);
+    // console.log(JSON.stringify(request.headers));
+    console.log('request.body', request.body);
 
     const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
@@ -89,7 +91,9 @@ const endpointApiPostAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiPostAll', url);
+    // console.log('endpointApiPostAll', url);
+    // console.log(JSON.stringify(request.headers));
+    console.log('request.body', request.body);
 
     const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
@@ -121,7 +125,9 @@ const endpointApiPutAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiPutAll', url);
+    // console.log('endpointApiPutAll', url);
+    // console.log(JSON.stringify(request.headers));
+    console.log('request.body', request.body);
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
@@ -153,7 +159,11 @@ const endpointApiPatchAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiPatchAll', url);
+    // console.log('endpointApiPatchAll', url);
+    // console.log(JSON.stringify(request.headers));
+    // console.log('request.body', request.body);
+    // console.log('request.query', request.query);
+    console.log('request.body', request.body);
 
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
@@ -175,7 +185,9 @@ const endpointApiDeleteAll = (
     response: express.Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiDeleteAll', url);
+    // console.log('endpointApiDeleteAll', url);
+    // console.log(JSON.stringify(request.headers));
+    console.log('request.body', request.body);
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
