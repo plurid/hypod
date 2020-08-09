@@ -177,8 +177,9 @@ export const postNameBlobsUploads = async (
 
     console.log('postNameBlobsUploads', name);
     // console.log(request.originalUrl);
-    // console.log('request.query', request.query);
-    // console.log(JSON.stringify(request.headers));
+    console.log('request.body', request.body);
+    console.log('request.query', request.query);
+    console.log(JSON.stringify(request.headers));
     console.log('------------------');
 
     response.setHeader(
@@ -196,113 +197,6 @@ export const postNameBlobsUploads = async (
     response.setHeader(
         'Docker-Upload-UUID',
         blobUuid,
-    );
-    response.status(202).end();
-}
-
-
-export const postNameBlobsUploadsUuid = async (
-    request: express.Request,
-    response: express.Response,
-    match: RegExpMatchArray,
-) => {
-    const name = getFromMatch(match, 'name');
-    if (!name) {
-        response.status(400).end();
-        return;
-    }
-    const uuid = getFromMatch(match, 'name');
-    if (!name) {
-        response.status(400).end();
-        return;
-    }
-
-    console.log('postNameBlobsUploadsUuid', name, uuid);
-    console.log(request.originalUrl);
-    console.log(JSON.stringify(request.headers));
-    console.log('------------------');
-    
-    response.status(202).end();
-}
-
-
-
-/** PUT */
-export const putNameManifestsReference = async (
-    request: express.Request,
-    response: express.Response,
-    match: RegExpMatchArray,
-) => {
-    const name = getFromMatch(match, 'name');
-    if (!name) {
-        response.status(400).end();
-        return;
-    }
-    const reference = getFromMatch(match, 'reference');
-    if (!reference) {
-        response.status(400).end();
-        return;
-    }
-
-    console.log('putNameManifestsReference', name, reference);
-    console.log(request.originalUrl);
-
-    const responseData = {
-        name,
-        tag: reference,
-        fsLayers: [],
-        history: '',
-        signature: '',
-    };
-    response.status(200).send(JSON.stringify(responseData));
-}
-
-
-export const putNameBlobsUploadsUuid = async (
-    request: express.Request,
-    response: express.Response,
-    match: RegExpMatchArray,
-) => {
-    const name = getFromMatch(match, 'name');
-    if (!name) {
-        response.status(400).end();
-        return;
-    }
-    const uuid = getFromMatch(match, 'uuid');
-    if (!uuid) {
-        response.status(400).end();
-        return;
-    }
-
-    const location = request.originalUrl;
-
-    console.log('putNameBlobsUploadsUuid', name, uuid);
-    console.log(request.originalUrl);
-    console.log('request.body', request.body);
-    console.log('request.query', request.query);
-    console.log(JSON.stringify(request.headers));
-    const bufferData = Buffer.from(request.body.toString('binary'), 'binary');
-
-    await storage.upload(
-        uuid,
-        bufferData,
-    );
-
-    response.setHeader(
-        'Location',
-        location,
-    );
-    response.setHeader(
-        'Range',
-        '0-1000',
-    );
-    response.setHeader(
-        'Content-Length',
-        '1000',
-    );
-    response.setHeader(
-        'Docker-Upload-UUID',
-        uuid,
     );
     response.status(202).end();
 }
@@ -375,9 +269,99 @@ export const patchNameBlobsUploadsUuid = async (
         'Range',
         `0-1000`,
     );
+    // response.setHeader(
+    //     'Content-Length',
+    //     `1000000`,
+    // );
+    response.setHeader(
+        'Docker-Upload-UUID',
+        uuid,
+    );
+    response.status(202).end();
+}
+
+
+
+/** PUT */
+export const putNameManifestsReference = async (
+    request: express.Request,
+    response: express.Response,
+    match: RegExpMatchArray,
+) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const reference = getFromMatch(match, 'reference');
+    if (!reference) {
+        response.status(400).end();
+        return;
+    }
+
+    console.log('putNameManifestsReference', name, reference);
+    console.log(request.originalUrl);
+
+    const responseData = {
+        name,
+        tag: reference,
+        fsLayers: [],
+        history: '',
+        signature: '',
+    };
+    response.status(200).send(JSON.stringify(responseData));
+}
+
+
+export const putNameBlobsUploadsUuid = async (
+    request: express.Request,
+    response: express.Response,
+    match: RegExpMatchArray,
+) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const uuid = getFromMatch(match, 'uuid');
+    if (!uuid) {
+        response.status(400).end();
+        return;
+    }
+
+    const location = request.originalUrl;
+    const digest = request.query.digest as string || '';
+    
+    if (!digest) {
+        response.status(400).end();
+        return;
+    }
+
+    console.log('putNameBlobsUploadsUuid', name, uuid);
+    console.log('request.originalUrl', request.originalUrl);
+    console.log('request.body', request.body);
+    console.log('request.query', request.query);
+    console.log('digest', digest);
+    console.log(JSON.stringify(request.headers));
+    console.log('------------------');
+    const bufferData = Buffer.from(request.body.toString('binary'), 'binary');
+
+    // await storage.upload(
+    //     uuid,
+    //     bufferData,
+    // );
+
+    response.setHeader(
+        'Location',
+        location,
+    );
+    response.setHeader(
+        'Range',
+        '0-1000',
+    );
     response.setHeader(
         'Content-Length',
-        `1000`,
+        '1000',
     );
     response.setHeader(
         'Docker-Upload-UUID',

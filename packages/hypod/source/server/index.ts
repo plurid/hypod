@@ -114,9 +114,12 @@ const pluridServer = new PluridServer({
 
 
 pluridServer.instance().use(
-    compression(),
-    bodyParser.raw(),
-    bodyParser.json(),
+    // compression(),
+    bodyParser.raw({
+        limit: '1000mb',
+        type: '*/*',
+    }),
+    // bodyParser.json(),
 );
 
 

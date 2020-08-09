@@ -39,7 +39,7 @@ const endpointApiGetAll = (
     const url = request.originalUrl;
     // console.log('endpointApiGetAll', url);
     // console.log(JSON.stringify(request.headers));
-    console.log('request.body', request.body);
+    // console.log('request.body', request.body);
 
     const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
@@ -93,25 +93,15 @@ const endpointApiPostAll = (
     const url = request.originalUrl;
     // console.log('endpointApiPostAll', url);
     // console.log(JSON.stringify(request.headers));
-    console.log('request.body', request.body);
+    // console.log('request.body', request.body);
 
     const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
-    const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
     if (matchNameBlobsUploads) {
         dockerLogic.postNameBlobsUploads(
             request,
             response,
             matchNameBlobsUploads,
-        );
-        return;
-    }
-
-    if (matchNameBlobsUploadsUuid) {
-        dockerLogic.postNameBlobsUploadsUuid(
-            request,
-            response,
-            matchNameBlobsUploadsUuid,
         );
         return;
     }
@@ -124,9 +114,9 @@ const endpointApiPutAll = (
     request: express.Request,
     response: express.Response,
 ) => {
-    const url = request.originalUrl;
-    // console.log('endpointApiPutAll', url);
-    // console.log(JSON.stringify(request.headers));
+    const url = request.path;
+    console.log('endpointApiPutAll', url);
+    console.log(JSON.stringify(request.headers));
     console.log('request.body', request.body);
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
@@ -187,7 +177,7 @@ const endpointApiDeleteAll = (
     const url = request.originalUrl;
     // console.log('endpointApiDeleteAll', url);
     // console.log(JSON.stringify(request.headers));
-    console.log('request.body', request.body);
+    // console.log('request.body', request.body);
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
@@ -228,6 +218,11 @@ const dockerHandlers = (
     );
 
     instance.get(
+        DOCKER_ENDPOINT_API_ALL,
+        endpointApiGetAll,
+    );
+
+    instance.head(
         DOCKER_ENDPOINT_API_ALL,
         endpointApiGetAll,
     );
