@@ -115,11 +115,24 @@ const pluridServer = new PluridServer({
 
 pluridServer.instance().use(
     // compression(),
-    bodyParser.raw({
-        inflate: true,
-        limit: '1000mb',
-        type: '*/*',
-    }),
+    (request, response, next) => {
+        let data = '';
+        request.setEncoding('binary');
+        request.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        request.on('end', () => {
+            (request as any).rawBody = data;
+            next();
+        });
+    }
+
+    // bodyParser.raw({
+    //     inflate: true,
+    //     limit: '1000mb',
+    //     type: '*/*',
+    // }),
     // bodyParser.json(),
 );
 

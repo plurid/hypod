@@ -243,10 +243,15 @@ export const patchNameBlobsUploadsUuid = async (
     console.log('request.query', request.query);
     console.log(JSON.stringify(request.headers));
     // console.log('bufferData', bufferData);
-    const contentType = request.header('Content-Type');
-    console.log('contentType', contentType);
+    // const contentType = request.header('Content-Type');
+    // console.log('contentType', contentType);
     console.log('------------------');
+    const bufferData = Buffer.from((request as any).rawBody.toString('binary'), 'binary');
 
+    await storage.upload(
+        uuid,
+        bufferData,
+    );
 
 
     // if (true) {
@@ -270,12 +275,12 @@ export const patchNameBlobsUploadsUuid = async (
     );
     response.setHeader(
         'Range',
-        `0-1000`,
+        `0-1000000`,
     );
-    // response.setHeader(
-    //     'Content-Length',
-    //     `1000000`,
-    // );
+    response.setHeader(
+        'Content-Length',
+        `${bufferData.length}`,
+    );
     response.setHeader(
         'Docker-Upload-UUID',
         uuid,
@@ -345,11 +350,12 @@ export const putNameBlobsUploadsUuid = async (
     console.log('request.body', request.body);
     console.log('request.query', request.query);
     console.log('digest', digest);
-    console.log(JSON.stringify(request.headers));
-    const contentType = request.header('Content-Type');
-    console.log('contentType', contentType);
+    // console.log(JSON.stringify(request.headers));
+    // const contentType = request.header('Content-Type');
+    // console.log('contentType', contentType);
     console.log('------------------');
-    const bufferData = Buffer.from(request.body.toString('binary'), 'binary');
+    // const bufferData = Buffer.from((request as any).rawBody.toString('binary'), 'binary');
+    // console.log('bufferData', bufferData);
 
     // await storage.upload(
     //     uuid,
