@@ -56,7 +56,9 @@ class Storage {
     ) {
         switch (this.type) {
             case 'filesystem':
-                return filesystemStorage.obliterate(filename);
+                return filesystemStorage.obliterate(
+                    filename,
+                );
             case 'amazon':
                 break;
             case 'google':

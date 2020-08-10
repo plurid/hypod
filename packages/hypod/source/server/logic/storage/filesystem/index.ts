@@ -66,7 +66,12 @@ const storageUpload = async (
 const storageObliterate = async (
     filename: string,
 ) => {
+    const filepath = path.join(
+        imagenesPath,
+        filename,
+    );
 
+    return fs.unlink(filepath);
 }
 
 
