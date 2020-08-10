@@ -181,6 +181,7 @@ const endpointApiDeleteAll = (
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
+    const matchNameBlobsDigest = url.match(DOCKER_RE_NAME_BLOBS_DIGEST);
 
     if (matchNameManifestsReference) {
         dockerLogic.deleteNameManifestsReference(
@@ -196,6 +197,15 @@ const endpointApiDeleteAll = (
             request,
             response,
             matchNameBlobsUploadsUuid,
+        );
+        return;
+    }
+
+    if (matchNameBlobsDigest) {
+        dockerLogic.deleteNameBlobsDigest(
+            request,
+            response,
+            matchNameBlobsDigest,
         );
         return;
     }

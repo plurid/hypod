@@ -2,7 +2,7 @@ import filesystemStorage from './filesystem';
 
 
 
-export type StorageType = 
+export type StorageType =
     | 'filesystem'
     | 'amazon'
     | 'google';
@@ -27,12 +27,14 @@ const storageUpload = async (
     type: StorageType,
     filename: string,
     data: Buffer,
+    kind?: 'write' | 'append',
 ) => {
     switch (type) {
         case 'filesystem':
             return filesystemStorage.upload(
                 filename,
                 data,
+                kind,
             );
         case 'amazon':
             break;
@@ -78,11 +80,13 @@ class Storage {
     public async upload(
         filename: string,
         data: Buffer,
+        kind?: 'write' | 'append',
     ) {
         return storageUpload(
             this.type,
             filename,
             data,
+            kind,
         );
     }
 

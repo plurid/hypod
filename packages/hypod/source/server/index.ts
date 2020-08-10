@@ -126,14 +126,13 @@ pluridServer.instance().use(
             (request as any).rawBody = data;
             next();
         });
-    }
-
+    },
+    bodyParser.json(),
     // bodyParser.raw({
     //     inflate: true,
     //     limit: '1000mb',
     //     type: '*/*',
     // }),
-    // bodyParser.json(),
 );
 
 

@@ -42,11 +42,16 @@ const storageDownload = async (
 const storageUpload = async (
     filename: string,
     data: Buffer,
+    kind?: 'write' | 'append',
 ) => {
     const filepath = path.join(
         imagenesPath,
         filename,
     );
+
+    if (kind === 'append') {
+        return fs.appendFile(filepath, data);
+    }
 
     return fs.writeFile(filepath, data);
 }
@@ -55,7 +60,7 @@ const storageUpload = async (
 const storageObliterate = async (
     filename: string,
 ) => {
-  
+
 }
 
 

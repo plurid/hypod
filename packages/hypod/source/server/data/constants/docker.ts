@@ -1,21 +1,21 @@
 /**
  * Docker Registry API https://docs.docker.com/registry/spec/api/#detail
- * 
+ *
  * GET /v2/<name>/tags/list
  * GET /v2/<name>/manifests/<reference>
  * GET /v2/<name>/blobs/<digest>
  * GET /v2/<name>/blobs/uploads/<uuid>
- * 
+ *
  * POST /v2/<name>/blobs/uploads/
- * 
+ *
  * PUT /v2/<name>/manifests/<reference>
  * PUT /v2/<name>/blobs/uploads/<uuid>
- * 
- * PATCH /v2/<name>/blobs/uploads/<uuid>	
- * 
- * DELETE /v2/<name>/blobs/<digest>
+ *
+ * PATCH /v2/<name>/blobs/uploads/<uuid>
+ *
  * DELETE /v2/<name>/manifests/<reference>
- * DELETE /v2/<name>/blobs/uploads/<uuid>	
+ * DELETE /v2/<name>/blobs/uploads/<uuid>
+ * DELETE /v2/<name>/blobs/<digest>
  */
 
 

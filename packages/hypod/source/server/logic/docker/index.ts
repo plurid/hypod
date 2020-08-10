@@ -21,6 +21,14 @@ import Storage from '#server/logic/storage';
 
 const storage = new Storage('filesystem');
 
+const getBufferData = (
+    request: express.Request,
+) => {
+    const bufferData = Buffer.from((request as any).rawBody.toString('binary'), 'binary');
+    return bufferData;
+}
+
+
 
 /** GET */
 export const getNameTagsList = async (
@@ -65,15 +73,19 @@ export const getNameManifestsReference = async (
 
     console.log('getNameManifestsReference', name, reference);
     console.log(request.originalUrl);
+    console.log('------');
 
-    const responseData = {
-        name,
-        tag: reference,
-        fsLayers: [],
-        history: '',
-        signature: '',
-    };
-    response.status(200).send(JSON.stringify(responseData));
+    const location = 'manifest/' + name + '/' + reference;
+
+    const file = await storage.download(
+        location,
+    );
+
+    if (!file) {
+        return response.status(404).end();
+    }
+
+    response.status(200).send(file);
 }
 
 
@@ -97,7 +109,7 @@ export const getNameBlobsDigest = async (
     // console.log(request.originalUrl);
     console.log('------------------');
 
-    const file = await storage.download(digest.replace(':', '-'));
+    const file = await storage.download(digest.replace(':', '/'));
     // console.log('file', file);
 
     if (!file) {
@@ -138,23 +150,41 @@ export const getNameBlobsUploadsUuid = async (
 
     const location = `/v2/${name}/blobs/uploads/${uuid}`;
 
+    const file = await storage.download(
+        uuid,
+    );
+
     response.setHeader(
         'Location',
         location,
     );
     response.setHeader(
-        'Range',
-        'bytes=0-1000',
-    );
-    response.setHeader(
-        'Content-Length',
-        '0',
-    );
-    response.setHeader(
         'Docker-Upload-UUID',
         uuid,
     );
-    response.status(204).end();
+
+    if (!file) {
+        response.setHeader(
+            'Range',
+            '0-0',
+        );
+        response.setHeader(
+            'Content-Length',
+            '0',
+        );
+        response.status(204).end();
+        return;
+    }
+
+    response.setHeader(
+        'Range',
+        '0-0',
+    );
+    response.setHeader(
+        'Content-Length',
+        file.length,
+    );
+    response.status(200).end();
 }
 
 
@@ -180,7 +210,11 @@ export const postNameBlobsUploads = async (
     console.log('request.body', request.body);
     console.log('request.query', request.query);
     console.log(JSON.stringify(request.headers));
+    const bufferData = getBufferData(request);
+    console.log('bufferData', bufferData);
+    console.log('bufferData.length', bufferData.length);
     console.log('------------------');
+
 
     response.setHeader(
         'Location',
@@ -242,15 +276,17 @@ export const patchNameBlobsUploadsUuid = async (
     console.log('request.body', request.body);
     console.log('request.query', request.query);
     console.log(JSON.stringify(request.headers));
-    // console.log('bufferData', bufferData);
+    const bufferData = getBufferData(request);
+    console.log('bufferData', bufferData);
+    console.log('bufferData.length', bufferData.length);
     // const contentType = request.header('Content-Type');
     // console.log('contentType', contentType);
     console.log('------------------');
-    const bufferData = Buffer.from((request as any).rawBody.toString('binary'), 'binary');
 
     await storage.upload(
         uuid,
         bufferData,
+        'append',
     );
 
 
@@ -286,6 +322,7 @@ export const patchNameBlobsUploadsUuid = async (
         uuid,
     );
     response.status(202).end();
+    // response.status(416).end();
 }
 
 
@@ -307,17 +344,38 @@ export const putNameManifestsReference = async (
         return;
     }
 
+    const data = (request as any).rawBody;
+
     console.log('putNameManifestsReference', name, reference);
     console.log(request.originalUrl);
+    console.log('request.query', request.query);
+    // const digest = request.query.digest as string || '';
 
-    const responseData = {
-        name,
-        tag: reference,
-        fsLayers: [],
-        history: '',
-        signature: '',
-    };
-    response.status(200).send(JSON.stringify(responseData));
+    console.log('data', data);
+    console.log('------');
+
+    const location = 'manifest/' + name + '/' + reference;
+
+    await storage.upload(
+        location,
+        data,
+    );
+
+
+    response.setHeader(
+        'Location',
+        location,
+    );
+    response.setHeader(
+        'Content-Length',
+        '0',
+    );
+    response.setHeader(
+        'Docker-Content-Digest',
+        reference,
+    );
+
+    response.status(201).end();
 }
 
 
@@ -350,17 +408,33 @@ export const putNameBlobsUploadsUuid = async (
     console.log('request.body', request.body);
     console.log('request.query', request.query);
     console.log('digest', digest);
-    // console.log(JSON.stringify(request.headers));
+    console.log(JSON.stringify(request.headers));
     // const contentType = request.header('Content-Type');
     // console.log('contentType', contentType);
+    const bufferData = getBufferData(request);
+    console.log('bufferData', bufferData);
+    console.log('bufferData.length', bufferData.length);
     console.log('------------------');
-    // const bufferData = Buffer.from((request as any).rawBody.toString('binary'), 'binary');
-    // console.log('bufferData', bufferData);
 
-    // await storage.upload(
-    //     uuid,
-    //     bufferData,
-    // );
+    await storage.upload(
+        uuid,
+        bufferData,
+        'append',
+    );
+
+    const tempFile = await storage.download(uuid);
+    if (!tempFile) {
+        response.status(400).end();
+        return;
+    }
+    await storage.upload(
+        digest.replace(':', '/'),
+        Buffer.from(tempFile, 'binary'),
+    );
+
+    await storage.obliterate(
+        uuid,
+    );
 
     response.setHeader(
         'Location',
@@ -368,17 +442,17 @@ export const putNameBlobsUploadsUuid = async (
     );
     response.setHeader(
         'Range',
-        '0-1000',
+        '0-1000000',
     );
     response.setHeader(
         'Content-Length',
-        '1000',
+        `${tempFile.length}`,
     );
     response.setHeader(
-        'Docker-Upload-UUID',
-        uuid,
+        'Docker-Content-Digest',
+        digest,
     );
-    response.status(202).end();
+    response.status(201).end();
 }
 
 
@@ -402,8 +476,13 @@ export const deleteNameManifestsReference = async (
 
     console.log('deleteNameManifestsReference', name, reference);
     console.log(request.originalUrl);
+    console.log('------------');
 
-    response.status(200).end();
+    await storage.obliterate(
+        'manifest/' + reference,
+    );
+
+    response.status(202).end();
 }
 
 
@@ -425,6 +504,39 @@ export const deleteNameBlobsUploadsUuid = async (
 
     console.log('deleteNameBlobsUploadsUuid', name, uuid);
     console.log(request.originalUrl);
+    console.log('------------');
 
-    response.status(200).end();
+    await storage.obliterate(
+        uuid,
+    );
+
+    response.status(202).end();
+}
+
+
+export const deleteNameBlobsDigest = async (
+    request: express.Request,
+    response: express.Response,
+    match: RegExpMatchArray,
+) => {
+    const name = getFromMatch(match, 'name');
+    if (!name) {
+        response.status(400).end();
+        return;
+    }
+    const digest = getFromMatch(match, 'digest');
+    if (!digest) {
+        response.status(400).end();
+        return;
+    }
+
+    console.log('deleteNameBlobsDigest', name, uuid);
+    console.log(request.originalUrl);
+    console.log('------------');
+
+    await storage.obliterate(
+        digest.replace(':', '/'),
+    );
+
+    response.status(202).end();
 }
