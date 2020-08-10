@@ -30,7 +30,7 @@ const storageDownload = async (
     );
 
     try {
-        const stats = await fs.stat(filepath);
+        await fs.stat(filepath);
 
         return fs.readFile(filepath, 'binary');
     } catch (error) {
@@ -48,6 +48,12 @@ const storageUpload = async (
         imagenesPath,
         filename,
     );
+
+    const directoryPath = path.dirname(filepath);
+
+    await fs.mkdir(directoryPath, {
+        recursive: true,
+    });
 
     if (kind === 'append') {
         return fs.appendFile(filepath, data);

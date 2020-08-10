@@ -8,57 +8,6 @@ export type StorageType =
     | 'google';
 
 
-const storageDownload = async (
-    type: StorageType,
-    filename: string,
-) => {
-    switch (type) {
-        case 'filesystem':
-            return filesystemStorage.download(filename);
-        case 'amazon':
-            return;
-        case 'google':
-            return;
-    }
-}
-
-
-const storageUpload = async (
-    type: StorageType,
-    filename: string,
-    data: Buffer,
-    kind?: 'write' | 'append',
-) => {
-    switch (type) {
-        case 'filesystem':
-            return filesystemStorage.upload(
-                filename,
-                data,
-                kind,
-            );
-        case 'amazon':
-            break;
-        case 'google':
-            break;
-    }
-}
-
-
-const storageObliterate = async (
-    type: StorageType,
-    filename: string,
-) => {
-    switch (type) {
-        case 'filesystem':
-            return filesystemStorage.obliterate(filename);
-        case 'amazon':
-            break;
-        case 'google':
-            break;
-    }
-}
-
-
 class Storage {
     private type: StorageType;
 
@@ -71,10 +20,16 @@ class Storage {
     public async download(
         filename: string,
     ) {
-        return storageDownload(
-            this.type,
-            filename,
-        );
+        switch (this.type) {
+            case 'filesystem':
+                return filesystemStorage.download(
+                    filename,
+                );
+            case 'amazon':
+                return;
+            case 'google':
+                return;
+        }
     }
 
     public async upload(
@@ -82,21 +37,31 @@ class Storage {
         data: Buffer,
         kind?: 'write' | 'append',
     ) {
-        return storageUpload(
-            this.type,
-            filename,
-            data,
-            kind,
-        );
+        switch (this.type) {
+            case 'filesystem':
+                return filesystemStorage.upload(
+                    filename,
+                    data,
+                    kind,
+                );
+            case 'amazon':
+                break;
+            case 'google':
+                break;
+        }
     }
 
     public async obliterate(
         filename: string,
     ) {
-        return storageObliterate(
-            this.type,
-            filename,
-        );
+        switch (this.type) {
+            case 'filesystem':
+                return filesystemStorage.obliterate(filename);
+            case 'amazon':
+                break;
+            case 'google':
+                break;
+        }
     }
 }
 

@@ -74,7 +74,7 @@ export const getNameManifestsReference = async (
         location,
     );
 
-    if (!file) {
+    if (typeof file !== 'string') {
         return response.status(404).end();
     }
 
@@ -110,9 +110,8 @@ export const getNameBlobsDigest = async (
     // console.log('------------------');
 
     const file = await storage.download(digest.replace(':', '/'));
-    // console.log('file', file);
 
-    if (!file) {
+    if (typeof file !== 'string') {
         response.status(404).end();
         return;
     }
@@ -163,7 +162,7 @@ export const getNameBlobsUploadsUuid = async (
         uuid,
     );
 
-    if (!file) {
+    if (typeof file !== 'string') {
         response.setHeader(
             'Range',
             '0-0',
@@ -424,7 +423,7 @@ export const putNameBlobsUploadsUuid = async (
     );
 
     const tempFile = await storage.download(uuid);
-    if (!tempFile) {
+    if (!tempFile || typeof tempFile !== 'string') {
         response.status(400).end();
         return;
     }
