@@ -115,9 +115,9 @@ const endpointApiPutAll = (
     response: express.Response,
 ) => {
     const url = request.path;
-    console.log('endpointApiPutAll', url);
-    console.log(JSON.stringify(request.headers));
-    console.log('request.body', request.body);
+    // console.log('endpointApiPutAll', url);
+    // console.log(JSON.stringify(request.headers));
+    // console.log('request.body', request.body);
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
@@ -153,7 +153,7 @@ const endpointApiPatchAll = (
     // console.log(JSON.stringify(request.headers));
     // console.log('request.body', request.body);
     // console.log('request.query', request.query);
-    console.log('request.body', request.body);
+    // console.log('request.body', request.body);
 
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
