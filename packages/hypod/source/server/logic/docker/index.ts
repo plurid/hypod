@@ -105,9 +105,9 @@ export const getNameBlobsDigest = async (
         return;
     }
 
-    console.log('getNameBlobsDigest', name, digest);
+    // console.log('getNameBlobsDigest', name, digest);
     // console.log(request.originalUrl);
-    console.log('------------------');
+    // console.log('------------------');
 
     const file = await storage.download(digest.replace(':', '/'));
     // console.log('file', file);
