@@ -1,15 +1,23 @@
-import React from 'react';
+// #region imports
+    // #region libraries
+    import React from 'react';
 
-import {
-    PluridComponent,
-} from '@plurid/plurid-react';
-
-import {
-    GlobalStyle,
-} from './styled';
-
+    import {
+        PluridComponent,
+    } from '@plurid/plurid-react';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        GlobalStyle,
+    } from './styled';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 export interface ShellProperties {
 }
 
@@ -37,6 +45,10 @@ const shell: PluridComponent = {
     kind: 'react',
     element: Shell,
 };
+// #endregion module
 
 
+
+// #region exports
 export default shell;
+// #endregion exports

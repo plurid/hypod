@@ -1,9 +1,12 @@
+// #region imports
 import {
     createGlobalStyle,
 } from 'styled-components';
+// #endregion imports
 
 
 
+// #region module
 export const GlobalStyle = createGlobalStyle`
     *, *::after, *::before {
         box-sizing: border-box;
@@ -35,3 +38,4 @@ export const GlobalStyle = createGlobalStyle`
         overflow: auto;
     }
 `;
+// #endregion module
