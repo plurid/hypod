@@ -76,6 +76,8 @@ const storageDownload = async (
 
         return fs.readFile(filepath, 'binary');
     } catch (error) {
+        console.log(`[Hypod Error 500] :: Filesystem could not download ${filename}.`);
+
         return;
     }
 }
@@ -86,34 +88,50 @@ const storageUpload = async (
     data: Buffer,
     kind?: 'write' | 'append',
 ) => {
-    const filepath = path.join(
-        imagenesPath,
-        filename,
-    );
+    try {
+        const filepath = path.join(
+            imagenesPath,
+            filename,
+        );
 
-    const directoryPath = path.dirname(filepath);
+        const directoryPath = path.dirname(filepath);
 
-    await fs.mkdir(directoryPath, {
-        recursive: true,
-    });
+        await makeDirectory(directoryPath);
 
-    if (kind === 'append') {
-        return fs.appendFile(filepath, data);
+        if (kind === 'append') {
+            return fs.appendFile(
+                filepath,
+                data,
+            );
+        }
+
+        return fs.writeFile(
+            filepath,
+            data,
+        );
+    } catch (error) {
+        console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);
+
+        return;
     }
-
-    return fs.writeFile(filepath, data);
 }
 
 
 const storageObliterate = async (
     filename: string,
 ) => {
-    const filepath = path.join(
-        imagenesPath,
-        filename,
-    );
+    try {
+        const filepath = path.join(
+            imagenesPath,
+            filename,
+        );
 
-    return fs.unlink(filepath);
+        return fs.unlink(filepath);
+    } catch (error) {
+        console.log(`[Hypod Error 500] :: Filesystem could not obliterate ${filename}.`);
+
+        return;
+    }
 }
 
 
@@ -124,8 +142,12 @@ const storageGenerateLocations = async () => {
         await makeDirectory(imagenesManifestPath);
         await makeDirectory(imagenesSha256Path);
         await makeDirectory(metadataPath);
+
+        return true;
     } catch (error) {
         console.log('[Hypod Error 500] :: Filesystem could not generate locations.');
+
+        return;
     }
 }
 

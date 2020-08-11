@@ -9,6 +9,10 @@ import {
 
 
 // #region external
+import {
+    BASE_PATH_BLOBS,
+} from '#server/data/constants';
+
 import storage from '#server/services/storage';
 
 import {
@@ -257,38 +261,11 @@ export const patchNameBlobsUploadsUuid = async (
     }
 
     const location = request.originalUrl;
-
     const bufferData = getBufferData(request);
-
-    // const bufferData = Buffer.from(request.body.toString('binary'), 'binary');
-
-    // await storage.upload(
-    //     uuid,
-    //     bufferData,
-    // );
-
-    // const blobFilePath = path.join(
-    //     __dirname,
-    //     uuid,
-    // );
-
-    // await fs.appendFile(blobFilePath, bufferData.toString('binary'), 'utf-8');
-
-    // console.log('patchNameBlobsUploadsUuid', name, uuid);
-    // console.log(request.originalUrl);
-    // console.log(request);
-    // console.log('blobFilePath', blobFilePath);
-    // console.log('request.body', request.body);
-    // console.log('request.query', request.query);
-    // console.log(JSON.stringify(request.headers));
-    // console.log('bufferData', bufferData);
-    // console.log('bufferData.length', bufferData.length);
-    // const contentType = request.header('Content-Type');
-    // console.log('contentType', contentType);
-    // console.log('------------------');
+    const blobPath = BASE_PATH_BLOBS + uuid;
 
     await storage.upload(
-        uuid,
+        blobPath,
         bufferData,
         'append',
     );
@@ -407,26 +384,15 @@ export const putNameBlobsUploadsUuid = async (
     }
 
     const bufferData = getBufferData(request);
-
-    // console.log('putNameBlobsUploadsUuid', name, uuid);
-    // console.log('request.originalUrl', request.originalUrl);
-    // console.log('request.body', request.body);
-    // console.log('request.query', request.query);
-    // console.log('digest', digest);
-    // console.log(JSON.stringify(request.headers));
-    // const contentType = request.header('Content-Type');
-    // console.log('contentType', contentType);
-    // console.log('bufferData', bufferData);
-    // console.log('bufferData.length', bufferData.length);
-    // console.log('------------------');
+    const blobPath = BASE_PATH_BLOBS + uuid;
 
     await storage.upload(
-        uuid,
+        blobPath,
         bufferData,
         'append',
     );
 
-    const tempFile = await storage.download(uuid);
+    const tempFile = await storage.download(blobPath);
     if (!tempFile || typeof tempFile !== 'string') {
         response.status(400).end();
         return;
@@ -437,7 +403,7 @@ export const putNameBlobsUploadsUuid = async (
     );
 
     await storage.obliterate(
-        uuid,
+        blobPath,
     );
 
     response.setHeader(
