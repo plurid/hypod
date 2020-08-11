@@ -42,7 +42,10 @@ const NotFound: React.FC<NotFoundProperties> = () => {
     );
     // #endregion render
 }
-
-
-export default NotFound;
 // #endregion module
+
+
+
+// #region exports
+export default NotFound;
+// #endregion exports

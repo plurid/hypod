@@ -1,5 +1,7 @@
 // #region imports
-import modules from '../modules';
+    // #region external
+    import modules from '../modules';
+    // #endregion external
 // #endregion imports
 
 

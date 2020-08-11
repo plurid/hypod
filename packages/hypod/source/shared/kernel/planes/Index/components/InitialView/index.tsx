@@ -107,6 +107,7 @@ const InitialView: React.FC<InitialViewProperties> = (
 // #endregion module
 
 
+
 // #region exports
 export default InitialView;
 // #endregion exports

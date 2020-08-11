@@ -94,10 +94,13 @@ const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): HomeDispatchProperties => ({
 });
+// #endregion module
 
 
+
+// #region exports
 export default connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(Home);
-// #endregion module
+// #endregion exports

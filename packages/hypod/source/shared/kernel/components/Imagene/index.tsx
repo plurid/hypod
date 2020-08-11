@@ -163,7 +163,10 @@ const Imagene: React.FC<ImageneProperties> = (
     );
     // #endregion render
 }
-
-
-export default Imagene;
 // #endregion module
+
+
+
+// #region external
+export default Imagene;
+// #endregion external

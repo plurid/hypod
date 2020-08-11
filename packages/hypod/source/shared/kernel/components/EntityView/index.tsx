@@ -183,7 +183,10 @@ const EntityView: React.FC<EntityViewProperties> = (
     );
     // #endregion render
 }
-
-
-export default EntityView;
 // #endregion module
+
+
+
+// #region external
+export default EntityView;
+// #endregion external

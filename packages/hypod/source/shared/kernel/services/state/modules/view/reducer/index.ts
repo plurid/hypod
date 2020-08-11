@@ -1,7 +1,9 @@
 // #region imports
-import initialState from '../initial';
-import resolvers from '../resolvers';
-import * as Types from '../types';
+    // #region external
+    import initialState from '../initial';
+    import resolvers from '../resolvers';
+    import * as Types from '../types';
+    // #endregion external
 // #endregion imports
 
 

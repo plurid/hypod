@@ -122,7 +122,10 @@ const Head: React.FC<HeadProperties> = (
     );
     // #endregion render
 }
-
-
-export default Head;
 // #endregion module
+
+
+
+// #region external
+export default Head;
+// #endregion external

@@ -1,7 +1,9 @@
 // #region imports
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    // #region libraries
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 // #endregion imports
 
 

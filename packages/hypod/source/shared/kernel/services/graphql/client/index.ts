@@ -28,7 +28,10 @@ const client = new ApolloClient({
     }),
     cache: new InMemoryCache(),
 });
-
-
-export default client;
 // #endregion module
+
+
+
+// #region exports
+export default client;
+// #endregion exports
