@@ -11,6 +11,7 @@ import {
 // #region external
 import {
     BASE_PATH_BLOBS,
+    BASE_PATH_IMAGENES_MANIFEST,
     dockerEntityMatchType,
 } from '#server/data/constants';
 
@@ -44,15 +45,21 @@ export const getNameTagsList = async (
         return;
     }
 
-    // console.log('getNameTagsList', name);
-    // console.log(request.originalUrl);
+    // check if name exists
 
-    const tags: any[] = [];
+    // get tags
+    const tags: string[] = [];
 
     const responseData = {
         name,
         tags,
     };
+
+    response.setHeader(
+        'Content-Type',
+        'application/json',
+    );
+
     response.status(200).send(JSON.stringify(responseData));
 }
 
@@ -79,11 +86,7 @@ export const getNameManifestsReference = async (
         return;
     }
 
-    // console.log('getNameManifestsReference', name, reference);
-    // console.log(request.originalUrl);
-    // console.log('------');
-
-    const location = '/imagenes/manifest/' + name + '/' + reference;
+    const location = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
 
     const file = await storage.download(
         location,
@@ -358,7 +361,7 @@ export const putNameManifestsReference = async (
     }
 
     const data = (request as any).rawBody;
-    const location = '/imagenes/manifest/' + name + '/' + reference;
+    const location = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
 
     const parsedData = JSON.parse(data);
     const digest = parsedData?.config?.digest || '';
@@ -490,12 +493,10 @@ export const deleteNameManifestsReference = async (
         return;
     }
 
-    // console.log('deleteNameManifestsReference', name, reference);
-    // console.log(request.originalUrl);
-    // console.log('------------');
+    const manifestPath = BASE_PATH_IMAGENES_MANIFEST + reference;
 
     await storage.obliterate(
-        '/imagenes/manifest/' + reference,
+        manifestPath,
     );
 
     response.status(202).end();
