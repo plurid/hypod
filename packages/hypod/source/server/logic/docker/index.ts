@@ -12,6 +12,7 @@ import {
 import {
     BASE_PATH_BLOBS,
     BASE_PATH_IMAGENES_MANIFEST,
+    BASE_PATH_IMAGENES,
     dockerEntityMatchType,
 } from '#server/data/constants';
 
@@ -133,7 +134,13 @@ export const getNameBlobsDigest = async (
     // console.log(request.originalUrl);
     // console.log('------------------');
 
-    const file = await storage.download(digest.replace(':', '/'));
+
+    const digestValue = digest.replace(':', '/');
+    const digestPath = BASE_PATH_IMAGENES + digestValue;
+
+    const file = await storage.download(
+        digestPath,
+    );
 
     if (typeof file !== 'string') {
         response.status(404).end();
@@ -440,8 +447,11 @@ export const putNameBlobsUploadsUuid = async (
         response.status(400).end();
         return;
     }
+
+    const digestValue = digest.replace(':', '/');
+    const digestPath = BASE_PATH_IMAGENES + digestValue;
     await storage.upload(
-        digest.replace(':', '/'),
+        digestPath,
         Buffer.from(tempFile, 'binary'),
     );
 
