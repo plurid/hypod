@@ -13,9 +13,24 @@ export interface Context {
 
 
 export type StorageType =
-    | 'filesystem'
-    | 'amazon'
-    | 'google';
+    | StorageTypeFilesystem
+    | StorageTypeAmazon
+    | StorageTypeGoogle;
+
+export interface StorageTypeData {
+    filesystem: StorageTypeFilesystem;
+    amazon: StorageTypeAmazon;
+    google: StorageTypeGoogle;
+}
+
+export type StorageTypeFilesystem = 'filesystem';
+export type StorageTypeAmazon = 'amazon';
+export type StorageTypeGoogle = 'google';
+
+
+export type StorageUploadKind =
+    | 'write'
+    | 'append';
 
 
 export type DockerEntityMatchType =

@@ -16,6 +16,10 @@ import {
     BASE_PATH_IMAGENES_MANIFEST,
     BASE_PATH_IMAGENES_SHA256,
 } from '#server/data/constants';
+
+import {
+    StorageUploadKind,
+} from '#server/data/interfaces';
 // #endregion external
 // #endregion imports
 
@@ -66,15 +70,22 @@ const makeDirectory = async (
 const storageDownload = async (
     filename: string,
 ) => {
-    const filepath = path.join(
-        imagenesPath,
-        filename,
-    );
-
     try {
-        await fs.stat(filepath);
+        const filepath = path.join(
+            imagenesPath,
+            filename,
+        );
 
-        return fs.readFile(filepath, 'binary');
+        await fs.stat(
+            filepath,
+        );
+
+        const filedata = await fs.readFile(
+            filepath,
+            'binary',
+        );
+
+        return filedata;
     } catch (error) {
         console.log(`[Hypod Error 500] :: Filesystem could not download ${filename}.`);
 
@@ -86,7 +97,7 @@ const storageDownload = async (
 const storageUpload = async (
     filename: string,
     data: Buffer,
-    kind?: 'write' | 'append',
+    kind?: StorageUploadKind,
 ) => {
     try {
         const filepath = path.join(
@@ -105,10 +116,12 @@ const storageUpload = async (
             );
         }
 
-        return fs.writeFile(
+        await fs.writeFile(
             filepath,
             data,
         );
+
+        return true;
     } catch (error) {
         console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);
 
@@ -126,7 +139,11 @@ const storageObliterate = async (
             filename,
         );
 
-        return fs.unlink(filepath);
+        await fs.unlink(
+            filepath,
+        );
+
+        return true;
     } catch (error) {
         console.log(`[Hypod Error 500] :: Filesystem could not obliterate ${filename}.`);
 

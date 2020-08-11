@@ -1,10 +1,14 @@
 // #region imports
 // #region libraries
 import {
+    storageType,
+} from '#server/data/constants';
+
+import {
     StorageType,
+    StorageUploadKind,
 } from '#server/data/interfaces';
 // #endregion libraries
-
 
 // #region imports
 import filesystemStorage from './filesystem';
@@ -27,13 +31,13 @@ class Storage {
         filename: string,
     ) {
         switch (this.type) {
-            case 'filesystem':
+            case storageType.filesystem:
                 return filesystemStorage.download(
                     filename,
                 );
-            case 'amazon':
+            case storageType.amazon:
                 return;
-            case 'google':
+            case storageType.google:
                 return;
         }
     }
@@ -41,19 +45,21 @@ class Storage {
     public async upload(
         filename: string,
         data: Buffer,
-        kind?: 'write' | 'append',
+        kind?: StorageUploadKind,
     ) {
         switch (this.type) {
-            case 'filesystem':
+            case storageType.filesystem:
                 return filesystemStorage.upload(
                     filename,
                     data,
                     kind,
                 );
-            case 'amazon':
-                break;
-            case 'google':
-                break;
+            case storageType.amazon:
+                console.log('[Hypod Error] :: Not implemented.');
+                return;
+            case storageType.google:
+                console.log('[Hypod Error] :: Not implemented.');
+                return;
         }
     }
 
@@ -61,25 +67,29 @@ class Storage {
         filename: string,
     ) {
         switch (this.type) {
-            case 'filesystem':
+            case storageType.filesystem:
                 return filesystemStorage.obliterate(
                     filename,
                 );
-            case 'amazon':
-                break;
-            case 'google':
-                break;
+            case storageType.amazon:
+                console.log('[Hypod Error] :: Not implemented.');
+                return;
+            case storageType.google:
+                console.log('[Hypod Error] :: Not implemented.');
+                return;
         }
     }
 
     public async generateLocations() {
         switch (this.type) {
-            case 'filesystem':
+            case storageType.filesystem:
                 return filesystemStorage.generateLocations();
-            case 'amazon':
-                break;
-            case 'google':
-                break;
+            case storageType.amazon:
+                console.log('[Hypod Error] :: Not implemented.');
+                return;
+            case storageType.google:
+                console.log('[Hypod Error] :: Not implemented.');
+                return;
         }
     }
 }
