@@ -1,3 +1,4 @@
+// #region module
 export const SET_VIEW_LOADING = 'SET_VIEW_LOADING';
 export interface SetViewLoadingAction {
     type: typeof SET_VIEW_LOADING;
@@ -38,3 +39,4 @@ export type Actions =
     | SetViewLoadingAction
     | SetViewTypeAction
     | SetViewCompactSelectorsAction;
+// #endregion module

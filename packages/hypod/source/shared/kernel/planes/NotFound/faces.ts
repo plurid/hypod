@@ -18,7 +18,9 @@ const faces = [
     '◉_◉',
     'ᕙ(⇀‸↼‶)ᕗ',
 ];
-
-
-export default faces;
 // #endregion module
+
+
+// #region exports
+export default faces;
+// #endregion exports

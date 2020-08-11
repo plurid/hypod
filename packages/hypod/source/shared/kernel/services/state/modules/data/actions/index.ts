@@ -1,11 +1,16 @@
-import * as Types from './types';
+// #region imports
+    // #region external
+    import * as Types from '../types';
 
-import {
+    import {
+        Imagene,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
 
-} from '#server/data/interfaces';
 
 
-
+// #region module
 export const removeEntity = (
     payload: Types.RemoveEntityPayload,
 ): Types.RemoveEntityAction => {
@@ -26,8 +31,14 @@ export const setActiveProviderID = (
 }
 
 
-
-export const actions = {
+const actions = {
     removeEntity,
     setActiveProviderID,
 };
+// #endregion module
+
+
+
+// #region exports
+export default actions;
+// #endregion exports

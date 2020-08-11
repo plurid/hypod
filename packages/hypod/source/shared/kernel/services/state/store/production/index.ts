@@ -1,16 +1,27 @@
-import {
-    createStore,
-    applyMiddleware,
-} from 'redux';
-import thunk from 'redux-thunk';
+// #region imports
+    // #region libraries
+    import {
+        createStore,
+        applyMiddleware,
+    } from 'redux';
 
-import rootReducer from './reducers';
+    import thunk from 'redux-thunk';
+    // #endregion libraries
+
+
+    // #region external
+    import reducers from '../reducers';
+    // #endregion external
+// #endregion imports
 
 
 
-export type AppState = ReturnType<typeof rootReducer>;
+// #region module
+export type AppState = ReturnType<typeof reducers>;
 
-const store = (preloadedState: any) => {
+const store = (
+    preloadedState: any,
+) => {
     // const localState = localStorage.loadState();
 
     // const persistedState = {
@@ -18,7 +29,7 @@ const store = (preloadedState: any) => {
     // };
 
     const _store = createStore(
-        rootReducer,
+        reducers,
         preloadedState,
         // persistedState || preloadedState,
         applyMiddleware(
@@ -38,6 +49,10 @@ const store = (preloadedState: any) => {
 
     return _store;
 }
+// #endregion module
 
 
+
+// #region exports
 export default store;
+// #endregion exports

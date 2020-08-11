@@ -1,7 +1,12 @@
-import * as Types from './types';
+// #region imports
+    // #region external
+    import * as Types from '../types';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 export const removeEntity = (
     state: Types.State,
     action: Types.RemoveEntityAction,
@@ -33,8 +38,14 @@ export const setActiveProviderID = (
 }
 
 
-
-export const resolvers = {
+const resolvers = {
     removeEntity,
     setActiveProviderID,
 };
+// #endregion module
+
+
+
+// #region exports
+export default resolvers;
+// #endregion exports

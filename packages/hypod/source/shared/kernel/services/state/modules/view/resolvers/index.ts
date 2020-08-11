@@ -1,7 +1,10 @@
-import * as Types from './types';
+// #region imports
+import * as Types from '../types';
+// #endregion imports
 
 
 
+// #region module
 export const setViewLoading = (
     state: Types.State,
     action: Types.SetViewLoadingAction,
@@ -52,9 +55,15 @@ export const setViewCompactSelectors = (
 }
 
 
-
-export const resolvers = {
+const resolvers = {
     setViewLoading,
     setViewType,
     setViewCompactSelectors,
 };
+// #endregion module
+
+
+
+// #region exports
+export default resolvers;
+// #endregion exports

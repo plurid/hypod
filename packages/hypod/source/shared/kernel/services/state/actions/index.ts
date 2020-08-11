@@ -1,18 +1,17 @@
 // #region imports
-import * as data from '../modules/data';
-import * as themes from '../modules/themes';
-import * as view from '../modules/view';
+import modules from '../modules';
 // #endregion imports
 
 
 
 // #region module
 const actions = {
-    data: data.actions,
-    themes: themes.actions,
-    view: view.actions,
+    data: modules.data.actions,
+    themes: modules.themes.actions,
+    view: modules.view.actions,
 };
 // #endregion module
+
 
 
 // #region exports

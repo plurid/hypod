@@ -1,11 +1,19 @@
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+// #region imports
+    // #region libraries
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
-import * as Types from './types';
+
+    // #region external
+    import * as Types from '../types';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 export const setGeneralTheme = (
     theme: Theme,
 ): Types.SetGeneralThemeAction => {
@@ -26,8 +34,14 @@ export const setInteractionTheme = (
 }
 
 
-
-export const actions = {
+const actions = {
     setGeneralTheme,
     setInteractionTheme,
 };
+// #endregion module
+
+
+
+// #region exports
+export default actions;
+// #endregion exports

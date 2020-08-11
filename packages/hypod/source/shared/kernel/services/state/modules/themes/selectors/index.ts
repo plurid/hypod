@@ -1,7 +1,9 @@
 // #region imports
-import {
-    AppState,
-} from '../store';
+    // #region external
+    import {
+        AppState,
+    } from '../../../store';
+    // #endregion external
 // #endregion imports
 
 
@@ -16,6 +18,7 @@ const selectors = {
     getInteractionTheme,
 };
 // #endregion module
+
 
 
 // #region exports

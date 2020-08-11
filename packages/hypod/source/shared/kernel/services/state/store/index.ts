@@ -1,19 +1,32 @@
-import environment from '../../utilities/environment';
+// #region imports
+    // #region external
+    import environment from '#kernel-services/utilities/environment';
+    // #endregion external
 
-import storeProduction, {
-    AppState as AppStateProduction,
-} from './store.production';
-import storeDevelopment, {
-    AppState as AppStateDeveloment,
-} from './store.development';
+    // #region internal
+    import storeProduction, {
+        AppState as AppStateProduction,
+    } from './production';
+    import storeDevelopment, {
+        AppState as AppStateDeveloment,
+    } from './development';
+    // #endregion internal
+// #endregion imports
 
 
 
-export type AppState = AppStateProduction | AppStateDeveloment;
+// #region module
+export type AppState =
+    | AppStateProduction
+    | AppStateDeveloment;
 
 const store = environment.production
     ? storeProduction
     : storeDevelopment;
+// #endregion module
 
 
+
+// #region exports
 export default store;
+// #endregion exports

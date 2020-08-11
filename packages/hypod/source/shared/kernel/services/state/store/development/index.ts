@@ -1,21 +1,34 @@
-import {
-    createStore,
-    applyMiddleware,
-} from 'redux';
-import thunk from 'redux-thunk';
+// #region imports
+    // #region libraries
+    import {
+        createStore,
+        applyMiddleware,
+    } from 'redux';
 
-import {
-    composeWithDevTools,
-} from 'redux-devtools-extension';
+    import thunk from 'redux-thunk';
 
-import rootReducer from './reducers';
+    import {
+        composeWithDevTools,
+    } from 'redux-devtools-extension';
+    // #endregion libraries
+
+
+    // #region external
+    import reducers from '../reducers';
+    // #endregion external
+// #endregion imports
 
 
 
-export type AppState = ReturnType<typeof rootReducer>;
+// #region module
+export type AppState = ReturnType<typeof reducers>;
 
-const store = (preloadedState: any) => {
-    const middleware = [ thunk ];
+const store = (
+    preloadedState: any,
+) => {
+    const middleware = [
+        thunk,
+    ];
 
     // const localState = localStorage.loadState();
 
@@ -24,7 +37,7 @@ const store = (preloadedState: any) => {
     // };
 
     const _store = createStore(
-        rootReducer,
+        reducers,
         preloadedState,
         // persistedState || preloadedState,
         composeWithDevTools(
@@ -44,6 +57,10 @@ const store = (preloadedState: any) => {
 
     return _store;
 }
+// #endregion module
 
 
+
+// #region exports
 export default store;
+// #endregion exports

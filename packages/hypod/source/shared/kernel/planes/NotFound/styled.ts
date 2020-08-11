@@ -1,7 +1,10 @@
+// #region imports
 import styled from 'styled-components';
+// #endregion imports
 
 
 
+// #region module
 export const StyledNotFound = styled.div`
     text-align: center;
     height: 100%;
@@ -15,3 +18,4 @@ export const StyledNotFound = styled.div`
         min-height: 60px;
     }
 `;
+// #endregion module

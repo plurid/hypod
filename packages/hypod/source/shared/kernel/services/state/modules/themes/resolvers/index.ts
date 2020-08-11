@@ -1,7 +1,10 @@
-import * as Types from './types';
+// #region imports
+import * as Types from '../types';
+// #endregion imports
 
 
 
+// #region module
 export const setGeneralTheme = (
     state: Types.State,
     action: Types.SetGeneralThemeAction,
@@ -28,8 +31,14 @@ export const setInteractionTheme = (
 }
 
 
-
-export const resolvers = {
+const resolvers = {
     setGeneralTheme,
     setInteractionTheme,
 };
+// #endregion module
+
+
+
+// #region exports
+export default resolvers;
+// #endregion exports

@@ -1,18 +1,18 @@
 // #region imports
-// #region libraries
-import React, {
-    useRef,
-} from 'react';
-// #endregion libraries
+    // #region libraries
+    import React, {
+        useRef,
+    } from 'react';
+    // #endregion libraries
 
 
-// #region internal
-import {
-    StyledNotFound,
-} from './styled';
+    // #region internal
+    import {
+        StyledNotFound,
+    } from './styled';
 
-import faces from './faces';
-// #endregion internal
+    import faces from './faces';
+    // #endregion internal
 // #endregion imports
 
 

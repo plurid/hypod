@@ -1,9 +1,14 @@
-import {
-    Imagene,
-} from '#server/data/interfaces';
+// #region imports
+    // #region external
+    import {
+        Imagene,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 export type RemovableEntityType =
     | 'imagene';
 
@@ -35,3 +40,4 @@ export interface State {
 export type Actions =
     | RemoveEntityAction
     | SetActiveProviderIDAction;
+// #endregion module

@@ -280,11 +280,6 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             rows={filteredRows}
             noRows="no imagenes"
 
-            actionButtonText="Add Imagene"
-            actionButtonClick={() => {
-                setGeneralView('add-imagene');
-            }}
-
             filterUpdate={filterUpdate}
         />
     );
