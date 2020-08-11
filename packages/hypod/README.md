@@ -20,7 +20,7 @@
 
 hypod is an imagene registry.
 
-An `imagene` is a renaming of the `container image` in order to escape from the visual nature of the word `image`.
+An `imagene registry` is a renaming of the `container registry` because, in fact, the registry is one of 'images', a runnable package, not of 'containers', a running package, and because a software 'image' is a bad name since there is nothing visual about it's nature.
 
 
 
