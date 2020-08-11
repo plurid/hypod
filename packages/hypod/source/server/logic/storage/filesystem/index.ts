@@ -10,6 +10,7 @@ import path from 'path';
 
 // #region external
 import {
+    QUIET,
     STORAGE_ROOT_PATH,
 
     BASE_PATH_DATA,
@@ -90,7 +91,9 @@ const storageDownload = async (
 
         return filedata;
     } catch (error) {
-        console.log(`[Hypod Error 500] :: Filesystem could not download ${filename}.`);
+        if (!QUIET) {
+            console.log(`[Hypod Error 500] :: Filesystem could not download ${filename}.`);
+        }
 
         return;
     }
@@ -126,7 +129,9 @@ const storageUpload = async (
 
         return true;
     } catch (error) {
-        console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);
+        if (!QUIET) {
+            console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);
+        }
 
         return;
     }
@@ -148,7 +153,9 @@ const storageObliterate = async (
 
         return true;
     } catch (error) {
-        console.log(`[Hypod Error 500] :: Filesystem could not obliterate ${filename}.`);
+        if (!QUIET) {
+            console.log(`[Hypod Error 500] :: Filesystem could not obliterate ${filename}.`);
+        }
 
         return;
     }
@@ -165,7 +172,9 @@ const storageGenerateLocations = async () => {
 
         return true;
     } catch (error) {
-        console.log('[Hypod Error 500] :: Filesystem could not generate locations.');
+        if (!QUIET) {
+            console.log('[Hypod Error 500] :: Filesystem could not generate locations.');
+        }
 
         return;
     }

@@ -7,6 +7,8 @@ import {
 
 
 // #region module
+export const QUIET = process.env.HYPOD_QUIET ?? true;
+
 export const STORAGE_TYPE = (process.env.HYPOD_STORAGE_TYPE as StorageType | undefined)
     || 'filesystem';
 
