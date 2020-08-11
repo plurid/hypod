@@ -17,15 +17,15 @@ export type StorageType =
     | StorageTypeAmazon
     | StorageTypeGoogle;
 
+export type StorageTypeFilesystem = 'filesystem';
+export type StorageTypeAmazon = 'amazon';
+export type StorageTypeGoogle = 'google';
+
 export interface StorageTypeData {
     filesystem: StorageTypeFilesystem;
     amazon: StorageTypeAmazon;
     google: StorageTypeGoogle;
 }
-
-export type StorageTypeFilesystem = 'filesystem';
-export type StorageTypeAmazon = 'amazon';
-export type StorageTypeGoogle = 'google';
 
 
 export type StorageUploadKind =
@@ -34,8 +34,20 @@ export type StorageUploadKind =
 
 
 export type DockerEntityMatchType =
-    | 'name'
-    | 'reference'
-    | 'digest'
-    | 'uuid';
+    | DockerEntityMatchName
+    | DockerEntityMatchReference
+    | DockerEntityMatchDigest
+    | DockerEntityMatchUuid;
+
+export type DockerEntityMatchName = 'name';
+export type DockerEntityMatchReference = 'reference';
+export type DockerEntityMatchDigest = 'digest';
+export type DockerEntityMatchUuid = 'uuid';
+
+export interface DockerEntityMatchTypeData {
+    name: DockerEntityMatchName;
+    reference: DockerEntityMatchReference;
+    digest: DockerEntityMatchDigest;
+    uuid: DockerEntityMatchUuid;
+}
 // #endregion module

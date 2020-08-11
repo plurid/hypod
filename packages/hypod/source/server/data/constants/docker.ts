@@ -1,3 +1,15 @@
+// #region imports
+import {
+    DockerEntityMatchName,
+    DockerEntityMatchReference,
+    DockerEntityMatchDigest,
+    DockerEntityMatchUuid,
+    DockerEntityMatchTypeData,
+} from '../interfaces';
+// #endregion imports
+
+
+
 // #region module
 /**
  * Docker Registry API https://docs.docker.com/registry/spec/api/#detail
@@ -32,4 +44,17 @@ export const DOCKER_RE_NAME_MANIFESTS_REFERENCE = /^\/v2\/(.*)\/manifests\/(.*)$
 export const DOCKER_RE_NAME_BLOBS_DIGEST = /^\/v2\/(.*)\/blobs\/(?!uploads)(.*)$/;
 export const DOCKER_RE_NAME_BLOBS_UPLOADS_UUID = /^\/v2\/(.*)\/blobs\/uploads\/(.*)$/;
 export const DOCKER_RE_NAME_BLOBS_UPLOADS = /^\/v2\/(.*)\/blobs\/uploads\/?$/;
+
+
+export const dockerEntityMatchName: DockerEntityMatchName = 'name';
+export const dockerEntityMatchReference: DockerEntityMatchReference = 'reference';
+export const dockerEntityMatchDigest: DockerEntityMatchDigest = 'digest';
+export const dockerEntityMatchUuid: DockerEntityMatchUuid = 'uuid';
+
+export const dockerEntityMatchType: DockerEntityMatchTypeData = {
+    name: dockerEntityMatchName,
+    reference: dockerEntityMatchReference,
+    digest: dockerEntityMatchDigest,
+    uuid: dockerEntityMatchUuid,
+};
 // #endregion module

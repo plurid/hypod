@@ -1,5 +1,9 @@
 // #region imports
 import {
+    dockerEntityMatchType,
+} from '#server/data/constants';
+
+import {
     DockerEntityMatchType,
 } from '#server/data/interfaces';
 // #endregion imports
@@ -12,13 +16,13 @@ export const getFromMatch = (
     type: DockerEntityMatchType,
 ) => {
     switch (type) {
-        case 'name':
+        case dockerEntityMatchType.name:
             return match[1];
-        case 'reference':
+        case dockerEntityMatchType.reference:
             return match[2];
-        case 'digest':
+        case dockerEntityMatchType.digest:
             return match[2];
-        case 'uuid':
+        case dockerEntityMatchType.uuid:
             return match[2];
         default:
             return;

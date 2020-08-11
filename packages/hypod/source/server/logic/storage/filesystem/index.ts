@@ -10,6 +10,9 @@ import path from 'path';
 
 // #region external
 import {
+    STORAGE_ROOT_PATH,
+
+    BASE_PATH_DATA,
     BASE_PATH_BLOBS,
     BASE_PATH_IMAGENES,
     BASE_PATH_METADATA,
@@ -27,8 +30,8 @@ import {
 
 // #region module
 const BASE_PATH = path.join(
-    process.cwd(),
-    '/data',
+    STORAGE_ROOT_PATH,
+    BASE_PATH_DATA,
 );
 
 const blobsPath = path.join(
@@ -72,7 +75,7 @@ const storageDownload = async (
 ) => {
     try {
         const filepath = path.join(
-            imagenesPath,
+            BASE_PATH,
             filename,
         );
 
@@ -101,7 +104,7 @@ const storageUpload = async (
 ) => {
     try {
         const filepath = path.join(
-            imagenesPath,
+            BASE_PATH,
             filename,
         );
 
@@ -135,7 +138,7 @@ const storageObliterate = async (
 ) => {
     try {
         const filepath = path.join(
-            imagenesPath,
+            BASE_PATH,
             filename,
         );
 

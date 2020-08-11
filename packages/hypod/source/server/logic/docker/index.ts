@@ -11,6 +11,7 @@ import {
 // #region external
 import {
     BASE_PATH_BLOBS,
+    dockerEntityMatchType,
 } from '#server/data/constants';
 
 import storage from '#server/services/storage';
@@ -61,12 +62,18 @@ export const getNameManifestsReference = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
     }
-    const reference = getFromMatch(match, 'reference');
+    const reference = getFromMatch(
+        match,
+        dockerEntityMatchType.reference,
+    );
     if (!reference) {
         response.status(400).end();
         return;
@@ -76,7 +83,7 @@ export const getNameManifestsReference = async (
     // console.log(request.originalUrl);
     // console.log('------');
 
-    const location = 'manifest/' + name + '/' + reference;
+    const location = '/imagenes/manifest/' + name + '/' + reference;
 
     const file = await storage.download(
         location,
@@ -102,12 +109,18 @@ export const getNameBlobsDigest = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
     }
-    const digest = getFromMatch(match, 'digest');
+    const digest = getFromMatch(
+        match,
+        dockerEntityMatchType.digest,
+    );
     if (!digest) {
         response.status(400).end();
         return;
@@ -141,12 +154,18 @@ export const getNameBlobsUploadsUuid = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
     }
-    const uuid = getFromMatch(match, 'uuid');
+    const uuid = getFromMatch(
+        match,
+        dockerEntityMatchType.uuid,
+    );
     if (!uuid) {
         response.status(400).end();
         return;
@@ -202,7 +221,10 @@ export const postNameBlobsUploads = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
@@ -249,12 +271,18 @@ export const patchNameBlobsUploadsUuid = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
     }
-    const uuid = getFromMatch(match, 'uuid');
+    const uuid = getFromMatch(
+        match,
+        dockerEntityMatchType.uuid,
+    );
     if (!uuid) {
         response.status(400).end();
         return;
@@ -312,19 +340,25 @@ export const putNameManifestsReference = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
     }
-    const reference = getFromMatch(match, 'reference');
+    const reference = getFromMatch(
+        match,
+        dockerEntityMatchType.reference,
+    );
     if (!reference) {
         response.status(400).end();
         return;
     }
 
     const data = (request as any).rawBody;
-    const location = 'manifest/' + name + '/' + reference;
+    const location = '/imagenes/manifest/' + name + '/' + reference;
 
     const parsedData = JSON.parse(data);
     const digest = parsedData?.config?.digest || '';
@@ -364,12 +398,18 @@ export const putNameBlobsUploadsUuid = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
     }
-    const uuid = getFromMatch(match, 'uuid');
+    const uuid = getFromMatch(
+        match,
+        dockerEntityMatchType.uuid,
+    );
     if (!uuid) {
         response.status(400).end();
         return;
@@ -433,12 +473,18 @@ export const deleteNameManifestsReference = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
     }
-    const reference = getFromMatch(match, 'reference');
+    const reference = getFromMatch(
+        match,
+        dockerEntityMatchType.reference,
+    );
     if (!reference) {
         response.status(400).end();
         return;
@@ -449,7 +495,7 @@ export const deleteNameManifestsReference = async (
     // console.log('------------');
 
     await storage.obliterate(
-        'manifest/' + reference,
+        '/imagenes/manifest/' + reference,
     );
 
     response.status(202).end();
@@ -461,23 +507,27 @@ export const deleteNameBlobsUploadsUuid = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
     }
-    const uuid = getFromMatch(match, 'uuid');
+    const uuid = getFromMatch(
+        match,
+        dockerEntityMatchType.uuid,
+    );
     if (!uuid) {
         response.status(400).end();
         return;
     }
 
-    // console.log('deleteNameBlobsUploadsUuid', name, uuid);
-    // console.log(request.originalUrl);
-    // console.log('------------');
+    const blobPath = BASE_PATH_BLOBS + uuid;
 
     await storage.obliterate(
-        uuid,
+        blobPath,
     );
 
     response.status(202).end();
@@ -489,20 +539,22 @@ export const deleteNameBlobsDigest = async (
     response: express.Response,
     match: RegExpMatchArray,
 ) => {
-    const name = getFromMatch(match, 'name');
+    const name = getFromMatch(
+        match,
+        dockerEntityMatchType.name,
+    );
     if (!name) {
         response.status(400).end();
         return;
     }
-    const digest = getFromMatch(match, 'digest');
+    const digest = getFromMatch(
+        match,
+        dockerEntityMatchType.digest,
+    );
     if (!digest) {
         response.status(400).end();
         return;
     }
-
-    // console.log('deleteNameBlobsDigest', name, uuid);
-    // console.log(request.originalUrl);
-    // console.log('------------');
 
     await storage.obliterate(
         digest.replace(':', '/'),
