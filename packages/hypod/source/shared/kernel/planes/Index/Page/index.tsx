@@ -16,6 +16,8 @@ import {
     StyledPage,
 } from './styled';
 
+import InitialView from './components/InitialView';
+
 
 
 export interface PageOwnProperties {
@@ -46,14 +48,21 @@ const Page: React.FC<PageProperties> = (
     const [
         view,
         setView,
-    ] = useState('');
+    ] = useState('initial');
 
 
     /** render */
     let renderView = (<></>);
 
-    // switch (view) {
-    // }
+    switch (view) {
+        case 'initial':
+            renderView = (
+                <InitialView
+                    setView={setView}
+                />
+            );
+            break;
+    }
 
     return (
         <StyledPage>

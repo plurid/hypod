@@ -21,12 +21,15 @@ const indexRoute: PluridRoute = {
     },
     planes: [
         {
-            value: '/',
+            value: '/plane',
             component: {
                 kind: 'react',
                 element: IndexPagePlane,
             },
         },
+    ],
+    view: [
+        '/plane',
     ],
     defaultConfiguration: {
         elements: {
