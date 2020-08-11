@@ -1,13 +1,19 @@
+// #region imports
+// #region libraries
+import {
+    StorageType,
+} from '#server/data/interfaces';
+// #endregion libraries
+
+
+// #region imports
 import filesystemStorage from './filesystem';
+// #endregion imports
+// #endregion imports
 
 
 
-export type StorageType =
-    | 'filesystem'
-    | 'amazon'
-    | 'google';
-
-
+// #region module
 class Storage {
     private type: StorageType;
 
@@ -65,7 +71,19 @@ class Storage {
                 break;
         }
     }
+
+    public async generateLocations() {
+        switch (this.type) {
+            case 'filesystem':
+                return filesystemStorage.generateLocations();
+            case 'amazon':
+                break;
+            case 'google':
+                break;
+        }
+    }
 }
 
 
 export default Storage;
+// #endregion module

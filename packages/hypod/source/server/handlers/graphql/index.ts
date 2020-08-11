@@ -1,3 +1,5 @@
+// #region imports
+// #region libraries
 import {
     Express,
 } from 'express';
@@ -5,7 +7,10 @@ import {
 import {
     ApolloServer,
 } from 'apollo-server-express';
+// #endregion libraries
 
+
+// #region external
 import {
     resolvers,
     schemas,
@@ -14,10 +19,13 @@ import {
 import {
     Context,
 } from '#server/data/interfaces';
+// #endregion external
+// #endregion imports
 
 
 
-const setupGraphQLServer = async (
+// #region module
+const graphqlHandler = async (
     instance: Express,
 ) => {
     const playground = {
@@ -50,4 +58,5 @@ const setupGraphQLServer = async (
 }
 
 
-export default setupGraphQLServer;
+export default graphqlHandler;
+// #endregion module

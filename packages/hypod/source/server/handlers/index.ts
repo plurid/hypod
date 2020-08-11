@@ -1,17 +1,21 @@
+// #region imports
 import PluridServer from '@plurid/plurid-react-server';
 
-import setupGraphQLServer from './graphql';
+import graphqlHandler from './graphql';
 
-import dockerHandlers from './docker';
+import dockerHandler from './docker';
+// #endregion imports
 
 
 
-export const setRouteHandlers = (
+// #region module
+export const setupHandlers = (
     server: PluridServer,
 ) => {
     const instance = server.instance();
 
-    setupGraphQLServer(instance);
+    graphqlHandler(instance);
 
-    dockerHandlers(instance);
+    dockerHandler(instance);
 }
+// #endregion module

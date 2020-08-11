@@ -1,28 +1,32 @@
+// #region imports
+// #region libraries
 import express from 'express';
 
 import {
     uuid,
 } from '@plurid/plurid-functions';
+// #endregion libraries
 
+
+// #region external
+import storage from '#server/services/storage';
+
+import {
+    getBufferData,
+} from '#server/utilities/buffer';
+// #endregion external
+
+
+// #region internal
 import {
     getFromMatch,
 } from './utilities';
-
-import Storage from '#server/logic/storage';
-
-
-
-const storage = new Storage('filesystem');
-
-const getBufferData = (
-    request: express.Request,
-) => {
-    const bufferData = Buffer.from((request as any).rawBody.toString('binary'), 'binary');
-    return bufferData;
-}
+// #endregion internal
+// #endregion imports
 
 
 
+// #region module
 /** GET */
 export const getNameTagsList = async (
     request: express.Request,
@@ -540,3 +544,4 @@ export const deleteNameBlobsDigest = async (
 
     response.status(202).end();
 }
+// #endregion module

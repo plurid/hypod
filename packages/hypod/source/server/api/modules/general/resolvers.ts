@@ -1,9 +1,13 @@
+// #region imports
 import merge from 'lodash.merge';
+// #endregion imports
 
 
 
-
-const generateResolvers = (...imports: any[]) => {
+// #region module
+const generateResolvers = <T>(
+    ...imports: T[]
+) => {
     const resolvers = {};
 
     merge(
@@ -14,9 +18,10 @@ const generateResolvers = (...imports: any[]) => {
     return resolvers;
 }
 
-const resolvers = generateResolvers(
 
+const resolvers = generateResolvers(
 );
 
 
 export default resolvers;
+// #endregion module

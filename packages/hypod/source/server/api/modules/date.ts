@@ -1,3 +1,4 @@
+// #region imports
 import {
     GraphQLScalarType,
 } from 'graphql';
@@ -5,10 +6,14 @@ import {
 import {
     Kind,
 } from 'graphql/language';
+// #endregion imports
 
 
 
-// https://stackoverflow.com/a/49694083
+// #region module
+/**
+ * https://stackoverflow.com/a/49694083
+ */
 const resolverMap = {
     Date: new GraphQLScalarType({
         name: 'Date',
@@ -30,3 +35,4 @@ const resolverMap = {
 
 
 export default resolverMap;
+// #endregion module

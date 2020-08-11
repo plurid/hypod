@@ -1,9 +1,13 @@
-import fs from 'fs';
+// #region imports
+import storage from '#server/services/storage';
+// #endregion imports
 
 
 
-const setup = () => {
+// #region module
+const setup = async () => {
     try {
+        await storage.generateLocations();
     } catch (error) {
         return;
     }
@@ -11,3 +15,4 @@ const setup = () => {
 
 
 export default setup;
+// #endregion module

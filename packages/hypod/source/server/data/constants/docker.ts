@@ -1,3 +1,4 @@
+// #region module
 /**
  * Docker Registry API https://docs.docker.com/registry/spec/api/#detail
  *
@@ -31,3 +32,4 @@ export const DOCKER_RE_NAME_MANIFESTS_REFERENCE = /^\/v2\/(.*)\/manifests\/(.*)$
 export const DOCKER_RE_NAME_BLOBS_DIGEST = /^\/v2\/(.*)\/blobs\/(?!uploads)(.*)$/;
 export const DOCKER_RE_NAME_BLOBS_UPLOADS_UUID = /^\/v2\/(.*)\/blobs\/uploads\/(.*)$/;
 export const DOCKER_RE_NAME_BLOBS_UPLOADS = /^\/v2\/(.*)\/blobs\/uploads\/?$/;
+// #endregion module

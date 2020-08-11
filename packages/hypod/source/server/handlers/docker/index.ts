@@ -1,5 +1,10 @@
+// #region imports
+// #region libraries
 import express from 'express';
+// #endregion libraries
 
+
+// #region external
 import {
     DOCKER_ENDPOINT_API_VERSION_CHECK,
     DOCKER_ENDPOINT_API_CATALOG,
@@ -12,10 +17,19 @@ import {
     DOCKER_RE_NAME_BLOBS_UPLOADS_UUID,
 } from '#server/data/constants';
 
-import * as dockerLogic from '#server/logic/docker';
+import * as docker from '#server/logic/docker';
+// #endregion external
+// #endregion imports
 
 
 
+// #region module
+/**
+ * https://docs.docker.com/registry/spec/api/#api-version-check
+ *
+ * @param request
+ * @param response
+ */
 const endpointApiVersionCheck = (
     request: express.Request,
     response: express.Response,
@@ -24,6 +38,12 @@ const endpointApiVersionCheck = (
 }
 
 
+/**
+ * https://docs.docker.com/registry/spec/api/#listing-repositories
+ *
+ * @param request
+ * @param response
+ */
 const endpointApiGetCatalog = (
     request: express.Request,
     response: express.Response,
@@ -47,7 +67,7 @@ const endpointApiGetAll = (
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
     if (matchNameTagsList) {
-        dockerLogic.getNameTagsList(
+        docker.getNameTagsList(
             request,
             response,
             matchNameTagsList,
@@ -56,7 +76,7 @@ const endpointApiGetAll = (
     }
 
     if (matchNameManifestsReference) {
-        dockerLogic.getNameManifestsReference(
+        docker.getNameManifestsReference(
             request,
             response,
             matchNameManifestsReference,
@@ -65,7 +85,7 @@ const endpointApiGetAll = (
     }
 
     if (matchNameBlobsDigest) {
-        dockerLogic.getNameBlobsDigest(
+        docker.getNameBlobsDigest(
             request,
             response,
             matchNameBlobsDigest,
@@ -74,7 +94,7 @@ const endpointApiGetAll = (
     }
 
     if (matchNameBlobsUploadsUuid) {
-        dockerLogic.getNameBlobsUploadsUuid(
+        docker.getNameBlobsUploadsUuid(
             request,
             response,
             matchNameBlobsUploadsUuid,
@@ -98,7 +118,7 @@ const endpointApiPostAll = (
     const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
 
     if (matchNameBlobsUploads) {
-        dockerLogic.postNameBlobsUploads(
+        docker.postNameBlobsUploads(
             request,
             response,
             matchNameBlobsUploads,
@@ -123,7 +143,7 @@ const endpointApiPutAll = (
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
     if (matchNameManifestsReference) {
-        dockerLogic.putNameManifestsReference(
+        docker.putNameManifestsReference(
             request,
             response,
             matchNameManifestsReference,
@@ -132,7 +152,7 @@ const endpointApiPutAll = (
     }
 
     if (matchNameBlobsUploadsUuid) {
-        dockerLogic.putNameBlobsUploadsUuid(
+        docker.putNameBlobsUploadsUuid(
             request,
             response,
             matchNameBlobsUploadsUuid,
@@ -158,7 +178,7 @@ const endpointApiPatchAll = (
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
     if (matchNameBlobsUploadsUuid) {
-        dockerLogic.patchNameBlobsUploadsUuid(
+        docker.patchNameBlobsUploadsUuid(
             request,
             response,
             matchNameBlobsUploadsUuid,
@@ -184,7 +204,7 @@ const endpointApiDeleteAll = (
     const matchNameBlobsDigest = url.match(DOCKER_RE_NAME_BLOBS_DIGEST);
 
     if (matchNameManifestsReference) {
-        dockerLogic.deleteNameManifestsReference(
+        docker.deleteNameManifestsReference(
             request,
             response,
             matchNameManifestsReference,
@@ -193,7 +213,7 @@ const endpointApiDeleteAll = (
     }
 
     if (matchNameBlobsUploadsUuid) {
-        dockerLogic.deleteNameBlobsUploadsUuid(
+        docker.deleteNameBlobsUploadsUuid(
             request,
             response,
             matchNameBlobsUploadsUuid,
@@ -202,7 +222,7 @@ const endpointApiDeleteAll = (
     }
 
     if (matchNameBlobsDigest) {
-        dockerLogic.deleteNameBlobsDigest(
+        docker.deleteNameBlobsDigest(
             request,
             response,
             matchNameBlobsDigest,
@@ -214,7 +234,7 @@ const endpointApiDeleteAll = (
 }
 
 
-const dockerHandlers = (
+const dockerHandler = (
     instance: express.Application,
 ) => {
     instance.get(
@@ -259,4 +279,5 @@ const dockerHandlers = (
 }
 
 
-export default dockerHandlers;
+export default dockerHandler;
+// #endregion module

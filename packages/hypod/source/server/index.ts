@@ -1,5 +1,6 @@
+// #region imports
+// #region libraries
 import bodyParser from 'body-parser';
-import compression from 'compression';
 
 import PluridServer, {
     PluridServerMiddleware,
@@ -8,7 +9,10 @@ import PluridServer, {
     PluridServerPartialOptions,
     PluridServerTemplateConfiguration,
 } from '@plurid/plurid-react-server';
+// #endregion libraries
 
+
+// #region external
 import helmet from '#kernel-services/helmet';
 
 import reduxStore from '#kernel-services/state/store';
@@ -18,28 +22,32 @@ import {
     routes,
     shell,
 } from '../shared';
+// #endregion external
 
-import preserves from './preserves';
 
-import {
-    setRouteHandlers,
-} from './handlers';
-
-import setup from './setup';
-
+// #region internal
 import {
     DOCKER_ENDPOINT_IGNORE,
 } from './data/constants';
 
+import preserves from './preserves';
+import setup from './setup';
+import {
+    setupHandlers,
+} from './handlers';
+// #endregion internal
+// #endregion imports
 
 
+
+// #region module
 /** ENVIRONMENT */
 setup();
 
 const watchMode = process.env.PLURID_WATCH_MODE === 'true';
 const isProduction = process.env.ENV_MODE === 'production';
 const buildDirectory = process.env.PLURID_BUILD_DIRECTORY || 'build';
-const port = process.env.PORT || 56065;
+const port = process.env.PORT || 56565;
 
 
 
@@ -114,7 +122,6 @@ const pluridServer = new PluridServer({
 
 
 pluridServer.instance().use(
-    // compression(),
     (request, response, next) => {
         let data = '';
         request.setEncoding('binary');
@@ -128,16 +135,10 @@ pluridServer.instance().use(
         });
     },
     bodyParser.json(),
-    // bodyParser.raw({
-    //     inflate: true,
-    //     limit: '1000mb',
-    //     type: '*/*',
-    // }),
 );
 
 
-// handle non-GET or custom routes (such as API requests, or anything else)
-setRouteHandlers(pluridServer);
+setupHandlers(pluridServer);
 
 
 
@@ -154,3 +155,4 @@ if (require.main === module) {
 
 
 export default pluridServer;
+// #endregion module

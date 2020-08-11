@@ -1,11 +1,14 @@
+// #region imports
 import {
     gql,
 } from 'apollo-server-express';
 
 import General from './general/schemas';
+// #endregion imports
 
 
 
+// #region module
 const baseSchema = gql`
     # default
     type Query {
@@ -44,3 +47,4 @@ const schemas = [
 
 
 export default schemas;
+// #endregion module

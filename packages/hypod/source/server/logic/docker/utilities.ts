@@ -1,6 +1,15 @@
+// #region imports
+import {
+    DockerEntityMatchType,
+} from '#server/data/interfaces';
+// #endregion imports
+
+
+
+// #region module
 export const getFromMatch = (
     match: RegExpMatchArray,
-    type: 'name' | 'reference' | 'digest' | 'uuid',
+    type: DockerEntityMatchType,
 ) => {
     switch (type) {
         case 'name':
@@ -15,3 +24,4 @@ export const getFromMatch = (
             return;
     }
 }
+// #endregion module
