@@ -7,13 +7,13 @@ import {
 
 
 // #region module
-const getGeneralTheme = (state: AppState) => state.themes.general;
-const getInteractionTheme = (state: AppState) => state.themes.interaction;
+const getActiveProviderID = (state: AppState) => state.data.activeProviderID;
+const getImagenes = (state: AppState) => state.data.imagenes;
 
 
 const selectors = {
-    getGeneralTheme,
-    getInteractionTheme,
+    getActiveProviderID,
+    getImagenes,
 };
 // #endregion module
 

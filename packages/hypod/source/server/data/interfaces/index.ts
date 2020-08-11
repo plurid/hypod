@@ -50,4 +50,12 @@ export interface DockerEntityMatchTypeData {
     digest: DockerEntityMatchDigest;
     uuid: DockerEntityMatchUuid;
 }
+
+
+export interface Imagene {
+    id: string;
+    name: string;
+    version: string;
+    size: string;
+}
 // #endregion module

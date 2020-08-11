@@ -1,33 +1,68 @@
-import React from 'react';
+// #region imports
+    // #region libraries
+    import React from 'react';
 
-import {
-    Helmet,
-} from 'react-helmet-async';
+    import {
+        Helmet,
+    } from 'react-helmet-async';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export interface HeadProperties {
-    title?: string;
-    description?: string;
-    ogTitle?: string;
-    ogImage?: string;
-    ogURL?: string;
-    ogDescription?: string;
-    canonicalURL?: string;
+    // #region required
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        title?: string;
+        description?: string;
+        ogTitle?: string;
+        ogImage?: string;
+        ogURL?: string;
+        ogDescription?: string;
+        canonicalURL?: string;
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 const Head: React.FC<HeadProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        title,
-        description,
-        ogTitle,
-        ogImage,
-        ogURL,
-        ogDescription,
-        canonicalURL,
+        // #region required
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            title,
+            description,
+            ogTitle,
+            ogImage,
+            ogURL,
+            ogDescription,
+            canonicalURL,
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
     } = properties;
 
     const titleValue = title || `hypod`;
@@ -36,9 +71,10 @@ const Head: React.FC<HeadProperties> = (
     const ogDescriptionValue = ogDescription || description || 'imagene registry';
     const ogImageValue = ogImage || '/icon-192x192.png';
     const ogURLValue = ogURL || '/';
+    // #endregion properties
 
 
-    /** render */
+    // #region render
     return (
         <Helmet>
             <meta charSet="utf-8" />
@@ -84,7 +120,9 @@ const Head: React.FC<HeadProperties> = (
             <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         </Helmet>
     );
+    // #endregion render
 }
 
 
 export default Head;
+// #endregion module

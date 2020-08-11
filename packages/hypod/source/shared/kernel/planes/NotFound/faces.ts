@@ -1,3 +1,4 @@
+// #region module
 const faces = [
     '¯\\_(ツ)_/¯',
     '(ノಠ益ಠ)ノ彡┻━┻',
@@ -20,3 +21,4 @@ const faces = [
 
 
 export default faces;
+// #endregion module

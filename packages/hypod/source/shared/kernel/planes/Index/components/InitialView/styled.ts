@@ -1,7 +1,10 @@
+// #region imports
 import styled from 'styled-components';
+// #endregion imports
 
 
 
+// #region module
 export interface IStyledInitialView {
 }
 
@@ -21,3 +24,4 @@ export const StyledInitialView = styled.div<IStyledInitialView>`
         margin: 1.5rem;
     }
 `;
+// #endregion module
