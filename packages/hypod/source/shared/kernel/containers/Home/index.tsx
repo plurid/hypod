@@ -51,6 +51,7 @@ export interface HomeStateProperties {
 }
 
 export interface HomeDispatchProperties {
+    dispatchSetImagenes: typeof actions.data.setImagenes;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -68,6 +69,7 @@ const Home: React.FC<HomeProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatchSetImagenes,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -87,11 +89,11 @@ const Home: React.FC<HomeProperties> = (
                     return;
                 }
 
-                const data = graphql.deleteTypenames(
-                    response.data
+                const imagenes = graphql.deleteTypenames(
+                    response.data,
                 );
 
-                console.log(data);
+                dispatchSetImagenes(imagenes);
             } catch (error) {
                 return;
             }
@@ -123,6 +125,11 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): HomeDispatchProperties => ({
+    dispatchSetImagenes: (
+        imagenes,
+    ) => dispatch(
+        actions.data.setImagenes(imagenes),
+    ),
 });
 // #endregion module
 

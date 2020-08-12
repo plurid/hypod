@@ -30,6 +30,13 @@ export interface SetActiveProviderIDAction {
 }
 
 
+export const SET_IMAGENES = 'SET_IMAGENES';
+export interface SetImagenesAction {
+    type: typeof SET_IMAGENES;
+    payload: Imagene[];
+}
+
+
 
 export interface State {
     activeProviderID: string;
@@ -39,5 +46,6 @@ export interface State {
 
 export type Actions =
     | RemoveEntityAction
-    | SetActiveProviderIDAction;
+    | SetActiveProviderIDAction
+    | SetImagenesAction;
 // #endregion module

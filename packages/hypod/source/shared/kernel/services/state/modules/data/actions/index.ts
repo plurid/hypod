@@ -31,9 +31,21 @@ export const setActiveProviderID = (
 }
 
 
+export const setImagenes = (
+    imagenes: Imagene[],
+): Types.SetImagenesAction => {
+    return {
+        type: Types.SET_IMAGENES,
+        payload: imagenes,
+    };
+}
+
+
+
 const actions = {
     removeEntity,
     setActiveProviderID,
+    setImagenes,
 };
 // #endregion module
 
