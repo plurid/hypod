@@ -1,34 +1,42 @@
 // #region imports
-// #region libraries
-import express from 'express';
+    // #region libraries
+    import express from 'express';
 
-import {
-    uuid,
-} from '@plurid/plurid-functions';
-// #endregion libraries
-
-
-// #region external
-import {
-    BASE_PATH_BLOBS,
-    BASE_PATH_IMAGENES_MANIFEST,
-    BASE_PATH_IMAGENES,
-    dockerEntityMatchType,
-} from '#server/data/constants';
-
-import storage from '#server/services/storage';
-
-import {
-    getBufferData,
-} from '#server/utilities/buffer';
-// #endregion external
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
 
 
-// #region internal
-import {
-    getFromMatch,
-} from './utilities';
-// #endregion internal
+    // #region external
+    import {
+        BASE_PATH_BLOBS,
+        BASE_PATH_IMAGENES_MANIFEST,
+        BASE_PATH_IMAGENES,
+        dockerEntityMatchType,
+    } from '#server/data/constants';
+
+    import {
+        Imagene,
+    } from '#server/data/interfaces';
+
+    import storage from '#server/services/storage';
+
+    import {
+        getBufferData,
+    } from '#server/utilities/buffer';
+
+    import {
+        registerImagene,
+    } from '../imagene';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        getFromMatch,
+    } from './utilities';
+    // #endregion internal
 // #endregion imports
 
 
@@ -373,13 +381,13 @@ export const putNameManifestsReference = async (
     const parsedData = JSON.parse(data);
     const digest = parsedData?.config?.digest || '';
 
-    // console.log('putNameManifestsReference', name, reference);
-    // console.log(request.originalUrl);
-    // console.log('request.query', request.query);
-    // const digest = request.query.digest as string || '';
-
-    // console.log('data', data);
-    // console.log('------');
+    const imagene: Imagene = {
+        id: uuid.generate(),
+        name,
+        size: '',
+        version: reference,
+    };
+    registerImagene(imagene);
 
     await storage.upload(
         location,
