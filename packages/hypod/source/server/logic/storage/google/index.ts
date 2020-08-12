@@ -5,6 +5,8 @@ import {
 } from 'fs';
 
 import path from 'path';
+
+import cloudStorage from '@google-cloud/storage';
 // #endregion libraries
 
 
@@ -225,7 +227,7 @@ const storageGenerateLocations = async () => {
 
 
 
-const filesystemStorage = {
+const googleStorage = {
     download: storageDownload,
     downloadAll: storageDownloadAll,
     upload: storageUpload,
@@ -237,5 +239,5 @@ const filesystemStorage = {
 
 
 // #region exports
-export default filesystemStorage;
+export default googleStorage;
 // #endregion exports

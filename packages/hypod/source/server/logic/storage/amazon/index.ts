@@ -1,36 +1,51 @@
 // #region imports
-// #region libraries
-import {
-    promises as fs,
-} from 'fs';
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
 
-import path from 'path';
-// #endregion libraries
+    import path from 'path';
+
+    import AWS from 'aws-sdk';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        QUIET,
+        STORAGE_ROOT_PATH,
 
-// #region external
-import {
-    QUIET,
-    STORAGE_ROOT_PATH,
+        BASE_PATH_DATA,
+        BASE_PATH_BLOBS,
+        BASE_PATH_IMAGENES,
+        BASE_PATH_METADATA,
+        BASE_PATH_IMAGENES_MANIFEST,
+        BASE_PATH_IMAGENES_SHA256,
+    } from '#server/data/constants';
 
-    BASE_PATH_DATA,
-    BASE_PATH_BLOBS,
-    BASE_PATH_IMAGENES,
-    BASE_PATH_METADATA,
-    BASE_PATH_IMAGENES_MANIFEST,
-    BASE_PATH_IMAGENES_SHA256,
-} from '#server/data/constants';
-
-import {
-    StorageUploadKind,
-} from '#server/data/interfaces';
-// #endregion external
+    import {
+        StorageUploadKind,
+    } from '#server/data/interfaces';
+    // #endregion external
 // #endregion imports
 
 
 
 // #region module
+const apiVersion = process.env.HYPOD_AWS_API_VERSION || '';
+const region = process.env.HYPOD_AWS_REGION || '';
+const accessKeyId = process.env.HYPOD_AWS_ACCESS_KEY_ID || '';
+const secretAccessKey = process.env.HYPOD_AWS_SECRET_ACCESS_KEY || '';
+const bucketName = process.env.HYPOD_STORAGE_BUCKET || '';
+
+const s3 = new AWS.S3({
+    apiVersion,
+    region,
+    accessKeyId,
+    secretAccessKey,
+});
+
+
 const BASE_PATH = path.join(
     STORAGE_ROOT_PATH,
     BASE_PATH_DATA,
@@ -101,19 +116,21 @@ const storageDownload = async (
             filename,
         );
 
-        await fs.stat(
-            filepath,
-        );
+        const fileParameters = {
+            Bucket: bucketName,
+            Key: filepath,
+        };
 
-        const filedata = await fs.readFile(
-            filepath,
-            'binary',
-        );
+        const readStream = s3
+            .getObject(fileParameters)
+            .createReadStream();
+
+        const filedata = '';
 
         return filedata;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Error 500] :: Filesystem could not download ${filename}.`);
+            console.log(`[Hypod Error 500] :: Amazon could not download ${filename}.`);
         }
 
         return;
@@ -155,8 +172,13 @@ const storageUpload = async (
         );
 
         const directoryPath = path.dirname(filepath);
-
         await makeDirectory(directoryPath);
+
+        const fileParameters = {
+            Bucket: bucketName,
+            Key: filepath,
+        };
+
 
         if (kind === 'append') {
             return fs.appendFile(
@@ -173,7 +195,7 @@ const storageUpload = async (
         return true;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);
+            console.log(`[Hypod Error 500] :: Amazon could not upload ${filename}.`);
         }
 
         return;
@@ -190,6 +212,11 @@ const storageObliterate = async (
             filename,
         );
 
+        const fileParameters = {
+            Bucket: bucketName,
+            Key: filepath,
+        };
+
         await fs.unlink(
             filepath,
         );
@@ -197,7 +224,7 @@ const storageObliterate = async (
         return true;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Error 500] :: Filesystem could not obliterate ${filename}.`);
+            console.log(`[Hypod Error 500] :: Amazon could not obliterate ${filename}.`);
         }
 
         return;
@@ -216,7 +243,7 @@ const storageGenerateLocations = async () => {
         return true;
     } catch (error) {
         if (!QUIET) {
-            console.log('[Hypod Error 500] :: Filesystem could not generate locations.');
+            console.log('[Hypod Error 500] :: Amazon could not generate locations.');
         }
 
         return;
@@ -225,7 +252,7 @@ const storageGenerateLocations = async () => {
 
 
 
-const filesystemStorage = {
+const amazonStorage = {
     download: storageDownload,
     downloadAll: storageDownloadAll,
     upload: storageUpload,
@@ -237,5 +264,5 @@ const filesystemStorage = {
 
 
 // #region exports
-export default filesystemStorage;
+export default amazonStorage;
 // #endregion exports
