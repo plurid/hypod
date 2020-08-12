@@ -20,7 +20,11 @@ WORKDIR /app
 ENV ENV_MODE production
 ENV NODE_ENV production
 
-ENV PORT=56065
+ENV PORT=56565
+
+ENV HYPOD_QUIET=true
+ENV HYPOD_STORAGE_TYPE=filesystem
+ENV HYPOD_STORAGE_ROOT_PATH=./
 
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/build ./build
