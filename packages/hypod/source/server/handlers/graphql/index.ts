@@ -30,7 +30,7 @@
 // #region module
 const graphqlHandler = async (
     instance: Express,
-    hypodLogic?: HypodLogic,
+    logic?: HypodLogic,
 ) => {
     const playground = {
         faviconUrl: '/favicon.ico',
@@ -56,6 +56,7 @@ const graphqlHandler = async (
                 response: res,
                 instance,
                 imagenes,
+                logic,
             };
 
             return context;

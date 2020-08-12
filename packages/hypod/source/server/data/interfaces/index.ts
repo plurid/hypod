@@ -12,6 +12,7 @@ export interface Context {
     response: express.Response;
     instance: express.Application;
     imagenes: Imagene[];
+    logic: HypodLogic | undefined;
 }
 
 
