@@ -22,6 +22,23 @@ const GET_IMAGENES = gql`
         }
     }
 `;
+
+
+const GET_CURRENT_OWNER = gql`
+    query GetCurrentOwner {
+        getCurrentOwner {
+            status
+            error {
+                path
+                type
+                message
+            }
+            data {
+                id
+            }
+        }
+    }
+`;
 // #endregion module
 
 
@@ -29,5 +46,6 @@ const GET_IMAGENES = gql`
 // #region exports
 export {
     GET_IMAGENES,
+    GET_CURRENT_OWNER,
 };
 // #endregion exports
