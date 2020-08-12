@@ -2,6 +2,7 @@ const {
     input,
     output,
     plugins,
+    externalPackages,
 } = require('./server.base');
 
 
