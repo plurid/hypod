@@ -1,11 +1,11 @@
 // #region imports
-import Imagenes from './imagenes';
+import getImagenes from './getImagenes';
 // #endregion imports
 
 
 
 // #region exports
-export {
-    Imagenes,
+export default {
+    getImagenes,
 };
 // #endregion exports

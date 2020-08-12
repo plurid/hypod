@@ -70,6 +70,26 @@ const makeDirectory = async (
 }
 
 
+const loadDataFromFiles = async <T>(
+    filespath: string,
+): Promise<T[]> => {
+    try {
+        const files = await fs.readdir(filespath);
+        const items: T[] = [];
+
+        for (const file of files) {
+            const filepath = path.join(filespath, file);
+            const data = await fs.readFile(filepath, 'utf-8');
+            const item = JSON.parse(data);
+            items.push(item);
+        }
+
+        return items;
+    } catch (error) {
+        return [];
+    }
+}
+
 
 const storageDownload = async (
     filename: string,
@@ -93,6 +113,28 @@ const storageDownload = async (
     } catch (error) {
         if (!QUIET) {
             console.log(`[Hypod Error 500] :: Filesystem could not download ${filename}.`);
+        }
+
+        return;
+    }
+}
+
+
+const storageDownloadAll = async (
+    directory: string,
+) => {
+    try {
+        const filespath = path.join(
+            BASE_PATH,
+            directory,
+        );
+
+        const items: any[] = await loadDataFromFiles(filespath);
+
+        return items;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Hypod Error 500] :: Filesystem could not download ${directory}.`);
         }
 
         return;
@@ -184,6 +226,7 @@ const storageGenerateLocations = async () => {
 
 const filesystemStorage = {
     download: storageDownload,
+    downloadAll: storageDownloadAll,
     upload: storageUpload,
     obliterate: storageObliterate,
     generateLocations: storageGenerateLocations,

@@ -1,5 +1,7 @@
 // #region imports
 import merge from 'lodash.merge';
+
+import imagenes from './imagenes/resolvers';
 // #endregion imports
 
 
@@ -20,8 +22,12 @@ const generateResolvers = <T>(
 
 
 const resolvers = generateResolvers(
+    imagenes,
 );
-
-
-export default resolvers;
 // #endregion module
+
+
+
+// #region exports
+export default resolvers;
+// #endregion exports

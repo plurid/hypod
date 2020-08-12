@@ -1,25 +1,27 @@
 // #region imports
-// #region libraries
-import {
-    Express,
-} from 'express';
+    // #region libraries
+    import {
+        Express,
+    } from 'express';
 
-import {
-    ApolloServer,
-} from 'apollo-server-express';
-// #endregion libraries
+    import {
+        ApolloServer,
+    } from 'apollo-server-express';
+    // #endregion libraries
 
 
-// #region external
-import {
-    resolvers,
-    schemas,
-} from '#server/api';
+    // #region external
+    import {
+        resolvers,
+        schemas,
+    } from '#server/api';
 
-import {
-    Context,
-} from '#server/data/interfaces';
-// #endregion external
+    import {
+        Context,
+    } from '#server/data/interfaces';
+
+    import dataLoader from '#server/logic/loader';
+    // #endregion external
 // #endregion imports
 
 
@@ -41,10 +43,17 @@ const graphqlHandler = async (
             req,
             res,
         }: any) => {
+            const data = await dataLoader();
+
+            const {
+                imagenes,
+            } = data;
+
             const context: Context = {
                 request: req,
                 response: res,
                 instance,
+                imagenes,
             };
 
             return context;

@@ -42,6 +42,21 @@ class Storage {
         }
     }
 
+    public async downloadAll(
+        directory: string,
+    ) {
+        switch (this.type) {
+            case storageType.filesystem:
+                return filesystemStorage.downloadAll(
+                    directory,
+                );
+            case storageType.amazon:
+                return;
+            case storageType.google:
+                return;
+        }
+    }
+
     public async upload(
         filename: string,
         data: Buffer,
