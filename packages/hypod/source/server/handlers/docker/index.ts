@@ -1,24 +1,24 @@
 // #region imports
-// #region libraries
-import express from 'express';
-// #endregion libraries
+    // #region libraries
+    import express from 'express';
+    // #endregion libraries
 
 
-// #region external
-import {
-    DOCKER_ENDPOINT_API_VERSION_CHECK,
-    DOCKER_ENDPOINT_API_CATALOG,
-    DOCKER_ENDPOINT_API_ALL,
+    // #region external
+    import {
+        DOCKER_ENDPOINT_API_VERSION_CHECK,
+        DOCKER_ENDPOINT_API_CATALOG,
+        DOCKER_ENDPOINT_API_ALL,
 
-    DOCKER_RE_NAME_TAGS_LIST,
-    DOCKER_RE_NAME_MANIFESTS_REFERENCE,
-    DOCKER_RE_NAME_BLOBS_DIGEST,
-    DOCKER_RE_NAME_BLOBS_UPLOADS,
-    DOCKER_RE_NAME_BLOBS_UPLOADS_UUID,
-} from '#server/data/constants';
+        DOCKER_RE_NAME_TAGS_LIST,
+        DOCKER_RE_NAME_MANIFESTS_REFERENCE,
+        DOCKER_RE_NAME_BLOBS_DIGEST,
+        DOCKER_RE_NAME_BLOBS_UPLOADS,
+        DOCKER_RE_NAME_BLOBS_UPLOADS_UUID,
+    } from '#server/data/constants';
 
-import * as docker from '#server/logic/docker';
-// #endregion external
+    import * as docker from '#server/logic/docker';
+    // #endregion external
 // #endregion imports
 
 
@@ -277,7 +277,10 @@ const dockerHandler = (
         endpointApiDeleteAll,
     );
 }
-
-
-export default dockerHandler;
 // #endregion module
+
+
+
+// #region exports
+export default dockerHandler;
+// #endregion exports

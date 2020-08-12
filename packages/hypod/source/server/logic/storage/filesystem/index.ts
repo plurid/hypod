@@ -1,31 +1,30 @@
 // #region imports
-// #region libraries
-import {
-    promises as fs,
-} from 'fs';
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
 
-import path from 'path';
-// #endregion libraries
+    import path from 'path';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        QUIET,
+        STORAGE_ROOT_PATH,
 
-// #region external
-import {
-    QUIET,
-    STORAGE_ROOT_PATH,
+        BASE_PATH_DATA,
+        BASE_PATH_BLOBS,
+        BASE_PATH_IMAGENES,
+        BASE_PATH_METADATA,
+        BASE_PATH_IMAGENES_MANIFEST,
+        BASE_PATH_IMAGENES_SHA256,
+    } from '#server/data/constants';
 
-    BASE_PATH_DATA,
-    BASE_PATH_BLOBS,
-    BASE_PATH_IMAGENES,
-    BASE_PATH_METADATA,
-    BASE_PATH_IMAGENES_MANIFEST,
-    BASE_PATH_IMAGENES_SHA256,
-} from '#server/data/constants';
-
-import {
-    StorageUploadKind,
-} from '#server/data/interfaces';
-// #endregion external
+    import {
+        StorageUploadKind,
+    } from '#server/data/interfaces';
+    // #endregion external
 // #endregion imports
 
 

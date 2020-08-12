@@ -1,5 +1,7 @@
 // #region imports
-import getImagenes from './getImagenes';
+    // #region internal
+    import getImagenes from './getImagenes';
+    // #endregion internal
 // #endregion imports
 
 

@@ -1,5 +1,7 @@
 // #region imports
-import imagenes from './imagenes/schemas';
+    // #region internal
+    import imagenes from './imagenes/schemas';
+    // #endregion internal
 // #endregion imports
 
 

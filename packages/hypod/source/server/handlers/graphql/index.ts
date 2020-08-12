@@ -65,7 +65,10 @@ const graphqlHandler = async (
         path: '/graphql',
     });
 }
-
-
-export default graphqlHandler;
 // #endregion module
+
+
+
+// #region exports
+export default graphqlHandler;
+// #endregion exports

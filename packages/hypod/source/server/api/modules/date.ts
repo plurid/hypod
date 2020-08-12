@@ -1,11 +1,13 @@
 // #region imports
-import {
-    GraphQLScalarType,
-} from 'graphql';
+    // #region libraries
+    import {
+        GraphQLScalarType,
+    } from 'graphql';
 
-import {
-    Kind,
-} from 'graphql/language';
+    import {
+        Kind,
+    } from 'graphql/language';
+    // #endregion libraries
 // #endregion imports
 
 
@@ -32,7 +34,10 @@ const resolverMap = {
         },
     }),
 }
-
-
-export default resolverMap;
 // #endregion module
+
+
+
+// #region exports
+export default resolverMap;
+// #endregion exports

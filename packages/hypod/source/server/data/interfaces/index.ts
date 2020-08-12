@@ -1,5 +1,7 @@
 // #region imports
-import express from 'express';
+    // #region libraries
+    import express from 'express';
+    // #endregion libraries
 // #endregion imports
 
 
@@ -26,6 +28,22 @@ export interface StorageTypeData {
     filesystem: StorageTypeFilesystem;
     amazon: StorageTypeAmazon;
     google: StorageTypeGoogle;
+}
+
+
+export type DatabaseType =
+    | DatabaseTypeFilesystem
+    | DatabaseTypeAmazon
+    | DatabaseTypeGoogle;
+
+export type DatabaseTypeFilesystem = 'filesystem';
+export type DatabaseTypeAmazon = 'amazon';
+export type DatabaseTypeGoogle = 'google';
+
+export interface DatabaseTypeData {
+    filesystem: DatabaseTypeFilesystem;
+    amazon: DatabaseTypeAmazon;
+    google: DatabaseTypeGoogle;
 }
 
 

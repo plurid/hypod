@@ -1,5 +1,7 @@
 // #region imports
-import gql from 'graphql-tag';
+    // #region libraries
+    import gql from 'graphql-tag';
+    // #endregion libraries
 // #endregion imports
 
 

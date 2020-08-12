@@ -1,7 +1,11 @@
 // #region imports
-import merge from 'lodash.merge';
+    // #region libraries
+    import merge from 'lodash.merge';
+    // #endregion libraries
 
-import imagenes from './imagenes/resolvers';
+    // #region internal
+    import imagenes from './imagenes/resolvers';
+    // #endregion internal
 // #endregion imports
 
 

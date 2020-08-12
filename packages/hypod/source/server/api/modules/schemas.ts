@@ -1,9 +1,13 @@
 // #region imports
-import {
-    gql,
-} from 'apollo-server-express';
+    // #region libraries
+    import {
+        gql,
+    } from 'apollo-server-express';
+    // #endregion libraries
 
-import General from './general/schemas';
+    // #region internal
+    import General from './general/schemas';
+    // #endregion internal
 // #endregion imports
 
 
@@ -48,7 +52,10 @@ const schemas = [
 
     ...General,
 ];
-
-
-export default schemas;
 // #endregion module
+
+
+
+// #region exports
+export default schemas;
+// #endregion exports

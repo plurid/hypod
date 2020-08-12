@@ -1,5 +1,7 @@
 // #region imports
-import storage from '#server/services/storage';
+    // #region external
+    import storage from '#server/services/storage';
+    // #endregion external
 // #endregion imports
 
 
@@ -12,7 +14,10 @@ const setup = async () => {
         return;
     }
 }
-
-
-export default setup;
 // #endregion module
+
+
+
+// #region exports
+export default setup;
+// #endregion exports

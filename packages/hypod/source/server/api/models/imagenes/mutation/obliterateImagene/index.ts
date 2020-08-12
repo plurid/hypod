@@ -1,15 +1,19 @@
 // #region imports
-import fs from 'fs';
+    // #region libraries
+    import fs from 'fs';
 
-import path from 'path';
+    import path from 'path';
+    // #endregion libraries
 
-// import {
-//     imagenesPath,
-// } from '#server/data/constants';
+    // #region external
+    // import {
+    //     imagenesPath,
+    // } from '#server/data/constants';
 
-import {
-    Context,
-} from '#server/data/interfaces';
+    import {
+        Context,
+    } from '#server/data/interfaces';
+    // #endregion external
 // #endregion imports
 
 

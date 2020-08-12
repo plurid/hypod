@@ -1,9 +1,13 @@
 // #region imports
-import PluridServer from '@plurid/plurid-react-server';
+    // #region libraries
+    import PluridServer from '@plurid/plurid-react-server';
+    // #endregion libraries
 
-import graphqlHandler from './graphql';
+    // #region internal
+    import graphqlHandler from './graphql';
 
-import dockerHandler from './docker';
+    import dockerHandler from './docker';
+    // #endregion internal
 // #endregion imports
 
 

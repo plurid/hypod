@@ -1,7 +1,9 @@
 // #region imports
-import General from './general/resolvers';
+    // #region internal
+    import General from './general/resolvers';
 
-import dateResolver from './date';
+    import dateResolver from './date';
+    // #endregion internal
 // #endregion imports
 
 
@@ -11,7 +13,10 @@ const resolvers = {
     ...General,
     ...dateResolver,
 };
-
-
-export default resolvers;
 // #endregion module
+
+
+
+// #region exports
+export default resolvers;
+// #endregion exports

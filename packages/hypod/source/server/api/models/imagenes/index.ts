@@ -1,6 +1,8 @@
 // #region imports
-import Query from './query';
-import Mutation from './mutation';
+    // #region internal
+    import Query from './query';
+    import Mutation from './mutation';
+    // #endregion internal
 // #endregion imports
 
 

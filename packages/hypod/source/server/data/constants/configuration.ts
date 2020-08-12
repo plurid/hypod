@@ -1,7 +1,9 @@
 // #region imports
-import {
-    StorageType,
-} from '../interfaces';
+    // #region external
+    import {
+        StorageType,
+    } from '../interfaces';
+    // #endregion external
 // #endregion imports
 
 

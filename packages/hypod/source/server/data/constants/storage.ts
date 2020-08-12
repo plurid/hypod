@@ -1,12 +1,12 @@
 // #region imports
-// #region external
-import {
-    StorageTypeData,
-    StorageTypeFilesystem,
-    StorageTypeAmazon,
-    StorageTypeGoogle,
-} from '../interfaces';
-// #endregion external
+    // #region external
+    import {
+        StorageTypeData,
+        StorageTypeFilesystem,
+        StorageTypeAmazon,
+        StorageTypeGoogle,
+    } from '../interfaces';
+    // #endregion external
 // #endregion imports
 
 

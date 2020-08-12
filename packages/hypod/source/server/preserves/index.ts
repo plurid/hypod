@@ -1,7 +1,9 @@
 // #region imports
-import {
-    PluridPreserve,
-} from '@plurid/plurid-react';
+    // #region libraries
+    import {
+        PluridPreserve,
+    } from '@plurid/plurid-react';
+    // #endregion libraries
 // #endregion imports
 
 

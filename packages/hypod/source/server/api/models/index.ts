@@ -1,5 +1,7 @@
 // #region imports
-import Imagenes from './imagenes';
+    // #region internal
+    import Imagenes from './imagenes';
+    // #endregion internal
 // #endregion imports
 
 

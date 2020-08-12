@@ -1,18 +1,20 @@
 // #region imports
-// #region libraries
-import {
-    storageType,
-} from '#server/data/constants';
+    // #region libraries
+    import {
+        storageType,
+    } from '#server/data/constants';
 
-import {
-    StorageType,
-    StorageUploadKind,
-} from '#server/data/interfaces';
-// #endregion libraries
+    import {
+        StorageType,
+        StorageUploadKind,
+    } from '#server/data/interfaces';
+    // #endregion libraries
 
-// #region imports
-import filesystemStorage from './filesystem';
-// #endregion imports
+    // #region internal
+    import filesystemStorage from './filesystem';
+    import amazonStorage from './amazon';
+    import googleStorage from './google';
+    // #endregion internal
 // #endregion imports
 
 
@@ -36,9 +38,13 @@ class Storage {
                     filename,
                 );
             case storageType.amazon:
-                return;
+                return amazonStorage.download(
+                    filename,
+                );
             case storageType.google:
-                return;
+                return googleStorage.download(
+                    filename,
+                );
         }
     }
 
@@ -51,9 +57,13 @@ class Storage {
                     directory,
                 );
             case storageType.amazon:
-                return;
+                return amazonStorage.downloadAll(
+                    directory,
+                );
             case storageType.google:
-                return;
+                return googleStorage.downloadAll(
+                    directory,
+                );
         }
     }
 
@@ -70,11 +80,17 @@ class Storage {
                     kind,
                 );
             case storageType.amazon:
-                console.log('[Hypod Error] :: Not implemented.');
-                return;
+                return amazonStorage.upload(
+                    filename,
+                    data,
+                    kind,
+                );
             case storageType.google:
-                console.log('[Hypod Error] :: Not implemented.');
-                return;
+                return googleStorage.upload(
+                    filename,
+                    data,
+                    kind,
+                );
         }
     }
 
@@ -87,11 +103,13 @@ class Storage {
                     filename,
                 );
             case storageType.amazon:
-                console.log('[Hypod Error] :: Not implemented.');
-                return;
+                return amazonStorage.obliterate(
+                    filename,
+                );
             case storageType.google:
-                console.log('[Hypod Error] :: Not implemented.');
-                return;
+                return googleStorage.obliterate(
+                    filename,
+                );
         }
     }
 
@@ -100,15 +118,16 @@ class Storage {
             case storageType.filesystem:
                 return filesystemStorage.generateLocations();
             case storageType.amazon:
-                console.log('[Hypod Error] :: Not implemented.');
-                return;
+                return amazonStorage.generateLocations();
             case storageType.google:
-                console.log('[Hypod Error] :: Not implemented.');
-                return;
+                return googleStorage.generateLocations();
         }
     }
 }
-
-
-export default Storage;
 // #endregion module
+
+
+
+// #region exports
+export default Storage;
+// #endregion exports

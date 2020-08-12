@@ -1,11 +1,13 @@
 // #region imports
-import {
-    DockerEntityMatchName,
-    DockerEntityMatchReference,
-    DockerEntityMatchDigest,
-    DockerEntityMatchUuid,
-    DockerEntityMatchTypeData,
-} from '../interfaces';
+    // #region external
+    import {
+        DockerEntityMatchName,
+        DockerEntityMatchReference,
+        DockerEntityMatchDigest,
+        DockerEntityMatchUuid,
+        DockerEntityMatchTypeData,
+    } from '../interfaces';
+    // #endregion external
 // #endregion imports
 
 
