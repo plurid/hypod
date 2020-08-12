@@ -19,6 +19,20 @@ const OBLITERATE_IMAGENE = gql`
         }
     }
 `;
+
+
+const OBLITERATE_IMAGENE_TAG = gql`
+    mutation ObliterateImageneTag($input: InputObliterateImageneTag!) {
+        obliterateImageneTag(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
 // #endregion module
 
 
@@ -26,5 +40,6 @@ const OBLITERATE_IMAGENE = gql`
 // #region exports
 export {
     OBLITERATE_IMAGENE,
+    OBLITERATE_IMAGENE_TAG,
 };
 // #endregion exports
