@@ -7,7 +7,6 @@ const environment = {
     customLogic: process.env.HYPOD_CUSTOM_LOGIC === 'true',
 };
 // #endregion module
-console.log('environment', environment);
 
 
 
