@@ -34,6 +34,8 @@ ENV HYPOD_AWS_REGION=region
 ENV HYPOD_AWS_ACCESS_KEY_ID=aws_access_key_id
 ENV HYPOD_AWS_SECRET_ACCESS_KEY=aws_secret_access_key
 
+ENV HYPOD_CUSTOM_LOGIC=false
+
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/scripts ./scripts
