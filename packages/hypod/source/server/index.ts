@@ -1,41 +1,42 @@
 // #region imports
-// #region libraries
-import bodyParser from 'body-parser';
+    // #region libraries
+    import bodyParser from 'body-parser';
 
-import PluridServer, {
-    PluridServerMiddleware,
-    PluridServerService,
-    PluridServerServicesData,
-    PluridServerPartialOptions,
-    PluridServerTemplateConfiguration,
-} from '@plurid/plurid-react-server';
-// #endregion libraries
-
-
-// #region external
-import helmet from '#kernel-services/helmet';
-
-import reduxStore from '#kernel-services/state/store';
-import apolloClient from '#kernel-services/graphql/client';
-
-import {
-    routes,
-    shell,
-} from '../shared';
-// #endregion external
+    import PluridServer, {
+        PluridServerMiddleware,
+        PluridServerService,
+        PluridServerServicesData,
+        PluridServerPartialOptions,
+        PluridServerTemplateConfiguration,
+    } from '@plurid/plurid-react-server';
+    // #endregion libraries
 
 
-// #region internal
-import {
-    DOCKER_ENDPOINT_IGNORE,
-} from './data/constants';
+    // #region external
+    import helmet from '#kernel-services/helmet';
 
-import preserves from './preserves';
-import setup from './setup';
-import {
-    setupHandlers,
-} from './handlers';
-// #endregion internal
+    import reduxStore from '#kernel-services/state/store';
+    import apolloClient from '#kernel-services/graphql/client';
+
+    import {
+        routes,
+        shell,
+    } from '../shared';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        DOCKER_ENDPOINT_API_VERSION_CHECK,
+        DOCKER_ENDPOINT_IGNORE,
+    } from './data/constants';
+
+    import preserves from './preserves';
+    import setup from './setup';
+    import {
+        setupHandlers,
+    } from './handlers';
+    // #endregion internal
 // #endregion imports
 
 
@@ -123,6 +124,13 @@ const pluridServer = new PluridServer({
 
 pluridServer.instance().use(
     (request, response, next) => {
+        const url = request.originalUrl;
+
+        if (!url.startsWith(DOCKER_ENDPOINT_API_VERSION_CHECK)) {
+            next();
+            return;
+        }
+
         let data = '';
         request.setEncoding('binary');
         request.on('data', (chunk) => {
@@ -152,7 +160,10 @@ setupHandlers(pluridServer);
 if (require.main === module) {
     pluridServer.start(port);
 }
-
-
-export default pluridServer;
 // #endregion module
+
+
+
+// #region exports
+export default pluridServer;
+// #endregion exports

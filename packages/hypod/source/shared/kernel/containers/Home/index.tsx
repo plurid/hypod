@@ -21,9 +21,10 @@
 
 
     // #region external
-    // import client from '#kernel-services/graphql/client';
-    // import {
-    // } from '#kernel-services/graphql/query';
+    import client from '#kernel-services/graphql/client';
+    import {
+        GET_IMAGENES,
+    } from '#kernel-services/graphql/query';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -70,6 +71,35 @@ const Home: React.FC<HomeProperties> = (
         // #endregion dispatch
     } = properties;
     // #endregion properties
+
+
+    // #region effects
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const query = await client.query({
+                    query: GET_IMAGENES,
+                });
+
+                const response = query.data.getImagenes;
+
+                if (!response.status) {
+                    return;
+                }
+
+                const data = graphql.deleteTypenames(
+                    response.data
+                );
+
+                console.log(data);
+            } catch (error) {
+                return;
+            }
+        }
+
+        loadData();
+    }, []);
+    // #endregion effects
 
 
     // #region render

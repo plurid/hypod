@@ -57,6 +57,6 @@ export interface Imagene {
     id: string;
     name: string;
     version: string;
-    size: string;
+    size: number;
 }
 // #endregion module

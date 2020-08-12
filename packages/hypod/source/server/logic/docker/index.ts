@@ -384,7 +384,7 @@ export const putNameManifestsReference = async (
     const imagene: Imagene = {
         id: uuid.generate(),
         name,
-        size: '',
+        size: 0,
         version: reference,
     };
     registerImagene(imagene);
