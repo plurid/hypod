@@ -177,9 +177,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     switch (stateIndexGeneralSelector) {
         case 'imagenes':
             renderSelectedView = (
-                <ImagenesView
-                    setGeneralView={setGeneralView}
-                />
+                <ImagenesView />
             );
             break;
     }

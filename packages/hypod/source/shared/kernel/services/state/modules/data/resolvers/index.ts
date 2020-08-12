@@ -20,9 +20,23 @@ export const removeEntity = (
         ...state,
     };
 
+    let imagenes = [
+        ...newState.imagenes,
+    ];
+
+    switch (type) {
+        case 'imagene':
+            imagenes = imagenes.filter(
+                imagene => imagene.id !== id
+            );
+            break;
+    }
 
     return {
         ...newState,
+        imagenes: [
+            ...imagenes,
+        ],
     };
 }
 

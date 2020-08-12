@@ -30,6 +30,11 @@
 
     import EntityView from '#kernel-components/EntityView';
 
+    import client from '#kernel-services/graphql/client';
+    import {
+        OBLITERATE_IMAGENE,
+    } from '#kernel-services/graphql/mutate';
+
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
     import actions from '#kernel-services/state/actions';
@@ -112,7 +117,6 @@ export interface ImagenesViewOwnProperties {
         // #endregion values
 
         // #region methods
-        setGeneralView: any;
         // #endregion methods
     // #endregion required
 
@@ -132,6 +136,7 @@ export interface ImagenesViewStateProperties {
 }
 
 export interface ImagenesViewDispatchProperties {
+    dispatchRemoveEntity: typeof actions.data.removeEntity;
 }
 
 export type ImagenesViewProperties = ImagenesViewOwnProperties
@@ -148,7 +153,6 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             // #endregion values
 
             // #region methods
-            setGeneralView,
             // #endregion methods
         // #endregion required
 
@@ -167,15 +171,35 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatchRemoveEntity,
         // #endregion dispatch
     } = properties;
     // #endregion properties
 
 
     // #region handlers
-    const handleImageneObliterate = (
+    const handleImageneObliterate = async (
         id: string,
     ) => {
+        try {
+            dispatchRemoveEntity({
+                id,
+                type: 'imagene',
+            });
+
+            const input = {
+                value: id,
+            };
+
+            await client.mutate({
+                mutation: OBLITERATE_IMAGENE,
+                variables: {
+                    input,
+                },
+            });
+        } catch (error) {
+            return;
+        }
     }
     // #endregion handlers
 
@@ -299,6 +323,11 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): ImagenesViewDispatchProperties => ({
+    dispatchRemoveEntity: (
+        payload,
+    ) => dispatch(
+        actions.data.removeEntity(payload),
+    ),
 });
 // #endregion module
 
