@@ -55,9 +55,12 @@ const imageneRowRenderer = (
     const {
         id,
         name,
-        version,
+        latest,
         size,
+        digest,
     } = imagene;
+
+    const shortDigest = digest.slice(0, 12) + '...';
 
     return (
         <>
@@ -66,11 +69,15 @@ const imageneRowRenderer = (
             </div>
 
             <div>
-                {version}
+                {latest}
             </div>
 
             <div>
                 {size} MB
+            </div>
+
+            <div>
+                {shortDigest}
             </div>
 
             <PluridIconDelete
@@ -89,17 +96,18 @@ const createSearchTerms = (
             const {
                 id,
                 name,
-                version,
+                latest,
                 size,
+                digest,
             } = imagene;
-
 
             const searchTerm = {
                 id,
                 data: [
                     name.toLowerCase(),
-                    version.toLowerCase(),
+                    latest.toLowerCase(),
                     size + '',
+                    digest.toLowerCase(),
                 ],
             };
 
@@ -283,11 +291,15 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             </div>
 
             <div>
-                version
+                latest
             </div>
 
             <div>
                 size
+            </div>
+
+            <div>
+                digest
             </div>
 
             <div />
@@ -299,7 +311,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 120px 120px 30px"
+            rowTemplate="auto 120px 120px 120px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no imagenes"

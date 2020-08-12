@@ -14,8 +14,10 @@ const GET_IMAGENES = gql`
             data {
                 id
                 name
-                version
+                latest
+                tags
                 size
+                digest
             }
         }
     }

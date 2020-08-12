@@ -36,8 +36,10 @@ export const types = gql`
     type Imagene {
         id: String!
         name: String!
-        version: String!
+        latest: String!
+        tags: [String!]!
         size: Float!
+        digest: String!
     }
 `;
 // #endregion module

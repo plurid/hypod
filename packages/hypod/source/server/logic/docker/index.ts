@@ -385,7 +385,11 @@ export const putNameManifestsReference = async (
         id: uuid.generate(),
         name,
         size: 0,
-        version: reference,
+        latest: reference,
+        tags: [
+            reference,
+        ],
+        digest,
     };
     registerImagene(imagene);
 

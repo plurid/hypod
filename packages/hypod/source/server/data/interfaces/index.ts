@@ -56,7 +56,9 @@ export interface DockerEntityMatchTypeData {
 export interface Imagene {
     id: string;
     name: string;
-    version: string;
+    latest: string;
+    tags: string[];
     size: number;
+    digest: string;
 }
 // #endregion module
