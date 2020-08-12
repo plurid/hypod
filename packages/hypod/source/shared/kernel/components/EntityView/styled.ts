@@ -1,9 +1,11 @@
 // #region imports
-import styled from 'styled-components';
+    // #region libraries
+    import styled from 'styled-components';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 // #endregion imports
 
 

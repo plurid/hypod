@@ -1,7 +1,9 @@
 // #region imports
-import {
-    createGlobalStyle,
-} from 'styled-components';
+    // #region libraries
+    import {
+        createGlobalStyle,
+    } from 'styled-components';
+    // #endregion libraries
 // #endregion imports
 
 

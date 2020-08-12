@@ -1,36 +1,47 @@
-import React, {
-    useRef,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useRef,
+    } from 'react';
 
-import {
-    HelmetProvider,
-} from 'react-helmet-async';
+    import {
+        HelmetProvider,
+    } from 'react-helmet-async';
 
-import {
-    Provider as ReduxProvider,
-} from 'react-redux';
+    import {
+        Provider as ReduxProvider,
+    } from 'react-redux';
 
-import {
-    ApolloProvider,
-} from '@apollo/client';
+    import {
+        ApolloProvider,
+    } from '@apollo/client';
 
-import {
-    PluridProvider,
-    PluridRouterBrowser,
-} from '@plurid/plurid-react';
-
-import helmetContext from '#kernel-services/helmet';
-
-import reduxStore from '#kernel-services/state/store';
-import graphqlClient from '#kernel-services/graphql/client';
-
-import {
-    routes,
-    shell,
-} from '../shared';
+    import {
+        PluridProvider,
+        PluridRouterBrowser,
+    } from '@plurid/plurid-react';
+    // #endregion libraries
 
 
+    // #region external
+    import helmetContext from '#kernel-services/helmet';
 
+    import reduxStore from '#kernel-services/state/store';
+    import graphqlClient from '#kernel-services/graphql/client';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        routes,
+        shell,
+    } from '../shared';
+    // #endregion internal
+// #endregion imports
+
+
+
+// #region module
 const reduxState = (window as any).__PRELOADED_REDUX_STATE__;
 delete (window as any).__PRELOADED_REDUX_STATE__;
 
@@ -39,11 +50,12 @@ delete (window as any).__PRELOADED_PLURID_METASTATE__;
 
 
 const Client: React.FC<any> = () => {
-    /** references */
+    // #region references
     const store = useRef(reduxStore(reduxState));
+    // #endregion references
 
 
-    /** render */
+    // #region render
     return (
         <HelmetProvider context={helmetContext}>
             <ReduxProvider store={store.current}>
@@ -58,7 +70,12 @@ const Client: React.FC<any> = () => {
             </ReduxProvider>
         </HelmetProvider>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Client;
+// #endregion exports
