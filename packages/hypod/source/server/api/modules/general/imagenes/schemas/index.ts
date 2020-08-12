@@ -15,13 +15,15 @@ export const queries = gql`
 export const mutations = gql`
     extend type Mutation {
         obliterateImagene(input: InputValueString!): Response!
+        obliterateImageneTag(input: InputObliterateImageneTag!): Response!
     }
 `;
 
 
 export const inputs = gql`
-    input InputValueString {
-        value: String!
+    input InputObliterateImageneTag {
+        id: String!
+        tag: String!
     }
 `;
 

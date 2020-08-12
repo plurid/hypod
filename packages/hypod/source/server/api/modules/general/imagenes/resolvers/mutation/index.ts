@@ -22,6 +22,14 @@ const Mutation = {
         input,
         context,
     ),
+    obliterateImageneTag: (
+        _: any,
+        { input }: any,
+        context: Context,
+    ) => Imagenes.Mutation.obliterateImageneTag(
+        input,
+        context,
+    ),
 };
 // #endregion module
 

@@ -36,6 +36,10 @@ const baseSchema = gql`
     }
 
     scalar Date
+
+    input InputValueString {
+        value: String!
+    }
 `;
 
 
