@@ -5,14 +5,15 @@
 
     // #region internal
     import imagenes from './imagenes/resolvers';
+    import owner from './owner/resolvers';
     // #endregion internal
 // #endregion imports
 
 
 
 // #region module
-const generateResolvers = <T>(
-    ...imports: T[]
+const generateResolvers = (
+    ...imports: any[]
 ) => {
     const resolvers = {};
 
@@ -27,6 +28,7 @@ const generateResolvers = <T>(
 
 const resolvers = generateResolvers(
     imagenes,
+    owner,
 );
 // #endregion module
 

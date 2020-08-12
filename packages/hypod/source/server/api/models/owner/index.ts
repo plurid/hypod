@@ -1,15 +1,13 @@
 // #region imports
     // #region internal
-    import Imagenes from './imagenes';
-    import Owner from './owner';
+    import Query from './query';
     // #endregion internal
 // #endregion imports
 
 
 
 // #region exports
-export {
-    Imagenes,
-    Owner,
+export default {
+    Query,
 };
 // #endregion exports

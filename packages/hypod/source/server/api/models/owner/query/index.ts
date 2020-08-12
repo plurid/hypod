@@ -1,15 +1,13 @@
 // #region imports
     // #region internal
-    import Imagenes from './imagenes';
-    import Owner from './owner';
+    import getCurrentOwner from './getCurrentOwner';
     // #endregion internal
 // #endregion imports
 
 
 
 // #region exports
-export {
-    Imagenes,
-    Owner,
+export default {
+    getCurrentOwner,
 };
 // #endregion exports
