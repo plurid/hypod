@@ -37,7 +37,7 @@ export const types = gql`
         id: String!
         name: String!
         version: String!
-        size: Int!
+        size: Float!
     }
 `;
 // #endregion module

@@ -65,7 +65,7 @@ const imageneRowRenderer = (
             </div>
 
             <div>
-                {size}
+                {size} Mb
             </div>
 
             <PluridIconDelete
