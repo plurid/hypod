@@ -70,7 +70,7 @@ const imageneRowRenderer = (
             </div>
 
             <div>
-                {size} Mb
+                {size} MB
             </div>
 
             <PluridIconDelete
@@ -99,7 +99,7 @@ const createSearchTerms = (
                 data: [
                     name.toLowerCase(),
                     version.toLowerCase(),
-                    size,
+                    size + '',
                 ],
             };
 
