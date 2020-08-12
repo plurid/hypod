@@ -44,8 +44,22 @@ const obliterateImagene = async (
     context: Context,
 ) => {
     const {
+        logic,
+    } = context;
+
+    const {
         value
     } = input;
+
+    if (logic?.obliterateOwnerImagene) {
+        const status = await logic.obliterateOwnerImagene(
+            value,
+        );
+
+        return {
+            status,
+        };
+    }
 
     await deregisterImagene(value);
 

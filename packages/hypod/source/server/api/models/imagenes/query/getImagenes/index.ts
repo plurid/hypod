@@ -14,7 +14,19 @@ const getImagenes = async (
 ) => {
     const {
         imagenes,
+        logic,
     } = context;
+
+    if (logic?.getOwnerImagenes) {
+        const imagenes = await logic.getOwnerImagenes();
+
+        return {
+            status: true,
+            data: [
+                ...imagenes,
+            ],
+        };
+    }
 
     return {
         status: true,

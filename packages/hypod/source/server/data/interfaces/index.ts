@@ -89,7 +89,14 @@ export interface HypodOwner {
 
 
 export interface HypodLogic {
-    getCurrentOwner: () => HypodOwner;
-    getOwnerImagenes: () => Imagene[];
+    getCurrentOwner: () => Promise<HypodOwner>;
+    getOwnerImagenes: () => Promise<Imagene[]>;
+    obliterateOwnerImagene: (
+        id: string,
+    ) => Promise<boolean>;
+    obliterateOwnerImageneTag: (
+        id: string,
+        tag: string,
+    ) => Promise<boolean>;
 }
 // #endregion module

@@ -45,9 +45,24 @@ const obliterateImageneTag = async (
     context: Context,
 ) => {
     const {
+        logic,
+    } = context;
+
+    const {
         id,
         tag,
     } = input;
+
+    if (logic?.obliterateOwnerImageneTag) {
+        const status = await logic.obliterateOwnerImageneTag(
+            id,
+            tag,
+        );
+
+        return {
+            status,
+        };
+    }
 
     await deregisterImageneTag(
         id,
