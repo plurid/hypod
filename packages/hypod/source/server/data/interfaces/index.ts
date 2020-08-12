@@ -79,4 +79,16 @@ export interface Imagene {
     size: number;
     digest: string;
 }
+
+
+
+export interface HypodOwner {
+    id: string;
+}
+
+
+export interface HypodLogic {
+    getCurrentOwner: () => HypodOwner;
+    getOwnerImagenes: () => Imagene[];
+}
 // #endregion module

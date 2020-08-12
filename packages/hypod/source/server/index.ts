@@ -31,6 +31,10 @@
         DOCKER_ENDPOINT_IGNORE,
     } from './data/constants';
 
+    import {
+        HypodLogic,
+    } from './data/interfaces';
+
     import preserves from './preserves';
     import setup from './setup';
     import {
@@ -146,7 +150,18 @@ pluridServer.instance().use(
 );
 
 
-setupHandlers(pluridServer);
+
+const Hypod = (
+    logic?: HypodLogic,
+) => {
+    setupHandlers(
+        pluridServer,
+        logic,
+    );
+
+    return pluridServer;
+}
+
 
 
 
@@ -158,6 +173,7 @@ setupHandlers(pluridServer);
  * for programmatic usage.
  */
 if (require.main === module) {
+    Hypod();
     pluridServer.start(port);
 }
 // #endregion module
@@ -165,5 +181,11 @@ if (require.main === module) {
 
 
 // #region exports
+export * from './data/interfaces';
+
+export {
+    Hypod,
+};
+
 export default pluridServer;
 // #endregion exports

@@ -18,6 +18,7 @@
 
     import {
         Context,
+        HypodLogic,
     } from '#server/data/interfaces';
 
     import dataLoader from '#server/logic/loader';
@@ -29,6 +30,7 @@
 // #region module
 const graphqlHandler = async (
     instance: Express,
+    hypodLogic?: HypodLogic,
 ) => {
     const playground = {
         faviconUrl: '/favicon.ico',

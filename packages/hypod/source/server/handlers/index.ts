@@ -3,6 +3,14 @@
     import PluridServer from '@plurid/plurid-react-server';
     // #endregion libraries
 
+
+    // #region external
+    import {
+        HypodLogic,
+    } from '#server/data/interfaces';
+    // #endregion external
+
+
     // #region internal
     import graphqlHandler from './graphql';
 
@@ -15,10 +23,14 @@
 // #region module
 export const setupHandlers = (
     server: PluridServer,
+    hypodLogic?: HypodLogic,
 ) => {
     const instance = server.instance();
 
-    graphqlHandler(instance);
+    graphqlHandler(
+        instance,
+        hypodLogic,
+    );
 
     dockerHandler(instance);
 }
