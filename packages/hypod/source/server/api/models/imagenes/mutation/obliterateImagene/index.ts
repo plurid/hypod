@@ -21,7 +21,7 @@ const deregisterImagene = async (
     id: string,
 ) => {
     try {
-
+        return;
     } catch (error) {
         return;
     }

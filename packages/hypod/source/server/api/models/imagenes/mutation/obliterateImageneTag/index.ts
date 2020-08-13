@@ -22,7 +22,7 @@ const deregisterImageneTag = async (
     tag: string,
 ) => {
     try {
-
+        return;
     } catch (error) {
         return;
     }
