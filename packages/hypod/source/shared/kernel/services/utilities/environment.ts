@@ -5,6 +5,7 @@ const environment = {
     development: process.env.ENV_MODE === 'development',
     production: process.env.ENV_MODE === 'production',
     customLogic: process.env.HYPOD_CUSTOM_LOGIC === 'true',
+    privateUsage: process.env.HYPOD_PRIVATE_USAGE === 'true',
 };
 // #endregion module
 
