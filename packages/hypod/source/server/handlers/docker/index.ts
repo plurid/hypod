@@ -162,8 +162,6 @@ const endpointApiGetToken = async (
     const logic = request.hypodLogic;
 
     if (logic) {
-        console.log('custom logic usage');
-
         const authorization = getAuthorizationHeader(request);
 
         if (!authorization) {
@@ -186,8 +184,6 @@ const endpointApiGetToken = async (
     }
 
     if (privateUsage) {
-        console.log('private usage');
-
         const authorization = getAuthorizationHeader(request);
 
         if (!authorization) {
