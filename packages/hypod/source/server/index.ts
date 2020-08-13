@@ -90,6 +90,7 @@ const servicesData: PluridServerServicesData = {
     reduxStoreValue: {},
 };
 
+
 const options: PluridServerPartialOptions = {
     serverName: 'Hypod Server',
     buildDirectory,
@@ -100,6 +101,7 @@ const options: PluridServerPartialOptions = {
         DOCKER_ENDPOINT_IGNORE,
     ],
 };
+
 
 const template: PluridServerTemplateConfiguration = {
     root: applicationRoot,
