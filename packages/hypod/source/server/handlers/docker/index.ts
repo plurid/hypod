@@ -1,6 +1,9 @@
 // #region imports
     // #region libraries
-    import express from 'express';
+    import {
+        Application,
+        Response,
+    } from 'express';
     // #endregion libraries
 
 
@@ -17,6 +20,10 @@
         DOCKER_RE_NAME_BLOBS_UPLOADS_UUID,
     } from '#server/data/constants';
 
+    import {
+        HypodRequest,
+    } from '#server/data/interfaces';
+
     import * as docker from '#server/logic/docker';
     // #endregion external
 // #endregion imports
@@ -31,8 +38,8 @@
  * @param response
  */
 const endpointApiVersionCheck = (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
 ) => {
     response.status(200).end();
 }
@@ -45,16 +52,16 @@ const endpointApiVersionCheck = (
  * @param response
  */
 const endpointApiGetCatalog = (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
 ) => {
     console.log('endpointApiGetCatalog');
 }
 
 
 const endpointApiGetAll = (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
 ) => {
     const url = request.originalUrl;
     // console.log('endpointApiGetAll', url);
@@ -107,8 +114,8 @@ const endpointApiGetAll = (
 
 
 const endpointApiPostAll = (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
 ) => {
     const url = request.originalUrl;
     // console.log('endpointApiPostAll', url);
@@ -131,8 +138,8 @@ const endpointApiPostAll = (
 
 
 const endpointApiPutAll = (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
 ) => {
     const url = request.path;
     // console.log('endpointApiPutAll', url);
@@ -165,8 +172,8 @@ const endpointApiPutAll = (
 
 
 const endpointApiPatchAll = (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
 ) => {
     const url = request.originalUrl;
     // console.log('endpointApiPatchAll', url);
@@ -191,8 +198,8 @@ const endpointApiPatchAll = (
 
 
 const endpointApiDeleteAll = (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
 ) => {
     const url = request.originalUrl;
     // console.log('endpointApiDeleteAll', url);
@@ -235,46 +242,50 @@ const endpointApiDeleteAll = (
 
 
 const dockerHandler = (
-    instance: express.Application,
+    instance: Application,
 ) => {
+    /**
+     * instance methods use `as any` to account for the `HypodRequest`.
+     */
+
     instance.get(
         DOCKER_ENDPOINT_API_VERSION_CHECK,
-        endpointApiVersionCheck,
+        endpointApiVersionCheck as any,
     );
 
     instance.get(
         DOCKER_ENDPOINT_API_CATALOG,
-        endpointApiGetCatalog,
+        endpointApiGetCatalog as any,
     );
 
     instance.get(
         DOCKER_ENDPOINT_API_ALL,
-        endpointApiGetAll,
+        endpointApiGetAll as any,
     );
 
     instance.head(
         DOCKER_ENDPOINT_API_ALL,
-        endpointApiGetAll,
+        endpointApiGetAll as any,
     );
 
     instance.post(
         DOCKER_ENDPOINT_API_ALL,
-        endpointApiPostAll,
+        endpointApiPostAll as any,
     );
 
     instance.put(
         DOCKER_ENDPOINT_API_ALL,
-        endpointApiPutAll,
+        endpointApiPutAll as any,
     );
 
     instance.patch(
         DOCKER_ENDPOINT_API_ALL,
-        endpointApiPatchAll,
+        endpointApiPatchAll as any,
     );
 
     instance.delete(
         DOCKER_ENDPOINT_API_ALL,
-        endpointApiDeleteAll,
+        endpointApiDeleteAll as any,
     );
 }
 // #endregion module

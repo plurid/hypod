@@ -35,6 +35,8 @@
         HypodLogic,
     } from './data/interfaces';
 
+    import mockLogic from './logic/mock';
+
     import preserves from './preserves';
     import setup from './setup';
     import {
@@ -112,7 +114,7 @@ const template: PluridServerTemplateConfiguration = {
 
 /** SERVER */
 // generate server
-const pluridServer = new PluridServer({
+const hypodServer = new PluridServer({
     helmet,
     routes,
     preserves,
@@ -126,42 +128,51 @@ const pluridServer = new PluridServer({
 });
 
 
-pluridServer.instance().use(
-    (request, response, next) => {
-        const url = request.originalUrl;
-
-        if (!url.startsWith(DOCKER_ENDPOINT_API_VERSION_CHECK)) {
-            next();
-            return;
-        }
-
-        let data = '';
-        request.setEncoding('binary');
-        request.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        request.on('end', () => {
-            (request as any).rawBody = data;
-            next();
-        });
-    },
-    bodyParser.json(),
-);
-
-
 
 const Hypod = (
     logic?: HypodLogic,
 ) => {
+    hypodServer.instance().use(
+        /** Attach logic */
+        (request, response, next) => {
+            if (logic) {
+                (request as any).hypodLogic = {
+                    ...logic,
+                };
+            }
+
+            next();
+        },
+        /** Parse raw body for docker */
+        (request, response, next) => {
+            const url = request.originalUrl;
+
+            if (!url.startsWith(DOCKER_ENDPOINT_API_VERSION_CHECK)) {
+                next();
+                return;
+            }
+
+            let data = '';
+            request.setEncoding('binary');
+            request.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            request.on('end', () => {
+                (request as any).rawBody = data;
+                next();
+            });
+        },
+        bodyParser.json(),
+    );
+
     setupHandlers(
-        pluridServer,
+        hypodServer,
         logic,
     );
 
-    return pluridServer;
+    return hypodServer;
 }
-
 
 
 
@@ -173,8 +184,10 @@ const Hypod = (
  * for programmatic usage.
  */
 if (require.main === module) {
-    Hypod();
-    pluridServer.start(port);
+    Hypod(
+        mockLogic,
+    );
+    hypodServer.start(port);
 }
 // #endregion module
 
@@ -187,5 +200,5 @@ export {
     Hypod,
 };
 
-export default pluridServer;
+export default hypodServer;
 // #endregion exports

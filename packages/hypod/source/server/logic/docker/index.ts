@@ -1,6 +1,8 @@
 // #region imports
     // #region libraries
-    import express from 'express';
+    import {
+        Response,
+    } from 'express';
 
     import {
         uuid,
@@ -18,6 +20,7 @@
 
     import {
         Imagene,
+        HypodRequest,
     } from '#server/data/interfaces';
 
     import storage from '#server/services/storage';
@@ -44,8 +47,8 @@
 // #region module
 /** GET */
 export const getNameTagsList = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(match, 'name');
@@ -55,6 +58,7 @@ export const getNameTagsList = async (
     }
 
     // check if name exists
+
 
     // get tags
     const tags: string[] = [];
@@ -74,8 +78,8 @@ export const getNameTagsList = async (
 
 
 export const getNameManifestsReference = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(
@@ -117,8 +121,8 @@ export const getNameManifestsReference = async (
 
 
 export const getNameBlobsDigest = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(
@@ -137,10 +141,6 @@ export const getNameBlobsDigest = async (
         response.status(400).end();
         return;
     }
-
-    // console.log('getNameBlobsDigest', name, digest);
-    // console.log(request.originalUrl);
-    // console.log('------------------');
 
 
     const digestValue = digest.replace(':', '/');
@@ -168,8 +168,8 @@ export const getNameBlobsDigest = async (
 
 
 export const getNameBlobsUploadsUuid = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(
@@ -235,8 +235,8 @@ export const getNameBlobsUploadsUuid = async (
 
 /** POST */
 export const postNameBlobsUploads = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(
@@ -285,8 +285,8 @@ export const postNameBlobsUploads = async (
 
 /** PATCH */
 export const patchNameBlobsUploadsUuid = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(
@@ -354,8 +354,8 @@ export const patchNameBlobsUploadsUuid = async (
 
 /** PUT */
 export const putNameManifestsReference = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(
@@ -416,8 +416,8 @@ export const putNameManifestsReference = async (
 
 
 export const putNameBlobsUploadsUuid = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(
@@ -494,8 +494,8 @@ export const putNameBlobsUploadsUuid = async (
 
 /** DELETE */
 export const deleteNameManifestsReference = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(
@@ -526,8 +526,8 @@ export const deleteNameManifestsReference = async (
 
 
 export const deleteNameBlobsUploadsUuid = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(
@@ -558,8 +558,8 @@ export const deleteNameBlobsUploadsUuid = async (
 
 
 export const deleteNameBlobsDigest = async (
-    request: express.Request,
-    response: express.Response,
+    request: HypodRequest,
+    response: Response,
     match: RegExpMatchArray,
 ) => {
     const name = getFromMatch(

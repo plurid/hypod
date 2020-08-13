@@ -36,6 +36,18 @@ const hypodLogic: HypodLogic = {
     ) => {
         return true;
     },
+    checkOwnerCanPush: async (
+        // id,
+        // tag,
+    ) => {
+        return true;
+    },
+    checkOwnerCanPull: async (
+        // id,
+        // tag,
+    ) => {
+        return true;
+    },
 };
 // #endregion module
 

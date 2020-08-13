@@ -1,6 +1,10 @@
 // #region imports
     // #region libraries
-    import express from 'express';
+    import {
+        Request,
+        Response,
+        Application,
+    } from 'express';
     // #endregion libraries
 // #endregion imports
 
@@ -8,11 +12,16 @@
 
 // #region module
 export interface Context {
-    request: express.Request;
-    response: express.Response;
-    instance: express.Application;
+    request: Request;
+    response: Response;
+    instance: Application;
     imagenes: Imagene[];
     logic: HypodLogic | undefined;
+}
+
+
+export type HypodRequest = Request & {
+    hypodLogic: HypodLogic | undefined;
 }
 
 
@@ -98,5 +107,7 @@ export interface HypodLogic {
         id: string,
         tag: string,
     ) => Promise<boolean>;
+    checkOwnerCanPush: () => Promise<boolean>;
+    checkOwnerCanPull: () => Promise<boolean>;
 }
 // #endregion module

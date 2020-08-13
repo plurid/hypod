@@ -32,6 +32,8 @@ export const setupHandlers = (
         hypodLogic,
     );
 
-    dockerHandler(instance);
+    dockerHandler(
+        instance,
+    );
 }
 // #endregion module
