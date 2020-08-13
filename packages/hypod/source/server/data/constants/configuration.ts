@@ -24,6 +24,7 @@ export const DOCKER_SERVICE = process.env.HYPOD_DOCKER_SERVICE || '';
 
 export const PRIVATE_OWNER_IDENTONYM = process.env.HYPOD_PRIVATE_OWNER_IDENTONYM || '';
 export const PRIVATE_OWNER_KEY = process.env.HYPOD_PRIVATE_OWNER_KEY || '';
+export const PRIVATE_TOKEN = process.env.HYPOD_PRIVATE_TOKEN || '';
 
 
 /**

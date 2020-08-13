@@ -13,6 +13,7 @@
         DOCKER_SERVICE,
         PRIVATE_OWNER_IDENTONYM,
         PRIVATE_OWNER_KEY,
+        PRIVATE_TOKEN,
 
         DOCKER_ENDPOINT_API_VERSION_CHECK,
         DOCKER_ENDPOINT_API_CATALOG,
@@ -104,7 +105,7 @@ const endpointApiVersionCheck = async (
         console.log('authorizationHeader', authorizationHeader);
         console.log('authorizationToken', authorizationToken);
 
-        const validAuthorizationToken = authorizationToken === 'owner-token';
+        const validAuthorizationToken = authorizationToken === PRIVATE_TOKEN;
 
         response.setHeader(
             'WWW-Authenticate',
@@ -229,9 +230,9 @@ const endpointApiGetToken = async (
         }
 
         const tokenResponse = {
-            token: 'owner-token',
-            issued_at: new Date(),
+            token: PRIVATE_TOKEN,
             expires_in: 3600,
+            issued_at: new Date(),
         };
 
         response.status(200).send(JSON.stringify(tokenResponse));

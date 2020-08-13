@@ -151,7 +151,7 @@ const Hypod = (
 if (require.main === module) {
     Hypod(
         /** mock logic for testing */
-        mockLogic,
+        // mockLogic,
     );
     hypodServer.start(port);
 }
