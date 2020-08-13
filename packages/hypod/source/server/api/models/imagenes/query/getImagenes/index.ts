@@ -3,6 +3,10 @@
     import {
         Context,
     } from '#server/data/interfaces';
+
+    import {
+        privateUsage,
+    } from '#server/data/constants';
     // #endregion external
 // #endregion imports
 
@@ -22,6 +26,15 @@ const getImagenes = async (
     if (logic) {
         const imagenes = await logic.getOwnerImagenes();
 
+        return {
+            status: true,
+            data: [
+                ...imagenes,
+            ],
+        };
+    }
+
+    if (privateUsage) {
         return {
             status: true,
             data: [

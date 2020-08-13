@@ -3,6 +3,10 @@
     import {
         Context,
     } from '#server/data/interfaces';
+
+    import {
+        privateUsage,
+    } from '#server/data/constants';
     // #endregion external
 // #endregion imports
 
@@ -24,6 +28,12 @@ const getCurrentOwner = async (
         return {
             status: true,
             data: owner,
+        };
+    }
+
+    if (privateUsage) {
+        return {
+            status: false,
         };
     }
 

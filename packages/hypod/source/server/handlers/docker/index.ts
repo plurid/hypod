@@ -15,6 +15,8 @@
         PRIVATE_OWNER_KEY,
         PRIVATE_TOKEN,
 
+        privateUsage,
+
         DOCKER_ENDPOINT_API_VERSION_CHECK,
         DOCKER_ENDPOINT_API_CATALOG,
         DOCKER_ENDPOINT_API_TOKEN,
@@ -47,8 +49,6 @@
 
 // #region module
 const realm = DOCKER_REALM_BASE + DOCKER_ENDPOINT_API_TOKEN;
-const privateUsage = !!(PRIVATE_OWNER_IDENTONYM && PRIVATE_OWNER_KEY);
-
 
 
 /**

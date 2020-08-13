@@ -1,10 +1,4 @@
 // #region imports
-    // #region libraries
-    import fs from 'fs';
-
-    import path from 'path';
-    // #endregion libraries
-
     // #region external
     // import {
     //     imagenesPath,
@@ -13,6 +7,10 @@
     import {
         Context,
     } from '#server/data/interfaces';
+
+    import {
+        privateUsage,
+    } from '#server/data/constants';
     // #endregion external
 // #endregion imports
 
@@ -23,16 +21,7 @@ const deregisterImagene = async (
     id: string,
 ) => {
     try {
-        // const imagenePath = path.join(
-        //     imagenesPath,
-        //     id + '.json',
-        // );
 
-        // if (!fs.existsSync(imagenePath)) {
-        //     return;
-        // }
-
-        // fs.promises.unlink(imagenePath);
     } catch (error) {
         return;
     }
