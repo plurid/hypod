@@ -18,6 +18,11 @@ export const DATABASE_TYPE = (process.env.HYPOD_DATABASE_TYPE as DatabaseType | 
 export const STORAGE_TYPE = (process.env.HYPOD_STORAGE_TYPE as StorageType | undefined)
     || 'filesystem';
 
+
+export const DOCKER_REALM_BASE = process.env.HYPOD_DOCKER_REALM_BASE || '';
+export const DOCKER_SERVICE = process.env.HYPOD_DOCKER_SERVICE || '';
+
+
 /**
  * Filesystem root path.
  */

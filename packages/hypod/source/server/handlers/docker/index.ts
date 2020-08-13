@@ -9,8 +9,12 @@
 
     // #region external
     import {
+        DOCKER_REALM_BASE,
+        DOCKER_SERVICE,
+
         DOCKER_ENDPOINT_API_VERSION_CHECK,
         DOCKER_ENDPOINT_API_CATALOG,
+        DOCKER_ENDPOINT_API_TOKEN,
         DOCKER_ENDPOINT_API_ALL,
 
         DOCKER_RE_NAME_TAGS_LIST,
@@ -41,6 +45,43 @@ const endpointApiVersionCheck = (
     request: HypodRequest,
     response: Response,
 ) => {
+    const logic = request.hypodLogic;
+
+    if (logic) {
+        console.log('endpointApiVersionCheck', JSON.stringify(request.headers));
+
+        const authorizationHeader = request.header('Authorization') || '';
+        const authorizationToken = authorizationHeader.replace('Bearer ', '');
+        console.log('authorizationHeader', authorizationHeader);
+        console.log('authorizationToken', authorizationToken);
+
+        if (!authorizationToken) {
+            const realm = DOCKER_REALM_BASE + DOCKER_ENDPOINT_API_TOKEN;
+            const service = DOCKER_SERVICE;
+
+            response.setHeader(
+                'WWW-Authenticate',
+                `Bearer realm="${realm}",service="${service}"`,
+            );
+            response.setHeader(
+                'Docker-Distribution-API-Version',
+                'registry/2.0',
+            );
+
+            const unauthorizedError = {
+                errors: [
+                    {
+                        code: 'UNAUTHORIZED',
+                        message: 'access to the requested resource is not authorized',
+                    },
+                ],
+            };
+
+            response.status(401).send(JSON.stringify(unauthorizedError));
+            return;
+        }
+    }
+
     response.status(200).end();
 }
 
@@ -113,11 +154,52 @@ const endpointApiGetAll = (
 }
 
 
+const endpointApiGetToken = (
+    request: HypodRequest,
+    response: Response,
+) => {
+    const authorizationHeader = request.header('Authorization') || '';
+    console.log('authorizationHeader', authorizationHeader);
+
+    if (!authorizationHeader) {
+        response.status(400).end();
+        return;
+    }
+
+    const authorizationValueBase64 = authorizationHeader.replace('Basic ', '');
+    console.log('authorizationValueBase64', authorizationValueBase64);
+    const base64Buffer = Buffer.from(authorizationValueBase64, 'base64');
+    const authorizationValue = base64Buffer.toString('utf-8');
+    console.log('authorizationValue', authorizationValue);
+    const split = authorizationValue.split(':');
+    const identonym = split[0] || '';
+    const key = split[1] || '';
+    console.log('identonym, key', identonym, key);
+
+    if (!identonym || !key) {
+        response.status(400).end();
+        return;
+    }
+
+    console.log('endpointApiGetToken', JSON.stringify(request.headers));
+
+    const tokenResponse = {
+        token: 'one-two',
+        expires_in: 3600,
+        issued_at: new Date(),
+    };
+
+    response.status(200).send(JSON.stringify(tokenResponse));
+}
+
+
 const endpointApiPostAll = (
     request: HypodRequest,
     response: Response,
 ) => {
     const url = request.originalUrl;
+    console.log('endpointApiPostAll');
+    // console.log('endpointApiPostAll', request);
     // console.log('endpointApiPostAll', url);
     // console.log(JSON.stringify(request.headers));
     // console.log('request.body', request.body);
@@ -143,6 +225,7 @@ const endpointApiPutAll = (
 ) => {
     const url = request.path;
     // console.log('endpointApiPutAll', url);
+    console.log('endpointApiPutAll', JSON.stringify(request.headers));
     // console.log(JSON.stringify(request.headers));
     // console.log('request.body', request.body);
 
@@ -256,6 +339,11 @@ const dockerHandler = (
     instance.get(
         DOCKER_ENDPOINT_API_CATALOG,
         endpointApiGetCatalog as any,
+    );
+
+    instance.get(
+        DOCKER_ENDPOINT_API_TOKEN,
+        endpointApiGetToken as any,
     );
 
     instance.get(
