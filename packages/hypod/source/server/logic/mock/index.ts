@@ -51,6 +51,10 @@ const hypodLogic: HypodLogic = {
     checkOwnerToken: async (
         token: string,
     ) => {
+        if (!token) {
+            return false;
+        }
+
         return true;
     },
     getOwnerToken: async (
@@ -59,7 +63,7 @@ const hypodLogic: HypodLogic = {
     ) => {
         return {
             token: 'owner-token',
-            issued_at: new Date() + '',
+            issued_at: new Date(),
             expires_in: 3600,
         };
     },

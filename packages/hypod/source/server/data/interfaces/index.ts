@@ -100,7 +100,7 @@ export interface HypodOwner {
 export interface OwnerToken {
     token: string;
     expires_in: number;
-    issued_at: string;
+    issued_at: Date;
 }
 
 

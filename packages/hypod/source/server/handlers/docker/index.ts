@@ -67,12 +67,12 @@ const endpointApiVersionCheck = async (
             authorizationToken,
         );
 
-        if (!validAuthorizationToken) {
-            response.setHeader(
-                'WWW-Authenticate',
-                `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
-            );
+        response.setHeader(
+            'WWW-Authenticate',
+            `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
+        );
 
+        if (!validAuthorizationToken) {
             const unauthorizedError = {
                 errors: [
                     {
