@@ -1,5 +1,7 @@
 // #region imports
     // #region libraries
+    import bodyParser from 'body-parser';
+
     import PluridServer from '@plurid/plurid-react-server';
     // #endregion libraries
 
@@ -7,11 +9,16 @@
     // #region external
     import {
         HypodLogic,
+        HypodRequest,
     } from '#server/data/interfaces';
     // #endregion external
 
 
     // #region internal
+    import setup from './setup';
+
+    import dockerRawBody from './middleware/dockerRawBody';
+
     import graphqlHandler from './graphql';
 
     import dockerHandler from './docker';
@@ -21,15 +28,31 @@
 
 
 // #region module
-export const setupHandlers = (
+const setupHandlers = (
     server: PluridServer,
-    hypodLogic?: HypodLogic,
+    logic: HypodLogic | undefined,
 ) => {
+    setup();
+
     const instance = server.instance();
+
+    instance.use(
+        /** Attach logic */
+        (request, _, next) => {
+            if (logic) {
+                (request as HypodRequest).hypodLogic = {
+                    ...logic,
+                };
+            }
+
+            next();
+        },
+        dockerRawBody,
+        bodyParser.json(),
+    );
 
     graphqlHandler(
         instance,
-        hypodLogic,
     );
 
     dockerHandler(
@@ -37,3 +60,11 @@ export const setupHandlers = (
     );
 }
 // #endregion module
+
+
+
+// #region exports
+export {
+    setupHandlers,
+};
+// #endregion exports

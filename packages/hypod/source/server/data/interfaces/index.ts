@@ -12,11 +12,10 @@
 
 // #region module
 export interface Context {
-    request: Request;
+    request: HypodRequest;
     response: Response;
     instance: Application;
     imagenes: Imagene[];
-    logic: HypodLogic | undefined;
 }
 
 

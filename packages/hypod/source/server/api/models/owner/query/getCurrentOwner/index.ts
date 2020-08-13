@@ -13,10 +13,12 @@ const getCurrentOwner = async (
     context: Context,
 ) => {
     const {
-        logic,
+        request,
     } = context;
 
-    if (logic?.getCurrentOwner) {
+    const logic = request.hypodLogic;
+
+    if (logic) {
         const owner = await logic.getCurrentOwner();
 
         return {

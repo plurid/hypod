@@ -1,7 +1,5 @@
 // #region imports
     // #region libraries
-    import bodyParser from 'body-parser';
-
     import PluridServer, {
         PluridServerMiddleware,
         PluridServerService,
@@ -27,7 +25,6 @@
 
     // #region internal
     import {
-        DOCKER_ENDPOINT_API_VERSION_CHECK,
         DOCKER_ENDPOINT_IGNORE,
     } from './data/constants';
 
@@ -38,7 +35,6 @@
     import mockLogic from './logic/mock';
 
     import preserves from './preserves';
-    import setup from './setup';
     import {
         setupHandlers,
     } from './handlers';
@@ -48,17 +44,16 @@
 
 
 // #region module
-/** ENVIRONMENT */
-setup();
-
+// #region environment
 const watchMode = process.env.PLURID_WATCH_MODE === 'true';
 const isProduction = process.env.ENV_MODE === 'production';
 const buildDirectory = process.env.PLURID_BUILD_DIRECTORY || 'build';
 const port = process.env.PORT || 56565;
+// #endregion environment
 
 
 
-/** CONSTANTS */
+// #region constants
 const applicationRoot = 'hypod-application';
 const openAtStart = watchMode
     ? false
@@ -109,11 +104,11 @@ const options: PluridServerPartialOptions = {
 const template: PluridServerTemplateConfiguration = {
     root: applicationRoot,
 };
+// #endregion constants
 
 
 
-/** SERVER */
-// generate server
+// #region server
 const hypodServer = new PluridServer({
     helmet,
     routes,
@@ -128,44 +123,9 @@ const hypodServer = new PluridServer({
 });
 
 
-
 const Hypod = (
     logic?: HypodLogic,
 ) => {
-    hypodServer.instance().use(
-        /** Attach logic */
-        (request, response, next) => {
-            if (logic) {
-                (request as any).hypodLogic = {
-                    ...logic,
-                };
-            }
-
-            next();
-        },
-        /** Parse raw body for docker */
-        (request, response, next) => {
-            const url = request.originalUrl;
-
-            if (!url.startsWith(DOCKER_ENDPOINT_API_VERSION_CHECK)) {
-                next();
-                return;
-            }
-
-            let data = '';
-            request.setEncoding('binary');
-            request.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            request.on('end', () => {
-                (request as any).rawBody = data;
-                next();
-            });
-        },
-        bodyParser.json(),
-    );
-
     setupHandlers(
         hypodServer,
         logic,
@@ -173,9 +133,12 @@ const Hypod = (
 
     return hypodServer;
 }
+// #endregion server
+// #endregion module
 
 
 
+// #region run
 /**
  * If the file is called directly, as in `node build/index.js`,
  * it will run the server.
@@ -185,11 +148,12 @@ const Hypod = (
  */
 if (require.main === module) {
     Hypod(
+        /** mock logic for testing */
         mockLogic,
     );
     hypodServer.start(port);
 }
-// #endregion module
+// #endregion run
 
 
 
