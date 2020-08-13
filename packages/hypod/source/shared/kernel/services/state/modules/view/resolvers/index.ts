@@ -57,10 +57,23 @@ export const setViewCompactSelectors = (
 }
 
 
+export const setViewOwnerID = (
+    state: Types.State,
+    action: Types.SetViewOwnerIDAction,
+): Types.State => {
+    return {
+        ...state,
+        ownerID: action.payload,
+    };
+}
+
+
+
 const resolvers = {
     setViewLoading,
     setViewType,
     setViewCompactSelectors,
+    setViewOwnerID,
 };
 // #endregion module
 

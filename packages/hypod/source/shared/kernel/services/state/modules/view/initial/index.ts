@@ -12,6 +12,7 @@ const initialState: Types.State = {
     indexGeneralSelector: 'imagenes',
     indexGeneralView: 'general',
     compactSelectors: false,
+    ownerID: '',
 };
 // #endregion module
 
