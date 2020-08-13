@@ -45,15 +45,17 @@ const obliterateImageneTag = async (
     context: Context,
 ) => {
     const {
-        logic,
+        request,
     } = context;
+
+    const logic = request.hypodLogic;
 
     const {
         id,
         tag,
     } = input;
 
-    if (logic?.obliterateOwnerImageneTag) {
+    if (logic) {
         const status = await logic.obliterateOwnerImageneTag(
             id,
             tag,

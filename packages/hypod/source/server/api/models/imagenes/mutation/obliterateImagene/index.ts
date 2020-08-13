@@ -44,14 +44,16 @@ const obliterateImagene = async (
     context: Context,
 ) => {
     const {
-        logic,
+        request,
     } = context;
+
+    const logic = request.hypodLogic;
 
     const {
         value
     } = input;
 
-    if (logic?.obliterateOwnerImagene) {
+    if (logic) {
         const status = await logic.obliterateOwnerImagene(
             value,
         );

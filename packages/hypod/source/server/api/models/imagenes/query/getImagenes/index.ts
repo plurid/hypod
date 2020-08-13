@@ -14,10 +14,12 @@ const getImagenes = async (
 ) => {
     const {
         imagenes,
-        logic,
+        request,
     } = context;
 
-    if (logic?.getOwnerImagenes) {
+    const logic = request.hypodLogic;
+
+    if (logic) {
         const imagenes = await logic.getOwnerImagenes();
 
         return {

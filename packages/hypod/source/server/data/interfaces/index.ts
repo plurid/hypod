@@ -21,6 +21,7 @@ export interface Context {
 
 export type HypodRequest = Request & {
     hypodLogic: HypodLogic | undefined;
+    rawBody: string | undefined;
 }
 
 

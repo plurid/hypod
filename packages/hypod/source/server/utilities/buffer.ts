@@ -1,20 +1,32 @@
 // #region imports
-    // #region libraries
-    import express from 'express';
-    // #endregion libraries
+    // #region external
+    import {
+        HypodRequest,
+    } from '#server/data/interfaces';
+    // #endregion external
 // #endregion imports
 
 
 
 // #region module
-export const getBufferData = (
-    request: express.Request,
+const getBufferData = (
+    request: HypodRequest,
 ) => {
+    const rawBody = request.rawBody || '';
+
     const bufferData = Buffer.from(
-        (request as any).rawBody.toString('binary'),
+        rawBody,
         'binary',
     );
 
     return bufferData;
 }
 // #endregion module
+
+
+
+// #region exports
+export {
+    getBufferData,
+};
+// #endregion exports
