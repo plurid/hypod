@@ -36,6 +36,10 @@
     import {
         getAuthorizationHeader,
     } from '#server/utilities/authorization';
+
+    import {
+        sendUnauthorizedResponse,
+    } from '#server/utilities/response';
     // #endregion external
 // #endregion imports
 
@@ -44,6 +48,7 @@
 // #region module
 const realm = DOCKER_REALM_BASE + DOCKER_ENDPOINT_API_TOKEN;
 const privateUsage = !!(PRIVATE_OWNER_IDENTONYM && PRIVATE_OWNER_KEY);
+
 
 
 /**
@@ -77,16 +82,7 @@ const endpointApiVersionCheck = async (
         );
 
         if (!validAuthorizationToken) {
-            const unauthorizedError = {
-                errors: [
-                    {
-                        code: 'UNAUTHORIZED',
-                        message: 'Access is not authorized.',
-                    },
-                ],
-            };
-
-            response.status(401).send(JSON.stringify(unauthorizedError));
+            sendUnauthorizedResponse(response);
             return;
         }
 
@@ -106,16 +102,7 @@ const endpointApiVersionCheck = async (
         );
 
         if (!validAuthorizationToken) {
-            const unauthorizedError = {
-                errors: [
-                    {
-                        code: 'UNAUTHORIZED',
-                        message: 'Access is not authorized.',
-                    },
-                ],
-            };
-
-            response.status(401).send(JSON.stringify(unauthorizedError));
+            sendUnauthorizedResponse(response);
             return;
         }
 
@@ -165,7 +152,7 @@ const endpointApiGetToken = async (
         const authorization = getAuthorizationHeader(request);
 
         if (!authorization) {
-            response.status(400).end();
+            sendUnauthorizedResponse(response);
             return;
         }
 
@@ -187,7 +174,7 @@ const endpointApiGetToken = async (
         const authorization = getAuthorizationHeader(request);
 
         if (!authorization) {
-            response.status(400).end();
+            sendUnauthorizedResponse(response);
             return;
         }
 
@@ -200,7 +187,7 @@ const endpointApiGetToken = async (
             identonym !== PRIVATE_OWNER_IDENTONYM
             || key !== PRIVATE_OWNER_KEY
         ) {
-            response.status(400).end();
+            sendUnauthorizedResponse(response);
             return;
         }
 
@@ -214,7 +201,7 @@ const endpointApiGetToken = async (
         return;
     }
 
-    response.status(400).end();
+    sendUnauthorizedResponse(response);
     return;
 }
 
