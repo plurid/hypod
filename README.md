@@ -18,6 +18,7 @@
 </h1>
 
 
+
 `hypod` is an imagene registry.
 
 An `imagene registry` is a renaming of the `container registry` because, in fact, the registry is one of 'images', a runnable package, not of 'containers', a running package, and because a software 'image' is a bad name since there is nothing visual about it's nature.
@@ -30,8 +31,7 @@ The name `hypod` comes from the appropriation of the greek `hupodochê`, recepta
 
 + [Install](#install)
 + [Usage](#usage)
-    + [Setup](#setup)
-    + [Command-Line Interface](#command-line-interface)
++ [Building](#building)
 + [Packages](#packages)
 
 
@@ -67,29 +67,26 @@ and run it
 node server.js
 ```
 
-hypod starts a server listening on port `56565` serving the hypod UI on `/`, or which can receive GraphQL API requests on `/api`.
+`hypod` starts a server listening on port `56565` serving the hypod UI on `/`, or which can receive GraphQL API requests on `/graphql`.
 
 
 
 ## Usage
 
-1. docker build given the appropriate file with the appropriate tag
-
-2. docker push the created image
 
 
+## Building
 
-### Setup
-
-### Command-Line Interface
-
-Options:
-
-    -v, --version                   output the version number
-
-    -h, --help                      display help for command
-
-Commands:
+``` bash
+docker build --file ./configurations/production.dockerfile \
+    --tag hypod \
+    --build-arg HYPOD_DOCKER_REALM_BASE= \
+    --build-arg HYPOD_DOCKER_SERVICE= \
+    --build-arg HYPOD_PRIVATE_OWNER_IDENTONYM= \
+    --build-arg HYPOD_PRIVATE_OWNER_KEY= \
+    --build-arg HYPOD_PRIVATE_TOKEN= \
+    .
+```
 
 
 
