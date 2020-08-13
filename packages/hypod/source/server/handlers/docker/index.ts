@@ -32,6 +32,10 @@
     } from '#server/data/interfaces';
 
     import * as docker from '#server/logic/docker';
+
+    import {
+        getAuthorizationHeader,
+    } from '#server/utilities/authorization';
     // #endregion external
 // #endregion imports
 
@@ -60,14 +64,8 @@ const endpointApiVersionCheck = async (
     );
 
     if (logic) {
-        console.log('custom logic usage');
-
-        console.log('endpointApiVersionCheck', JSON.stringify(request.headers));
-
         const authorizationHeader = request.header('Authorization') || '';
         const authorizationToken = authorizationHeader.replace('Bearer ', '');
-        console.log('authorizationHeader', authorizationHeader);
-        console.log('authorizationToken', authorizationToken);
 
         const validAuthorizationToken = await logic?.checkOwnerToken(
             authorizationToken,
@@ -97,13 +95,8 @@ const endpointApiVersionCheck = async (
     }
 
     if (privateUsage) {
-        console.log('private usage');
-        console.log('endpointApiVersionCheck', JSON.stringify(request.headers));
-
         const authorizationHeader = request.header('Authorization') || '';
         const authorizationToken = authorizationHeader.replace('Bearer ', '');
-        console.log('authorizationHeader', authorizationHeader);
-        console.log('authorizationToken', authorizationToken);
 
         const validAuthorizationToken = authorizationToken === PRIVATE_TOKEN;
 
@@ -140,39 +133,25 @@ const endpointApiVersionCheck = async (
  * @param request
  * @param response
  */
-const endpointApiGetCatalog = (
+const endpointApiGetCatalog = async (
     request: HypodRequest,
     response: Response,
 ) => {
-    console.log('endpointApiGetCatalog');
-    response.status(200).end();
-}
+    const logic = request.hypodLogic;
 
+    if (logic) {
+        const ownerCatalog = await logic.getOwnerCatalog();
 
-const getAuthorizationHeader = (
-    request: HypodRequest,
-) => {
-    const authorizationHeader = request.header('Authorization') || '';
-
-    if (!authorizationHeader) {
+        response.status(200).send(JSON.stringify(ownerCatalog));
         return;
     }
 
-    const authorizationValueBase64 = authorizationHeader.replace('Basic ', '');
-    const base64Buffer = Buffer.from(authorizationValueBase64, 'base64');
-    const authorizationValue = base64Buffer.toString('utf-8');
-    const split = authorizationValue.split(':');
-    const identonym = split[0] || '';
-    const key = split[1] || '';
-
-    if (!identonym || !key) {
-        return;
-    }
-
-    return {
-        identonym,
-        key,
+    const data = {
+        repositories: [],
     };
+
+    response.status(200).send(JSON.stringify(data));
+    return;
 }
 
 
@@ -244,7 +223,7 @@ const endpointApiGetToken = async (
 }
 
 
-const endpointApiGetAll = (
+const endpointApiGetAll = async (
     request: HypodRequest,
     response: Response,
 ) => {
@@ -297,12 +276,12 @@ const endpointApiGetAll = (
 }
 
 
-const endpointApiPostAll = (
+const endpointApiPostAll = async (
     request: HypodRequest,
     response: Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiPostAll');
+    // console.log('endpointApiPostAll');
     // console.log('endpointApiPostAll', request);
     // console.log('endpointApiPostAll', url);
 
@@ -321,7 +300,7 @@ const endpointApiPostAll = (
 }
 
 
-const endpointApiPutAll = (
+const endpointApiPutAll = async (
     request: HypodRequest,
     response: Response,
 ) => {
@@ -354,7 +333,7 @@ const endpointApiPutAll = (
 }
 
 
-const endpointApiPatchAll = (
+const endpointApiPatchAll = async (
     request: HypodRequest,
     response: Response,
 ) => {
@@ -420,7 +399,7 @@ const endpointApiDeleteAll = (
 }
 
 
-const dockerHandler = (
+const dockerHandler = async (
     instance: Application,
 ) => {
     /**

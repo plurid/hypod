@@ -107,6 +107,7 @@ export interface OwnerToken {
 export interface HypodLogic {
     getCurrentOwner: () => Promise<HypodOwner>;
     getOwnerImagenes: () => Promise<Imagene[]>;
+    getOwnerCatalog: () => Promise<any>;
     obliterateOwnerImagene: (
         id: string,
     ) => Promise<boolean>;

@@ -36,6 +36,9 @@ const hypodLogic: HypodLogic = {
             // },
         ];
     },
+    getOwnerCatalog: async () => {
+        return {};
+    },
     obliterateOwnerImagene: async (
         id,
     ) => {
