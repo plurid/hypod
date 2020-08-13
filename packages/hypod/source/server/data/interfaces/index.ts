@@ -97,6 +97,13 @@ export interface HypodOwner {
 }
 
 
+export interface OwnerToken {
+    token: string;
+    expires_in: number;
+    issued_at: string;
+}
+
+
 export interface HypodLogic {
     getCurrentOwner: () => Promise<HypodOwner>;
     getOwnerImagenes: () => Promise<Imagene[]>;
@@ -109,5 +116,12 @@ export interface HypodLogic {
     ) => Promise<boolean>;
     checkOwnerCanPush: () => Promise<boolean>;
     checkOwnerCanPull: () => Promise<boolean>;
+    checkOwnerToken: (
+        token: string,
+    ) => Promise<boolean>;
+    getOwnerToken: (
+        identonym: string,
+        key: string,
+    ) => Promise<OwnerToken>;
 }
 // #endregion module

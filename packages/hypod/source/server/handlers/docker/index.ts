@@ -35,17 +35,25 @@
 
 
 // #region module
+const realm = DOCKER_REALM_BASE + DOCKER_ENDPOINT_API_TOKEN;
+
+
 /**
  * https://docs.docker.com/registry/spec/api/#api-version-check
  *
  * @param request
  * @param response
  */
-const endpointApiVersionCheck = (
+const endpointApiVersionCheck = async (
     request: HypodRequest,
     response: Response,
 ) => {
     const logic = request.hypodLogic;
+
+    response.setHeader(
+        'Docker-Distribution-API-Version',
+        'registry/2.0',
+    );
 
     if (logic) {
         console.log('endpointApiVersionCheck', JSON.stringify(request.headers));
@@ -55,24 +63,21 @@ const endpointApiVersionCheck = (
         console.log('authorizationHeader', authorizationHeader);
         console.log('authorizationToken', authorizationToken);
 
-        if (!authorizationToken) {
-            const realm = DOCKER_REALM_BASE + DOCKER_ENDPOINT_API_TOKEN;
-            const service = DOCKER_SERVICE;
+        const validAuthorizationToken = await logic?.checkOwnerToken(
+            authorizationToken,
+        );
 
+        if (!validAuthorizationToken) {
             response.setHeader(
                 'WWW-Authenticate',
-                `Bearer realm="${realm}",service="${service}"`,
-            );
-            response.setHeader(
-                'Docker-Distribution-API-Version',
-                'registry/2.0',
+                `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
             );
 
             const unauthorizedError = {
                 errors: [
                     {
                         code: 'UNAUTHORIZED',
-                        message: 'access to the requested resource is not authorized',
+                        message: 'Access is not authorized.',
                     },
                 ],
             };
@@ -80,6 +85,9 @@ const endpointApiVersionCheck = (
             response.status(401).send(JSON.stringify(unauthorizedError));
             return;
         }
+
+        response.status(200).end();
+        return;
     }
 
     response.status(200).end();
@@ -97,6 +105,47 @@ const endpointApiGetCatalog = (
     response: Response,
 ) => {
     console.log('endpointApiGetCatalog');
+    response.status(200).end();
+}
+
+
+const endpointApiGetToken = async (
+    request: HypodRequest,
+    response: Response,
+) => {
+    const logic = request.hypodLogic;
+
+    const authorizationHeader = request.header('Authorization') || '';
+    console.log('authorizationHeader', authorizationHeader);
+
+    if (!authorizationHeader) {
+        response.status(400).end();
+        return;
+    }
+
+    const authorizationValueBase64 = authorizationHeader.replace('Basic ', '');
+    console.log('authorizationValueBase64', authorizationValueBase64);
+    const base64Buffer = Buffer.from(authorizationValueBase64, 'base64');
+    const authorizationValue = base64Buffer.toString('utf-8');
+    console.log('authorizationValue', authorizationValue);
+    const split = authorizationValue.split(':');
+    const identonym = split[0] || '';
+    const key = split[1] || '';
+    console.log('identonym, key', identonym, key);
+
+    if (!identonym || !key) {
+        response.status(400).end();
+        return;
+    }
+
+    console.log('endpointApiGetToken', JSON.stringify(request.headers));
+
+    const tokenResponse = await logic?.getOwnerToken(
+        identonym,
+        key,
+    );
+
+    response.status(200).send(JSON.stringify(tokenResponse));
 }
 
 
@@ -107,7 +156,6 @@ const endpointApiGetAll = (
     const url = request.originalUrl;
     // console.log('endpointApiGetAll', url);
     // console.log(JSON.stringify(request.headers));
-    // console.log('request.body', request.body);
 
     const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
@@ -154,45 +202,6 @@ const endpointApiGetAll = (
 }
 
 
-const endpointApiGetToken = (
-    request: HypodRequest,
-    response: Response,
-) => {
-    const authorizationHeader = request.header('Authorization') || '';
-    console.log('authorizationHeader', authorizationHeader);
-
-    if (!authorizationHeader) {
-        response.status(400).end();
-        return;
-    }
-
-    const authorizationValueBase64 = authorizationHeader.replace('Basic ', '');
-    console.log('authorizationValueBase64', authorizationValueBase64);
-    const base64Buffer = Buffer.from(authorizationValueBase64, 'base64');
-    const authorizationValue = base64Buffer.toString('utf-8');
-    console.log('authorizationValue', authorizationValue);
-    const split = authorizationValue.split(':');
-    const identonym = split[0] || '';
-    const key = split[1] || '';
-    console.log('identonym, key', identonym, key);
-
-    if (!identonym || !key) {
-        response.status(400).end();
-        return;
-    }
-
-    console.log('endpointApiGetToken', JSON.stringify(request.headers));
-
-    const tokenResponse = {
-        token: 'one-two',
-        expires_in: 3600,
-        issued_at: new Date(),
-    };
-
-    response.status(200).send(JSON.stringify(tokenResponse));
-}
-
-
 const endpointApiPostAll = (
     request: HypodRequest,
     response: Response,
@@ -201,8 +210,6 @@ const endpointApiPostAll = (
     console.log('endpointApiPostAll');
     // console.log('endpointApiPostAll', request);
     // console.log('endpointApiPostAll', url);
-    // console.log(JSON.stringify(request.headers));
-    // console.log('request.body', request.body);
 
     const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
 
@@ -225,9 +232,7 @@ const endpointApiPutAll = (
 ) => {
     const url = request.path;
     // console.log('endpointApiPutAll', url);
-    console.log('endpointApiPutAll', JSON.stringify(request.headers));
-    // console.log(JSON.stringify(request.headers));
-    // console.log('request.body', request.body);
+    // console.log('endpointApiPutAll', JSON.stringify(request.headers));
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
@@ -261,9 +266,6 @@ const endpointApiPatchAll = (
     const url = request.originalUrl;
     // console.log('endpointApiPatchAll', url);
     // console.log(JSON.stringify(request.headers));
-    // console.log('request.body', request.body);
-    // console.log('request.query', request.query);
-    // console.log('request.body', request.body);
 
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
@@ -287,7 +289,6 @@ const endpointApiDeleteAll = (
     const url = request.originalUrl;
     // console.log('endpointApiDeleteAll', url);
     // console.log(JSON.stringify(request.headers));
-    // console.log('request.body', request.body);
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);

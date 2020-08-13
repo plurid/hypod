@@ -48,6 +48,21 @@ const hypodLogic: HypodLogic = {
     ) => {
         return true;
     },
+    checkOwnerToken: async (
+        token: string,
+    ) => {
+        return true;
+    },
+    getOwnerToken: async (
+        identonym,
+        key,
+    ) => {
+        return {
+            token: 'owner-token',
+            issued_at: new Date() + '',
+            expires_in: 3600,
+        };
+    },
 };
 // #endregion module
 
