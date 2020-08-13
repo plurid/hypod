@@ -23,7 +23,18 @@ const hypodLogic: HypodLogic = {
         };
     },
     getOwnerImagenes: async () => {
-        return [];
+        return [
+            // {
+            //     id: 'one',
+            //     digest: 'sha:2567902',
+            //     latest: 'latest',
+            //     name: 'one',
+            //     size: 234,
+            //     tags: [
+            //         'latest',
+            //     ],
+            // },
+        ];
     },
     obliterateOwnerImagene: async (
         id,
