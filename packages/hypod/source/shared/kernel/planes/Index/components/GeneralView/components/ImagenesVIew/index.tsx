@@ -60,7 +60,7 @@ const imageneRowRenderer = (
         digest,
     } = imagene;
 
-    const shortDigest = digest.slice(0, 12) + '...';
+    const shortDigest = digest.slice(0, 12) + '…';
 
     return (
         <>
