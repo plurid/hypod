@@ -11,6 +11,8 @@
     import {
         DOCKER_REALM_BASE,
         DOCKER_SERVICE,
+        PRIVATE_OWNER_IDENTONYM,
+        PRIVATE_OWNER_KEY,
 
         DOCKER_ENDPOINT_API_VERSION_CHECK,
         DOCKER_ENDPOINT_API_CATALOG,
@@ -36,6 +38,7 @@
 
 // #region module
 const realm = DOCKER_REALM_BASE + DOCKER_ENDPOINT_API_TOKEN;
+const privateUsage = !!(PRIVATE_OWNER_IDENTONYM && PRIVATE_OWNER_KEY);
 
 
 /**
@@ -56,6 +59,8 @@ const endpointApiVersionCheck = async (
     );
 
     if (logic) {
+        console.log('custom logic usage');
+
         console.log('endpointApiVersionCheck', JSON.stringify(request.headers));
 
         const authorizationHeader = request.header('Authorization') || '';
@@ -66,6 +71,40 @@ const endpointApiVersionCheck = async (
         const validAuthorizationToken = await logic?.checkOwnerToken(
             authorizationToken,
         );
+
+        response.setHeader(
+            'WWW-Authenticate',
+            `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
+        );
+
+        if (!validAuthorizationToken) {
+            const unauthorizedError = {
+                errors: [
+                    {
+                        code: 'UNAUTHORIZED',
+                        message: 'Access is not authorized.',
+                    },
+                ],
+            };
+
+            response.status(401).send(JSON.stringify(unauthorizedError));
+            return;
+        }
+
+        response.status(200).end();
+        return;
+    }
+
+    if (privateUsage) {
+        console.log('private usage');
+        console.log('endpointApiVersionCheck', JSON.stringify(request.headers));
+
+        const authorizationHeader = request.header('Authorization') || '';
+        const authorizationToken = authorizationHeader.replace('Bearer ', '');
+        console.log('authorizationHeader', authorizationHeader);
+        console.log('authorizationToken', authorizationToken);
+
+        const validAuthorizationToken = authorizationToken === 'owner-token';
 
         response.setHeader(
             'WWW-Authenticate',
@@ -109,43 +148,98 @@ const endpointApiGetCatalog = (
 }
 
 
+const getAuthorizationHeader = (
+    request: HypodRequest,
+) => {
+    const authorizationHeader = request.header('Authorization') || '';
+
+    if (!authorizationHeader) {
+        return;
+    }
+
+    const authorizationValueBase64 = authorizationHeader.replace('Basic ', '');
+    const base64Buffer = Buffer.from(authorizationValueBase64, 'base64');
+    const authorizationValue = base64Buffer.toString('utf-8');
+    const split = authorizationValue.split(':');
+    const identonym = split[0] || '';
+    const key = split[1] || '';
+
+    if (!identonym || !key) {
+        return;
+    }
+
+    return {
+        identonym,
+        key,
+    };
+}
+
+
 const endpointApiGetToken = async (
     request: HypodRequest,
     response: Response,
 ) => {
     const logic = request.hypodLogic;
 
-    const authorizationHeader = request.header('Authorization') || '';
-    console.log('authorizationHeader', authorizationHeader);
+    if (logic) {
+        console.log('custom logic usage');
 
-    if (!authorizationHeader) {
-        response.status(400).end();
+        const authorization = getAuthorizationHeader(request);
+
+        if (!authorization) {
+            response.status(400).end();
+            return;
+        }
+
+        const {
+            identonym,
+            key,
+        } = authorization;
+
+        const tokenResponse = await logic?.getOwnerToken(
+            identonym,
+            key,
+        );
+
+        response.status(200).send(JSON.stringify(tokenResponse));
         return;
     }
 
-    const authorizationValueBase64 = authorizationHeader.replace('Basic ', '');
-    console.log('authorizationValueBase64', authorizationValueBase64);
-    const base64Buffer = Buffer.from(authorizationValueBase64, 'base64');
-    const authorizationValue = base64Buffer.toString('utf-8');
-    console.log('authorizationValue', authorizationValue);
-    const split = authorizationValue.split(':');
-    const identonym = split[0] || '';
-    const key = split[1] || '';
-    console.log('identonym, key', identonym, key);
+    if (privateUsage) {
+        console.log('private usage');
 
-    if (!identonym || !key) {
-        response.status(400).end();
+        const authorization = getAuthorizationHeader(request);
+
+        if (!authorization) {
+            response.status(400).end();
+            return;
+        }
+
+        const {
+            identonym,
+            key,
+        } = authorization;
+
+        if (
+            identonym !== PRIVATE_OWNER_IDENTONYM
+            || key !== PRIVATE_OWNER_KEY
+        ) {
+            response.status(400).end();
+            return;
+        }
+
+        const tokenResponse = {
+            token: 'owner-token',
+            issued_at: new Date(),
+            expires_in: 3600,
+        };
+
+        response.status(200).send(JSON.stringify(tokenResponse));
         return;
     }
 
-    console.log('endpointApiGetToken', JSON.stringify(request.headers));
-
-    const tokenResponse = await logic?.getOwnerToken(
-        identonym,
-        key,
-    );
-
-    response.status(200).send(JSON.stringify(tokenResponse));
+    response.status(400).end();
+    return;
 }
 
 
