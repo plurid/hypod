@@ -15,7 +15,12 @@
 
     import {
         PluridIconDelete,
+        PluridIconCopy,
     } from '@plurid/plurid-icons-react';
+
+    import {
+        clipboard,
+    } from '@plurid/plurid-functions';
     // #endregion libraries
 
 
@@ -43,6 +48,13 @@
         getFilterIDs,
     } from '#kernel-services/utilities';
     // #endregion external
+
+
+    // #region internal
+    import {
+        StyledDigest,
+    } from './styled';
+    // #endregion internal
 // #endregion imports
 
 
@@ -76,9 +88,14 @@ const imageneRowRenderer = (
                 {size} MB
             </div>
 
-            <div>
+            <StyledDigest
+            >
+                <PluridIconCopy
+                    atClick={() => clipboard.copy(digest)}
+                />
+
                 {shortDigest}
-            </div>
+            </StyledDigest>
 
             <PluridIconDelete
                 atClick={() => handleImageneObliterate(id)}
@@ -311,7 +328,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 120px 120px 120px 30px"
+            rowTemplate="auto 120px 120px 150px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no imagenes"
