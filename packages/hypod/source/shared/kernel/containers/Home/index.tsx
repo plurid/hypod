@@ -95,11 +95,9 @@ const Home: React.FC<HomeProperties> = (
 
                     const response = query.data.getUsageType;
 
-                    if (!response.status) {
-                        return;
+                    if (response.status) {
+                        dispatchSetViewUsageType(response.data);
                     }
-
-                    dispatchSetViewUsageType(response.data);
                 }
 
                 /** Get imagenes */
@@ -110,15 +108,13 @@ const Home: React.FC<HomeProperties> = (
 
                     const response = query.data.getImagenes;
 
-                    if (!response.status) {
-                        return;
+                    if (response.status) {
+                        const imagenes = graphql.deleteTypenames(
+                            response.data,
+                        );
+
+                        dispatchSetImagenes(imagenes);
                     }
-
-                    const imagenes = graphql.deleteTypenames(
-                        response.data,
-                    );
-
-                    dispatchSetImagenes(imagenes);
                 }
 
                 /** Get current owner */
@@ -129,15 +125,13 @@ const Home: React.FC<HomeProperties> = (
 
                     const response = query.data.getCurrentOwner;
 
-                    if (!response.status) {
-                        return;
+                    if (response.status) {
+                        const owner = graphql.deleteTypenames(
+                            response.data,
+                        );
+
+                        dispatchSetViewOwnerID(owner.id);
                     }
-
-                    const owner = graphql.deleteTypenames(
-                        response.data,
-                    );
-
-                    dispatchSetViewOwnerID(owner.id);
                 }
 
                 dispatchSetViewLoading(false);
