@@ -22,11 +22,10 @@ export const STORAGE_TYPE = (process.env.HYPOD_STORAGE_TYPE as StorageType | und
 export const DOCKER_REALM_BASE = process.env.HYPOD_DOCKER_REALM_BASE || '';
 export const DOCKER_SERVICE = process.env.HYPOD_DOCKER_SERVICE || '';
 
+export const PRIVATE_USAGE = process.env.HYPOD_PRIVATE_USAGE ?? false;
 export const PRIVATE_OWNER_IDENTONYM = process.env.HYPOD_PRIVATE_OWNER_IDENTONYM || '';
 export const PRIVATE_OWNER_KEY = process.env.HYPOD_PRIVATE_OWNER_KEY || '';
 export const PRIVATE_TOKEN = process.env.HYPOD_PRIVATE_TOKEN || '';
-
-export const privateUsage = !!(PRIVATE_OWNER_IDENTONYM && PRIVATE_OWNER_KEY);
 
 
 /**

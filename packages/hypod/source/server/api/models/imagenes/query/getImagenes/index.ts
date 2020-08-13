@@ -5,7 +5,7 @@
     } from '#server/data/interfaces';
 
     import {
-        privateUsage,
+        PRIVATE_USAGE,
     } from '#server/data/constants';
     // #endregion external
 // #endregion imports
@@ -34,7 +34,7 @@ const getImagenes = async (
         };
     }
 
-    if (privateUsage) {
+    if (PRIVATE_USAGE) {
         return {
             status: true,
             data: [

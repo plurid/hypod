@@ -5,7 +5,7 @@
     } from '#server/data/interfaces';
 
     import {
-        privateUsage,
+        PRIVATE_USAGE,
     } from '#server/data/constants';
     // #endregion external
 // #endregion imports
@@ -31,7 +31,7 @@ const getCurrentOwner = async (
         };
     }
 
-    if (privateUsage) {
+    if (PRIVATE_USAGE) {
         return {
             status: false,
         };

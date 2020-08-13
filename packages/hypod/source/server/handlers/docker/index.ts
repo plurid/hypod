@@ -11,11 +11,11 @@
     import {
         DOCKER_REALM_BASE,
         DOCKER_SERVICE,
+
+        PRIVATE_USAGE,
         PRIVATE_OWNER_IDENTONYM,
         PRIVATE_OWNER_KEY,
         PRIVATE_TOKEN,
-
-        privateUsage,
 
         DOCKER_ENDPOINT_API_VERSION_CHECK,
         DOCKER_ENDPOINT_API_CATALOG,
@@ -90,7 +90,7 @@ const endpointApiVersionCheck = async (
         return;
     }
 
-    if (privateUsage) {
+    if (PRIVATE_USAGE) {
         const authorizationHeader = request.header('Authorization') || '';
         const authorizationToken = authorizationHeader.replace('Bearer ', '');
 
@@ -170,7 +170,7 @@ const endpointApiGetToken = async (
         return;
     }
 
-    if (privateUsage) {
+    if (PRIVATE_USAGE) {
         const authorization = getAuthorizationHeader(request);
 
         if (!authorization) {
