@@ -13,6 +13,7 @@ const initialState: Types.State = {
     indexGeneralView: 'general',
     compactSelectors: false,
     ownerID: '',
+    usageType: '',
 };
 // #endregion module
 

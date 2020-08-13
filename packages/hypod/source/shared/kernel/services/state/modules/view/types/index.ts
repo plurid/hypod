@@ -33,6 +33,13 @@ export interface SetViewOwnerIDAction {
 }
 
 
+export const SET_VIEW_USAGE_TYPE = 'SET_VIEW_USAGE_TYPE';
+export interface SetViewUsageTypeAction {
+    type: typeof SET_VIEW_USAGE_TYPE;
+    payload: string;
+}
+
+
 
 export interface State {
     loading: boolean;
@@ -40,6 +47,7 @@ export interface State {
     indexGeneralView: string;
     compactSelectors: boolean;
     ownerID: string;
+    usageType: string;
 }
 
 
@@ -47,5 +55,6 @@ export type Actions =
     | SetViewLoadingAction
     | SetViewTypeAction
     | SetViewCompactSelectorsAction
-    | SetViewOwnerIDAction;
+    | SetViewOwnerIDAction
+    | SetViewUsageTypeAction;
 // #endregion module

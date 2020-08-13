@@ -14,6 +14,7 @@ const getIndexGeneralSelector = (state: AppState) => state.view.indexGeneralSele
 const getIndexGeneralView = (state: AppState) => state.view.indexGeneralView;
 const getViewCompactSelectors = (state: AppState) => state.view.compactSelectors;
 const getViewOwnerID = (state: AppState) => state.view.ownerID;
+const getViewUsageType = (state: AppState) => state.view.usageType;
 
 
 const selectors = {
@@ -22,6 +23,7 @@ const selectors = {
     getIndexGeneralView,
     getViewCompactSelectors,
     getViewOwnerID,
+    getViewUsageType,
 };
 // #endregion module
 

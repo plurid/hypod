@@ -22,6 +22,8 @@ const reducer = (
             return resolvers.setViewCompactSelectors(state, action);
         case Types.SET_VIEW_OWNER_ID:
             return resolvers.setViewOwnerID(state, action);
+        case Types.SET_VIEW_USAGE_TYPE:
+            return resolvers.setViewUsageType(state, action);
         default:
             return {
                 ...state,

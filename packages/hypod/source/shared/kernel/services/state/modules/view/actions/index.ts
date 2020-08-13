@@ -47,12 +47,23 @@ export const setViewOwnerID = (
 }
 
 
+export const setViewUsageType = (
+    usageType: string,
+): Types.SetViewUsageTypeAction => {
+    return {
+        type: Types.SET_VIEW_USAGE_TYPE,
+        payload: usageType,
+    };
+}
+
+
 
 const actions = {
     setViewLoading,
     setViewType,
     setViewCompactSelectors,
     setViewOwnerID,
+    setViewUsageType,
 };
 // #endregion module
 

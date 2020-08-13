@@ -35,6 +35,7 @@ export interface PageOwnProperties {
 }
 
 export interface PageStateProperties {
+    stateViewLoading: boolean;
 }
 
 export interface PageDispatchProperties {
@@ -48,9 +49,11 @@ const Page: React.FC<PageProperties> = (
     properties,
 ) => {
     // #region properties
-    // const {
-    //     // plurid,
-    // } = properties;
+    const {
+        // #region state
+        stateViewLoading,
+        // #endregion state
+    } = properties;
     // #endregion properties
 
 
@@ -63,6 +66,10 @@ const Page: React.FC<PageProperties> = (
 
 
     // #region render
+    if (stateViewLoading) {
+        return (<></>);
+    }
+
     let renderView = (<></>);
 
     switch (view) {
@@ -92,6 +99,7 @@ const Page: React.FC<PageProperties> = (
 const mapStateToProperties = (
     state: AppState,
 ): PageStateProperties => ({
+    stateViewLoading: selectors.view.getLoading(state),
 });
 
 

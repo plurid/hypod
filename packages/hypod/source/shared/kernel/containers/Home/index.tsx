@@ -25,6 +25,7 @@
     import {
         GET_IMAGENES,
         GET_CURRENT_OWNER,
+        GET_USAGE_TYPE,
     } from '#kernel-services/graphql/query';
 
     import { AppState } from '#kernel-services/state/store';
@@ -52,6 +53,8 @@ export interface HomeStateProperties {
 }
 
 export interface HomeDispatchProperties {
+    dispatchSetViewLoading: typeof actions.view.setViewLoading;
+    dispatchSetViewUsageType: typeof actions.view.setViewUsageType;
     dispatchSetImagenes: typeof actions.data.setImagenes;
     dispatchSetViewOwnerID: typeof actions.view.setViewOwnerID;
 }
@@ -71,6 +74,8 @@ const Home: React.FC<HomeProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatchSetViewLoading,
+        dispatchSetViewUsageType,
         dispatchSetImagenes,
         dispatchSetViewOwnerID,
         // #endregion dispatch
@@ -82,6 +87,22 @@ const Home: React.FC<HomeProperties> = (
     useEffect(() => {
         const loadData = async () => {
             try {
+                /** Get usage type */
+                {
+                    const query = await client.query({
+                        query: GET_USAGE_TYPE,
+                    });
+
+                    const response = query.data.getUsageType;
+
+                    if (!response.status) {
+                        return;
+                    }
+
+                    dispatchSetViewUsageType(response.data);
+                }
+
+                /** Get imagenes */
                 {
                     const query = await client.query({
                         query: GET_IMAGENES,
@@ -100,6 +121,7 @@ const Home: React.FC<HomeProperties> = (
                     dispatchSetImagenes(imagenes);
                 }
 
+                /** Get current owner */
                 {
                     const query = await client.query({
                         query: GET_CURRENT_OWNER,
@@ -117,7 +139,10 @@ const Home: React.FC<HomeProperties> = (
 
                     dispatchSetViewOwnerID(owner.id);
                 }
+
+                dispatchSetViewLoading(false);
             } catch (error) {
+                dispatchSetViewLoading(false);
                 return;
             }
         }
@@ -148,6 +173,16 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): HomeDispatchProperties => ({
+    dispatchSetViewLoading: (
+        loading,
+    ) => dispatch(
+        actions.view.setViewLoading(loading),
+    ),
+    dispatchSetViewUsageType: (
+        usageType,
+    ) => dispatch(
+        actions.view.setViewUsageType(usageType),
+    ),
     dispatchSetImagenes: (
         imagenes,
     ) => dispatch(

@@ -39,6 +39,21 @@ const GET_CURRENT_OWNER = gql`
         }
     }
 `;
+
+
+const GET_USAGE_TYPE = gql`
+    query GetUsageType {
+        getUsageType {
+            status
+            error {
+                path
+                type
+                message
+            }
+            data
+        }
+    }
+`;
 // #endregion module
 
 
@@ -47,5 +62,6 @@ const GET_CURRENT_OWNER = gql`
 export {
     GET_IMAGENES,
     GET_CURRENT_OWNER,
+    GET_USAGE_TYPE,
 };
 // #endregion exports
