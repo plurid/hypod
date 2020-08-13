@@ -10,6 +10,7 @@
 export const queries = gql`
     extend type Query {
         getCurrentOwner: ResponseOwner!
+        getUsageType: ResponseUsageType!
     }
 `;
 
@@ -23,6 +24,12 @@ export const types = gql`
 
     type Owner {
         id: ID!
+    }
+
+    type ResponseUsageType {
+        status: Boolean!
+        error: Error
+        data: String!
     }
 `;
 // #endregion module

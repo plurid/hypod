@@ -13,34 +13,30 @@
 
 
 // #region module
-const getCurrentOwner = async (
+const getUsageType = async (
     context: Context,
 ) => {
     const {
         request,
     } = context;
 
-    const logic = request.hypodLogic;
-
-    if (logic) {
-        const owner = await logic.getCurrentOwner();
-
+    if (request.hypodLogic) {
         return {
             status: true,
-            data: owner,
+            data: 'CUSTOM_LOGIC',
         };
     }
 
     if (PRIVATE_USAGE) {
-        // TODO
-        // check if user
         return {
-            status: false,
+            status: true,
+            data: 'PRIVATE_USAGE'
         };
     }
 
     return {
-        status: false,
+        status: true,
+        data: 'PUBLIC',
     };
 }
 // #endregion module
@@ -48,5 +44,5 @@ const getCurrentOwner = async (
 
 
 // #region exports
-export default getCurrentOwner;
+export default getUsageType;
 // #endregion exports

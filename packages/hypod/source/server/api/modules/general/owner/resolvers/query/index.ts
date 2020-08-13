@@ -21,6 +21,13 @@ const Query = {
     ) => Owner.Query.getCurrentOwner(
         context,
     ),
+    getUsageType: (
+        _: any,
+        __: any,
+        context: Context,
+    ) => Owner.Query.getUsageType(
+        context,
+    ),
 };
 // #endregion module
 
