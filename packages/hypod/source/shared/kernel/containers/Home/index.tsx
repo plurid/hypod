@@ -55,6 +55,7 @@ export interface HomeStateProperties {
 
 export interface HomeDispatchProperties {
     dispatchSetImagenes: typeof actions.data.setImagenes;
+    dispatchSetViewOwnerID: typeof actions.view.setViewOwnerID;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -73,6 +74,7 @@ const Home: React.FC<HomeProperties> = (
 
         // #region dispatch
         dispatchSetImagenes,
+        dispatchSetViewOwnerID,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -112,6 +114,8 @@ const Home: React.FC<HomeProperties> = (
                     const owner = graphql.deleteTypenames(
                         response.data,
                     );
+
+                    dispatchSetViewOwnerID(owner.id);
                 }
             } catch (error) {
                 return;
@@ -148,6 +152,11 @@ const mapDispatchToProperties = (
         imagenes,
     ) => dispatch(
         actions.data.setImagenes(imagenes),
+    ),
+    dispatchSetViewOwnerID: (
+        id,
+    ) => dispatch(
+        actions.view.setViewOwnerID(id),
     ),
 });
 // #endregion module
