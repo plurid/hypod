@@ -30,8 +30,6 @@
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
     import actions from '#kernel-services/state/actions';
-
-    import environment from '#kernel-services/utilities/environment';
     // #endregion external
 
 
@@ -84,23 +82,25 @@ const Home: React.FC<HomeProperties> = (
     useEffect(() => {
         const loadData = async () => {
             try {
-                const query = await client.query({
-                    query: GET_IMAGENES,
-                });
+                {
+                    const query = await client.query({
+                        query: GET_IMAGENES,
+                    });
 
-                const response = query.data.getImagenes;
+                    const response = query.data.getImagenes;
 
-                if (!response.status) {
-                    return;
+                    if (!response.status) {
+                        return;
+                    }
+
+                    const imagenes = graphql.deleteTypenames(
+                        response.data,
+                    );
+
+                    dispatchSetImagenes(imagenes);
                 }
 
-                const imagenes = graphql.deleteTypenames(
-                    response.data,
-                );
-
-                dispatchSetImagenes(imagenes);
-
-                if (environment.customLogic) {
+                {
                     const query = await client.query({
                         query: GET_CURRENT_OWNER,
                     });
