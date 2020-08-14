@@ -18,6 +18,7 @@ const GET_IMAGENES = gql`
                 tags
                 size
                 digest
+                isPublic
             }
         }
     }

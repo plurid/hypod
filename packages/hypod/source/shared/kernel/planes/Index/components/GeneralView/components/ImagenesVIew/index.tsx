@@ -16,6 +16,7 @@
     import {
         PluridIconDelete,
         PluridIconCopy,
+        PluridIconLocked,
     } from '@plurid/plurid-icons-react';
 
     import {
@@ -70,6 +71,7 @@ const imageneRowRenderer = (
         latest,
         size,
         digest,
+        isPublic,
     } = imagene;
 
     const shortDigest = digest.slice(0, 12) + '…';
@@ -96,6 +98,12 @@ const imageneRowRenderer = (
 
                 {shortDigest}
             </StyledDigest>
+
+            <div>
+                {!isPublic && (
+                    <PluridIconLocked />
+                )}
+            </div>
 
             <PluridIconDelete
                 atClick={() => handleImageneObliterate(id)}
@@ -320,6 +328,8 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             </div>
 
             <div />
+
+            <div />
         </>
     );
 
@@ -328,7 +338,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 120px 120px 150px 30px"
+            rowTemplate="auto 120px 120px 150px 30px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no imagenes"
