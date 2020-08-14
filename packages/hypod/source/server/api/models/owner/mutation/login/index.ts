@@ -8,6 +8,9 @@
         PRIVATE_USAGE,
         PRIVATE_OWNER_IDENTONYM,
         PRIVATE_OWNER_KEY,
+        PRIVATE_TOKEN,
+
+        COOKIE_PRIVATE_TOKEN,
     } from '#server/data/constants';
     // #endregion external
 // #endregion imports
@@ -20,6 +23,10 @@ const login = async (
     context: Context,
 ) => {
     const {
+        response,
+    } = context;
+
+    const {
         identonym,
         key,
     } = input;
@@ -29,7 +36,17 @@ const login = async (
             identonym === PRIVATE_OWNER_IDENTONYM
             && key === PRIVATE_OWNER_KEY
         ) {
-            // set cookie
+            const base64Token = Buffer
+                .from(PRIVATE_TOKEN)
+                .toString('base64');
+
+            response.cookie(
+                COOKIE_PRIVATE_TOKEN,
+                base64Token,
+                {
+                    httpOnly: true,
+                },
+            );
 
             return {
                 status: true,

@@ -6,6 +6,9 @@
 
     import {
         PRIVATE_USAGE,
+        PRIVATE_TOKEN,
+
+        COOKIE_PRIVATE_TOKEN,
     } from '#server/data/constants';
     // #endregion external
 // #endregion imports
@@ -32,10 +35,25 @@ const getCurrentOwner = async (
     }
 
     if (PRIVATE_USAGE) {
-        // TODO
-        // check if user
+        console.log('request.cookies', request.cookies);
+
+        const cookiePrivateToken = request.cookies[COOKIE_PRIVATE_TOKEN];
+
+        const token = Buffer
+            .from(cookiePrivateToken, 'base64')
+            .toString('utf-8');
+
+        console.log('cookiePrivateToken', cookiePrivateToken);
+        console.log('token', token);
+
+        if (token !== PRIVATE_TOKEN) {
+            return {
+                status: false,
+            };
+        }
+
         return {
-            status: false,
+            status: true,
         };
     }
 
