@@ -41,6 +41,8 @@ const getImagenes = async (
 
         if (PRIVATE_USAGE) {
             const privateOwnerIdentonym = getPrivateOwner(request);
+            console.log(request.cookies);
+            console.log('privateOwnerIdentonym', privateOwnerIdentonym);
 
             if (!privateOwnerIdentonym) {
                 return {

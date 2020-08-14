@@ -25,6 +25,7 @@ const getImagenes = async (
 ) => {
     const query = await client.query({
         query: GET_IMAGENES,
+        fetchPolicy: 'no-cache',
     });
 
     const response = query.data.getImagenes;
