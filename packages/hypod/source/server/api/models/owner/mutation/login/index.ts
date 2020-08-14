@@ -24,11 +24,10 @@ const login = async (
         key,
     } = input;
 
-
     if (PRIVATE_USAGE) {
         if (
-            identonym !== PRIVATE_OWNER_IDENTONYM
-            || key !== PRIVATE_OWNER_KEY
+            identonym === PRIVATE_OWNER_IDENTONYM
+            && key === PRIVATE_OWNER_KEY
         ) {
             // set cookie
 

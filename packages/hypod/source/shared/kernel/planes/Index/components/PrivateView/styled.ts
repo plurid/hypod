@@ -36,6 +36,6 @@ export const StyledLoginButtons = styled.div`
 
 export const StyledLoginButton = styled.div`
     width: 200px;
-    margin: 50px auto;
+    margin: 0 auto;
 `;
 // #endregion module

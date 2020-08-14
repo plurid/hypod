@@ -110,13 +110,20 @@ const PrivateView: React.FC<PrivateViewProperties> = (
         key,
         setKey
     ] = useState('');
+    const [
+        error,
+        setError
+    ] = useState('');
     // #endregion state
 
 
     // #region handlers
     const login = async () => {
         try {
+            setError('');
+
             if (!identonym || !key) {
+                setError('identonym and key required.');
                 return;
             }
 
@@ -135,6 +142,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
             const response = mutation.data.login;
 
             if (!response.status) {
+                setError('something is wrong. try again.');
                 return;
             }
 
@@ -184,6 +192,14 @@ const PrivateView: React.FC<PrivateViewProperties> = (
                     }}
                     level={2}
                 />
+
+                <div
+                    style={{
+                        minHeight: '30px'
+                    }}
+                >
+                    {error}
+                </div>
             </StyledLoginButtons>
 
             <StyledLoginButton>
