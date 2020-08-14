@@ -54,7 +54,7 @@
 
     // #region internal
     import {
-        StyledDigest,
+        StyledLine,
     } from './styled';
     // #endregion internal
 // #endregion imports
@@ -80,30 +80,36 @@ const imageneRowRenderer = (
         isPublic,
     } = imagene;
 
+    const imageneAddress = 'hypod.cloud/' + name + ':' + latest;
+
+    const textSize = size + ' MB';
     const shortDigest = digest.slice(0, 12) + '…';
 
     return (
         <>
-            <div>
+            <StyledLine>
+                <PluridIconCopy
+                    atClick={() => clipboard.copy(imageneAddress)}
+                />
+
                 {name}
-            </div>
+            </StyledLine>
 
             <div>
                 {latest}
             </div>
 
             <div>
-                {size} MB
+                {textSize}
             </div>
 
-            <StyledDigest
-            >
+            <StyledLine>
                 <PluridIconCopy
                     atClick={() => clipboard.copy(digest)}
                 />
 
                 {shortDigest}
-            </StyledDigest>
+            </StyledLine>
 
             <div>
                 {isPublic ? (
@@ -136,15 +142,20 @@ const createSearchTerms = (
                 latest,
                 size,
                 digest,
+                isPublic,
             } = imagene;
+
+            const textSize = size + ' MB';
+            const textPublic = isPublic ? 'public' : 'private';
 
             const searchTerm = {
                 id,
                 data: [
                     name.toLowerCase(),
                     latest.toLowerCase(),
-                    size + '',
+                    textSize.toLowerCase(),
                     digest.toLowerCase(),
+                    textPublic,
                 ],
             };
 
@@ -359,7 +370,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 120px 120px 150px 30px 30px"
+            rowTemplate="auto 90px 90px 160px 30px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no imagenes"

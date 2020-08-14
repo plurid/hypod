@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 
 // #region module
-export const StyledDigest = styled.div`
+export const StyledLine = styled.div`
     display: grid;
     grid-template-columns: 16px auto;
     align-items: center;
