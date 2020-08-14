@@ -17,6 +17,7 @@
         PluridIconDelete,
         PluridIconCopy,
         PluridIconLocked,
+        PluridIconUnlocked,
     } from '@plurid/plurid-icons-react';
 
     import {
@@ -63,7 +64,12 @@
 // #region module
 const imageneRowRenderer = (
     imagene: Imagene,
-    handleImageneObliterate: any,
+    handleImageneObliterate: (
+        id: string,
+    ) => void,
+    handleToggleImagePublic: (
+        isPublic: boolean,
+    ) => void,
 ) => {
     const {
         id,
@@ -100,8 +106,14 @@ const imageneRowRenderer = (
             </StyledDigest>
 
             <div>
-                {!isPublic && (
-                    <PluridIconLocked />
+                {isPublic ? (
+                    <PluridIconUnlocked
+                        atClick={() => handleToggleImagePublic(true)}
+                    />
+                ) : (
+                    <PluridIconLocked
+                        atClick={() => handleToggleImagePublic(false)}
+                    />
                 )}
             </div>
 
@@ -234,6 +246,12 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             return;
         }
     }
+
+    const handleToggleImagePublic = async (
+        isPublic: boolean,
+    ) => {
+
+    }
     // #endregion handlers
 
 
@@ -247,6 +265,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             imagene => imageneRowRenderer(
                 imagene,
                 handleImageneObliterate,
+                handleToggleImagePublic,
             ),
         ),
     );
@@ -281,6 +300,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
                 imagene => imageneRowRenderer(
                     imagene,
                     handleImageneObliterate,
+                    handleToggleImagePublic,
                 ),
             ),
         );
@@ -297,6 +317,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             imagene => imageneRowRenderer(
                 imagene,
                 handleImageneObliterate,
+                handleToggleImagePublic,
             ),
         );
 
