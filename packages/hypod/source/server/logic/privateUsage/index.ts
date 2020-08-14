@@ -23,16 +23,17 @@ const getPrivateOwner = (
     request: Request,
 ) => {
     const cookiePrivateToken = request.cookies[COOKIE_PRIVATE_TOKEN];
+    console.log('cookiePrivateToken', cookiePrivateToken);
 
     const token = Buffer
         .from(cookiePrivateToken, 'base64')
         .toString('utf-8');
 
     if (token !== PRIVATE_TOKEN) {
-        return PRIVATE_OWNER_IDENTONYM;
+        return;
     }
 
-    return;
+    return PRIVATE_OWNER_IDENTONYM;
 }
 // #endregion module
 
