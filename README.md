@@ -26,6 +26,9 @@ An `imagene registry` is a renaming of the `container registry` because, in fact
 The name `hypod` comes from the appropriation of the greek `hupodochê`, receptacle, as discussed in Plato's [`Timaeus`](https://plato.stanford.edu/entries/plato-timaeus/).
 
 
+<img src="https://raw.githubusercontent.com/plurid/hypod/master/about/screenshots/ss-1.png" height="500px">
+
+
 
 ### Contents
 
@@ -72,6 +75,12 @@ node server.js
 
 
 ## Usage
+
+`hypod` can be used as
+
++ a completely public registry;
++ a completely private registry (with only one owner);
++ a registry with multiple owning accounts (requires custom logic);
 
 
 
