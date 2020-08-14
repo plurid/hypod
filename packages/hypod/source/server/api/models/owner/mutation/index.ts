@@ -1,7 +1,7 @@
 // #region imports
     // #region internal
-    import Query from './query';
-    import Mutation from './mutation';
+    import login from './login';
+    import logout from './logout';
     // #endregion internal
 // #endregion imports
 
@@ -9,7 +9,7 @@
 
 // #region exports
 export default {
-    Query,
-    Mutation,
+    login,
+    logout,
 };
 // #endregion exports

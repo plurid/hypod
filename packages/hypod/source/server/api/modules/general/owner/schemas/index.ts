@@ -15,6 +15,14 @@ export const queries = gql`
 `;
 
 
+export const mutations = gql`
+    extend type Mutation {
+        login(input: InputLogin!): Response!
+        logout: Response!
+    }
+`;
+
+
 export const types = gql`
     type ResponseOwner {
         status: Boolean!
@@ -32,6 +40,14 @@ export const types = gql`
         data: String!
     }
 `;
+
+
+export const input = gql`
+    input InputLogin {
+        identonym: String!
+        key: String!
+    }
+`;
 // #endregion module
 
 
@@ -39,6 +55,8 @@ export const types = gql`
 // #region exports
 export default gql`
     ${queries}
+    ${mutations}
     ${types}
+    ${input}
 `;
 // #endregion exports
