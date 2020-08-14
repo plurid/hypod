@@ -22,6 +22,8 @@
     // #region internal
     import {
         StyledPrivateView,
+        StyledLoginButtons,
+        StyledLoginButton,
     } from './styled';
     // #endregion internal
 // #endregion imports
@@ -104,11 +106,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
                 hypod private usage
             </h1>
 
-            <div
-                style={{
-                    margin: '50px auto',
-                }}
-            >
+            <StyledLoginButtons>
                 <StyledPluridTextline
                     text={identonym}
                     placeholder="identonym"
@@ -123,20 +121,15 @@ const PrivateView: React.FC<PrivateViewProperties> = (
                     atChange={(event) => setKey(event.target.value)}
                     level={2}
                 />
-            </div>
+            </StyledLoginButtons>
 
-            <div
-                style={{
-                    width: '200px',
-                    margin: '50px auto',
-                }}
-            >
+            <StyledLoginButton>
                 <PluridPureButton
                     text="Login"
                     atClick={() => login()}
                     level={2}
                 />
-            </div>
+            </StyledLoginButton>
         </StyledPrivateView>
     );
     // #endregion render

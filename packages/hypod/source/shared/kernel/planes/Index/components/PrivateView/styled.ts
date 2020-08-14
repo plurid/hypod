@@ -15,5 +15,27 @@ export const StyledPrivateView = styled.div<IStyledPrivateView>`
     display: grid;
     place-content: center;
     text-align: center;
+
+    h1 {
+        font-size: 1.3rem;
+        margin: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+        margin: 1.5rem;
+    }
+`;
+
+
+export const StyledLoginButtons = styled.div`
+    margin: 50px auto;
+    display: grid;
+`;
+
+
+export const StyledLoginButton = styled.div`
+    width: 200px;
+    margin: 50px auto;
 `;
 // #endregion module
