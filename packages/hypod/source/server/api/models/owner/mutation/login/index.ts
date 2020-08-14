@@ -6,6 +6,8 @@
 
     import {
         PRIVATE_USAGE,
+        PRIVATE_OWNER_IDENTONYM,
+        PRIVATE_OWNER_KEY,
     } from '#server/data/constants';
     // #endregion external
 // #endregion imports
@@ -17,28 +19,24 @@ const login = async (
     input: any,
     context: Context,
 ) => {
-//     const {
-//         request,
-//     } = context;
+    const {
+        identonym,
+        key,
+    } = input;
 
-//     const logic = request.hypodLogic;
 
-//     if (logic) {
-//         const owner = await logic.getCurrentOwner();
+    if (PRIVATE_USAGE) {
+        if (
+            identonym !== PRIVATE_OWNER_IDENTONYM
+            || key !== PRIVATE_OWNER_KEY
+        ) {
+            // set cookie
 
-//         return {
-//             status: true,
-//             data: owner,
-//         };
-//     }
-
-//     if (PRIVATE_USAGE) {
-//         // TODO
-//         // check if user
-//         return {
-//             status: false,
-//         };
-//     }
+            return {
+                status: true,
+            };
+        }
+    }
 
     return {
         status: false,
