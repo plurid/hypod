@@ -125,7 +125,7 @@ const hypodServer = new PluridServer({
 });
 
 
-const Hypod = (
+const hypodSetup = (
     logic?: HypodLogic,
 ) => {
     setupHandlers(
@@ -149,7 +149,7 @@ const Hypod = (
  * for programmatic usage.
  */
 if (require.main === module) {
-    Hypod(
+    hypodSetup(
         /** mock logic for testing */
         // mockLogic,
     );
@@ -163,7 +163,7 @@ if (require.main === module) {
 export * from './data/interfaces';
 
 export {
-    Hypod,
+    hypodSetup,
 };
 
 export default hypodServer;

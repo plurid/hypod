@@ -58,12 +58,14 @@ yarn add @plurid/hypod
 create a `server.js` file
 
 ``` typescript
-import hypod from '@plurid/hypod';
+// server.js
+import hypodServer, {
+    hypodSetup,
+} from '@plurid/hypod';
 
 
-const hypod = new hypod();
-
-hypod.start();
+hypodSetup();
+hypodServer.start();
 ```
 
 and run it
