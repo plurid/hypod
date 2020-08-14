@@ -51,6 +51,9 @@ const login = async (
 
                 return {
                     status: true,
+                    data: {
+                        id: PRIVATE_OWNER_IDENTONYM,
+                    },
                 };
             }
         }

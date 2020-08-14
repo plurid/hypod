@@ -67,6 +67,7 @@ export interface PrivateViewStateProperties {
 
 export interface PrivateViewDispatchProperties {
     dispatchSetViewType: typeof actions.view.setViewType;
+    dispatchViewOwnerID: typeof actions.view.setViewOwnerID;
 }
 
 export type PrivateViewProperties = PrivateViewOwnProperties
@@ -96,6 +97,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
 
         // #region dispatch
         dispatchSetViewType,
+        dispatchViewOwnerID,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -146,10 +148,14 @@ const PrivateView: React.FC<PrivateViewProperties> = (
                 return;
             }
 
+            const owner = response.data;
+
             dispatchSetViewType({
                 type: 'indexGeneralView',
                 value: 'general',
             });
+
+            dispatchViewOwnerID(owner.id);
         } catch (error) {
             return;
         }
@@ -228,6 +234,11 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch(
         actions.view.setViewType(payload),
+    ),
+    dispatchViewOwnerID: (
+        payload,
+    ) => dispatch(
+        actions.view.setViewOwnerID(payload),
     ),
 });
 // #endregion module

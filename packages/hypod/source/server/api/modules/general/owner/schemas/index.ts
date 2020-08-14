@@ -17,7 +17,7 @@ export const queries = gql`
 
 export const mutations = gql`
     extend type Mutation {
-        login(input: InputLogin!): Response!
+        login(input: InputLogin!): ResponseOwner!
         logout: Response!
     }
 `;
