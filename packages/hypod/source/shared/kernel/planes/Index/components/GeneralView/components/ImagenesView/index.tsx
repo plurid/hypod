@@ -49,6 +49,8 @@
     import {
         getFilterIDs,
     } from '#kernel-services/utilities';
+
+    import environment from '#kernel-services/utilities/environment';
     // #endregion external
 
 
@@ -80,7 +82,7 @@ const imageneRowRenderer = (
         isPublic,
     } = imagene;
 
-    const imageneAddress = 'hypod.cloud/' + name + ':' + latest;
+    const imageneAddress = environment.dockerService + '/' + name + ':' + latest;
 
     const textSize = size + ' MB';
     const shortDigest = digest.slice(0, 12) + '…';
