@@ -39,7 +39,7 @@
 
 
     // #region internal
-    import ImagenesView from './components/ImagenesViewz';
+    import ImagenesView from './components/ImagenesView';
 
     import {
         StyledGeneralView,
