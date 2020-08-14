@@ -54,6 +54,7 @@ export interface HomeStateProperties {
 
 export interface HomeDispatchProperties {
     dispatchSetViewLoading: typeof actions.view.setViewLoading;
+    dispatchSetViewType: typeof actions.view.setViewType;
     dispatchSetViewUsageType: typeof actions.view.setViewUsageType;
     dispatchSetImagenes: typeof actions.data.setImagenes;
     dispatchSetViewOwnerID: typeof actions.view.setViewOwnerID;
@@ -75,6 +76,7 @@ const Home: React.FC<HomeProperties> = (
 
         // #region dispatch
         dispatchSetViewLoading,
+        dispatchSetViewType,
         dispatchSetViewUsageType,
         dispatchSetImagenes,
         dispatchSetViewOwnerID,
@@ -96,7 +98,18 @@ const Home: React.FC<HomeProperties> = (
                     const response = query.data.getUsageType;
 
                     if (response.status) {
-                        dispatchSetViewUsageType(response.data);
+                        const usageType = response.data;
+
+                        switch (usageType) {
+                            case 'PRIVATE_USAGE':
+                                dispatchSetViewType({
+                                    type: 'indexGeneralView',
+                                    value: 'private',
+                                });
+                                break;
+                        }
+
+                        dispatchSetViewUsageType(usageType);
                     }
                 }
 
@@ -171,6 +184,11 @@ const mapDispatchToProperties = (
         loading,
     ) => dispatch(
         actions.view.setViewLoading(loading),
+    ),
+    dispatchSetViewType: (
+        payload,
+    ) => dispatch(
+        actions.view.setViewType(payload),
     ),
     dispatchSetViewUsageType: (
         usageType,

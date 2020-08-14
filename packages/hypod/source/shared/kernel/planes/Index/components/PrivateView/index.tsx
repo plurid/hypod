@@ -1,6 +1,8 @@
 // #region imports
     // #region libraries
-    import React from 'react';
+    import React, {
+        useState,
+    } from 'react';
 
     import {
         PluridPureButton,
@@ -10,12 +12,16 @@
 
     // #region external
     import hypodLogo from '../../assets/hypod-logo.png';
+
+    import {
+        StyledPluridTextline,
+    } from '#kernel-services/styled';
     // #endregion external
 
 
     // #region internal
     import {
-        StyledInitialView,
+        StyledPrivateView,
     } from './styled';
     // #endregion internal
 // #endregion imports
@@ -23,7 +29,7 @@
 
 
 // #region module
-export interface InitialViewProperties {
+export interface PrivateViewProperties {
     // #region required
         // #region values
         // #endregion values
@@ -41,7 +47,7 @@ export interface InitialViewProperties {
     // #endregion optional
 }
 
-const InitialView: React.FC<InitialViewProperties> = (
+const PrivateView: React.FC<PrivateViewProperties> = (
     properties,
 ) => {
     // #region properties
@@ -65,9 +71,27 @@ const InitialView: React.FC<InitialViewProperties> = (
     // #endregion properties
 
 
+    // #region state
+    const [
+        identonym,
+        setIdentonym
+    ] = useState('');
+    const [
+        key,
+        setKey
+    ] = useState('');
+    // #endregion state
+
+
+    // #region handlers
+    const login = async () => {
+    }
+    // #endregion handlers
+
+
     // #region render
     return (
-        <StyledInitialView>
+        <StyledPrivateView>
             <div>
                 <img
                     src={hypodLogo}
@@ -77,12 +101,29 @@ const InitialView: React.FC<InitialViewProperties> = (
             </div>
 
             <h1>
-                hypod
+                hypod private usage
             </h1>
 
-            <h2>
-                Cloud-Native Imagene Registry
-            </h2>
+            <div
+                style={{
+                    margin: '50px auto',
+                }}
+            >
+                <StyledPluridTextline
+                    text={identonym}
+                    placeholder="identonym"
+                    atChange={(event) => setIdentonym(event.target.value)}
+                    level={2}
+                />
+
+                <StyledPluridTextline
+                    text={key}
+                    placeholder="key"
+                    type="password"
+                    atChange={(event) => setKey(event.target.value)}
+                    level={2}
+                />
+            </div>
 
             <div
                 style={{
@@ -91,13 +132,12 @@ const InitialView: React.FC<InitialViewProperties> = (
                 }}
             >
                 <PluridPureButton
-                    text="Initial Setup"
-                    atClick={() => {
-                    }}
+                    text="Login"
+                    atClick={() => login()}
                     level={2}
                 />
             </div>
-        </StyledInitialView>
+        </StyledPrivateView>
     );
     // #endregion render
 }
@@ -106,5 +146,5 @@ const InitialView: React.FC<InitialViewProperties> = (
 
 
 // #region exports
-export default InitialView;
+export default PrivateView;
 // #endregion exports

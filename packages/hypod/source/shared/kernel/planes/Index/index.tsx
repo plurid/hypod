@@ -25,6 +25,7 @@
 
     import InitialView from './components/InitialView';
     import GeneralView from './components/GeneralView';
+    import PrivateView from './components/PrivateView';
     // #endregion internal
 // #endregion imports
 
@@ -36,6 +37,7 @@ export interface PageOwnProperties {
 
 export interface PageStateProperties {
     stateViewLoading: boolean;
+    stateIndexGeneralView: string;
 }
 
 export interface PageDispatchProperties {
@@ -52,17 +54,10 @@ const Page: React.FC<PageProperties> = (
     const {
         // #region state
         stateViewLoading,
+        stateIndexGeneralView,
         // #endregion state
     } = properties;
     // #endregion properties
-
-
-    // #region state
-    const [
-        view,
-        setView,
-    ] = useState('general');
-    // #endregion state
 
 
     // #region render
@@ -72,17 +67,20 @@ const Page: React.FC<PageProperties> = (
 
     let renderView = (<></>);
 
-    switch (view) {
+    switch (stateIndexGeneralView) {
         case 'initial':
             renderView = (
-                <InitialView
-                    setView={setView}
-                />
+                <InitialView />
             );
             break;
         case 'general':
             renderView = (
                 <GeneralView />
+            );
+            break;
+        case 'private':
+            renderView = (
+                <PrivateView />
             );
             break;
     }
@@ -100,6 +98,7 @@ const mapStateToProperties = (
     state: AppState,
 ): PageStateProperties => ({
     stateViewLoading: selectors.view.getLoading(state),
+    stateIndexGeneralView: selectors.view.getIndexGeneralView(state),
 });
 
 
