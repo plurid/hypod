@@ -28,7 +28,9 @@ The name `hypod` comes from the appropriation of the greek `hupodochê`, recepta
 `hypod` uses [plurid](https://github.com/plurid/plurid) to explore information as a 3D structure.
 
 
-<img src="https://raw.githubusercontent.com/plurid/hypod/master/about/screenshots/ss-1.png" height="500px">
+<p align="center">
+    <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/screenshots/ss-1.png" height="500px">
+</p>
 
 
 
