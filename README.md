@@ -88,9 +88,6 @@ docker build --file ./configurations/production.dockerfile \
     --build-arg HYPOD_STORAGE_TYPE= \
     --build-arg HYPOD_STORAGE_BUCKET= \
     --build-arg HYPOD_STORAGE_ROOT_PATH= \
-    --build-arg HYPOD_PRIVATE_OWNER_IDENTONYM= \
-    --build-arg HYPOD_PRIVATE_OWNER_KEY= \
-    --build-arg HYPOD_PRIVATE_TOKEN= \
     --build-arg HYPOD_AWS_API_VERSION= \
     --build-arg HYPOD_AWS_REGION= \
     --build-arg HYPOD_AWS_ACCESS_KEY_ID= \
