@@ -88,6 +88,7 @@ export interface Imagene {
     tags: string[];
     size: number;
     digest: string;
+    isPublic: boolean;
 }
 
 

@@ -390,6 +390,7 @@ export const putNameManifestsReference = async (
             reference,
         ],
         digest,
+        isPublic: false,
     };
     registerImagene(imagene);
 
