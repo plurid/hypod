@@ -37,7 +37,7 @@ The name `hypod` comes from the appropriation of the greek `hupodochê`, recepta
 + [Install](#install)
 + [Usage](#usage)
 + [Building](#building)
-+ [Packages](#packages)
++ [Configuration](#configuration)
 
 
 
@@ -132,3 +132,21 @@ docker build --file ./configurations/production.dockerfile \
     --build-arg HYPOD_PRIVATE_TOKEN= \
     .
 ```
+
+
+
+## Configuration
+
+`hypod` can be configured to use
+
+as a database:
+
++ the `filesystem`
++ `amazon` database
++ `google` database
+
+as storage:
+
++ the `filesystem`
++ `amazon` storage
++ `google` storage
