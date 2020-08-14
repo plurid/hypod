@@ -44,6 +44,7 @@ export const types = gql`
         tags: [String!]!
         size: Float!
         digest: String!
+        isPublic: Boolean!
     }
 `;
 // #endregion module
