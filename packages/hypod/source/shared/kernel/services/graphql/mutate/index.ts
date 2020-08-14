@@ -33,6 +33,34 @@ const OBLITERATE_IMAGENE_TAG = gql`
         }
     }
 `;
+
+
+const LOGIN = gql`
+    mutation Login($input: InputLogin!) {
+        login(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
+const LOGOUT = gql`
+    mutation Logout {
+        logout {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
 // #endregion module
 
 
@@ -41,5 +69,7 @@ const OBLITERATE_IMAGENE_TAG = gql`
 export {
     OBLITERATE_IMAGENE,
     OBLITERATE_IMAGENE_TAG,
+    LOGIN,
+    LOGOUT,
 };
 // #endregion exports

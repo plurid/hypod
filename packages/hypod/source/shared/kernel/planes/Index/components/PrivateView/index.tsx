@@ -4,6 +4,10 @@
         useState,
     } from 'react';
 
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
+
     import {
         PluridPureButton,
     } from '@plurid/plurid-ui-react';
@@ -13,9 +17,18 @@
     // #region external
     import hypodLogo from '../../assets/hypod-logo.png';
 
+    import client from '#kernel-services/graphql/client';
+    import {
+        LOGIN,
+    } from '#kernel-services/graphql/mutate';
+
     import {
         StyledPluridTextline,
     } from '#kernel-services/styled';
+
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
     // #endregion external
 
 
@@ -31,7 +44,7 @@
 
 
 // #region module
-export interface PrivateViewProperties {
+export interface PrivateViewOwnProperties {
     // #region required
         // #region values
         // #endregion values
@@ -48,6 +61,17 @@ export interface PrivateViewProperties {
         // #endregion methods
     // #endregion optional
 }
+
+export interface PrivateViewStateProperties {
+}
+
+export interface PrivateViewDispatchProperties {
+    dispatchSetViewType: typeof actions.view.setViewType;
+}
+
+export type PrivateViewProperties = PrivateViewOwnProperties
+    & PrivateViewStateProperties
+    & PrivateViewDispatchProperties;
 
 const PrivateView: React.FC<PrivateViewProperties> = (
     properties,
@@ -69,6 +93,10 @@ const PrivateView: React.FC<PrivateViewProperties> = (
             // #region methods
             // #endregion methods
         // #endregion optional
+
+        // #region dispatch
+        dispatchSetViewType,
+        // #endregion dispatch
     } = properties;
     // #endregion properties
 
@@ -88,8 +116,32 @@ const PrivateView: React.FC<PrivateViewProperties> = (
     // #region handlers
     const login = async () => {
         try {
-            console.log('identonym', identonym);
-            console.log('key', key);
+            if (!identonym || !key) {
+                return;
+            }
+
+            const input = {
+                identonym,
+                key,
+            };
+
+            const mutation = await client.mutate({
+                mutation: LOGIN,
+                variables: {
+                    input,
+                },
+            });
+
+            const response = mutation.data.login;
+
+            if (!response.status) {
+                return;
+            }
+
+            dispatchSetViewType({
+                type: 'indexGeneralView',
+                value: 'general',
+            });
         } catch (error) {
             return;
         }
@@ -145,10 +197,30 @@ const PrivateView: React.FC<PrivateViewProperties> = (
     );
     // #endregion render
 }
+
+
+const mapStateToProperties = (
+    state: AppState,
+): PrivateViewStateProperties => ({
+});
+
+
+const mapDispatchToProperties = (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+): PrivateViewDispatchProperties => ({
+    dispatchSetViewType: (
+        payload,
+    ) => dispatch(
+        actions.view.setViewType(payload),
+    ),
+});
 // #endregion module
 
 
 
 // #region exports
-export default PrivateView;
+export default connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+)(PrivateView);
 // #endregion exports
