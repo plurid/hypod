@@ -150,12 +150,11 @@ const PrivateView: React.FC<PrivateViewProperties> = (
 
             const owner = response.data;
 
+            dispatchViewOwnerID(owner.id);
             dispatchSetViewType({
                 type: 'indexGeneralView',
                 value: 'general',
             });
-
-            dispatchViewOwnerID(owner.id);
         } catch (error) {
             return;
         }

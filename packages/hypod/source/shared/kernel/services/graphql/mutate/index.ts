@@ -44,6 +44,9 @@ const LOGIN = gql`
                 path
                 message
             }
+            data {
+                id
+            }
         }
     }
 `;
