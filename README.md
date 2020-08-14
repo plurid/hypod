@@ -25,6 +25,8 @@ An `imagene registry` is a renaming of the `container registry` because, in fact
 
 The name `hypod` comes from the appropriation of the greek `hupodochê`, receptacle, as discussed in Plato's [`Timaeus`](https://plato.stanford.edu/entries/plato-timaeus/).
 
+`hypod` uses [plurid](https://github.com/plurid/plurid) to explore information as a 3D structure.
+
 
 <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/screenshots/ss-1.png" height="500px">
 
