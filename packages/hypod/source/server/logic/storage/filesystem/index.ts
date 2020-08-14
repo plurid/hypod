@@ -70,6 +70,20 @@ const makeDirectory = async (
 }
 
 
+const loadDataFromFile = async (
+    filepath: string,
+) => {
+    try {
+        const data = await fs.readFile(filepath, 'utf-8');
+        const item = JSON.parse(data);
+
+        return item;
+    } catch (error) {
+        return;
+    }
+}
+
+
 const loadDataFromFiles = async <T>(
     filespath: string,
 ): Promise<T[]> => {
@@ -79,9 +93,10 @@ const loadDataFromFiles = async <T>(
 
         for (const file of files) {
             const filepath = path.join(filespath, file);
-            const data = await fs.readFile(filepath, 'utf-8');
-            const item = JSON.parse(data);
-            items.push(item);
+            const item = await loadDataFromFile(filepath);
+            if (item) {
+                items.push(item);
+            }
         }
 
         return items;
