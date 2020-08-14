@@ -87,6 +87,12 @@ const PrivateView: React.FC<PrivateViewProperties> = (
 
     // #region handlers
     const login = async () => {
+        try {
+            console.log('identonym', identonym);
+            console.log('key', key);
+        } catch (error) {
+            return;
+        }
     }
     // #endregion handlers
 
@@ -119,6 +125,11 @@ const PrivateView: React.FC<PrivateViewProperties> = (
                     placeholder="key"
                     type="password"
                     atChange={(event) => setKey(event.target.value)}
+                    atKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                            login();
+                        }
+                    }}
                     level={2}
                 />
             </StyledLoginButtons>
