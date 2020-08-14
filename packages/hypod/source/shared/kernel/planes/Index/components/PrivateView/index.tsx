@@ -26,6 +26,10 @@
         StyledPluridTextline,
     } from '#kernel-services/styled';
 
+    import {
+        getImagenes,
+    } from '#kernel-services/logic/queries';
+
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
     import actions from '#kernel-services/state/actions';
@@ -68,6 +72,7 @@ export interface PrivateViewStateProperties {
 export interface PrivateViewDispatchProperties {
     dispatchSetViewType: typeof actions.view.setViewType;
     dispatchViewOwnerID: typeof actions.view.setViewOwnerID;
+    dispatchSetImagenes: typeof actions.data.setImagenes;
 }
 
 export type PrivateViewProperties = PrivateViewOwnProperties
@@ -98,6 +103,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
         // #region dispatch
         dispatchSetViewType,
         dispatchViewOwnerID,
+        dispatchSetImagenes,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -149,6 +155,8 @@ const PrivateView: React.FC<PrivateViewProperties> = (
             }
 
             const owner = response.data;
+
+            await getImagenes(dispatchSetImagenes);
 
             dispatchViewOwnerID(owner.id);
             dispatchSetViewType({
@@ -238,6 +246,11 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch(
         actions.view.setViewOwnerID(payload),
+    ),
+    dispatchSetImagenes: (
+        imagenes,
+    ) => dispatch(
+        actions.data.setImagenes(imagenes),
     ),
 });
 // #endregion module

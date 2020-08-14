@@ -12,21 +12,16 @@
         Theme,
     } from '@plurid/plurid-themes';
 
-    import {
-        graphql,
-    } from '@plurid/plurid-functions';
-
     import Head from '#kernel-components/Head';
     // #endregion libraries
 
 
     // #region external
-    import client from '#kernel-services/graphql/client';
     import {
-        GET_IMAGENES,
-        GET_CURRENT_OWNER,
-        GET_USAGE_TYPE,
-    } from '#kernel-services/graphql/query';
+        getImagenes,
+        getCurrentOwner,
+        getUsageType,
+    } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -92,60 +87,18 @@ const Home: React.FC<HomeProperties> = (
                 let generalView = '';
 
                 /** Get usage type */
-                {
-                    const query = await client.query({
-                        query: GET_USAGE_TYPE,
-                    });
-
-                    const response = query.data.getUsageType;
-
-                    if (response.status) {
-                        const usageType = response.data;
-
-                        switch (usageType) {
-                            case 'PRIVATE_USAGE':
-                                generalView = 'private';
-                                break;
-                        }
-
-                        dispatchSetViewUsageType(usageType);
-                    }
+                const usageType = await getUsageType(dispatchSetViewUsageType);
+                if (usageType) {
+                    generalView = usageType;
                 }
 
                 /** Get imagenes */
-                {
-                    const query = await client.query({
-                        query: GET_IMAGENES,
-                    });
-
-                    const response = query.data.getImagenes;
-
-                    if (response.status) {
-                        const imagenes = graphql.deleteTypenames(
-                            response.data,
-                        );
-
-                        dispatchSetImagenes(imagenes);
-                    }
-                }
+                await getImagenes(dispatchSetImagenes);
 
                 /** Get current owner */
-                {
-                    const query = await client.query({
-                        query: GET_CURRENT_OWNER,
-                    });
-
-                    const response = query.data.getCurrentOwner;
-
-                    if (response.status) {
-                        const owner = graphql.deleteTypenames(
-                            response.data,
-                        );
-
-                        generalView = 'general';
-
-                        dispatchSetViewOwnerID(owner.id);
-                    }
+                const ownerSet = await getCurrentOwner(dispatchSetViewOwnerID);
+                if (ownerSet) {
+                    generalView = 'general';
                 }
 
                 dispatchSetViewType({
