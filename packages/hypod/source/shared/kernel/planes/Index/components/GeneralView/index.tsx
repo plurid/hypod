@@ -17,6 +17,7 @@
         PluridIconArrowRight,
         PluridIconDocuments,
         PluridIconExternalLink,
+        PluridIconEnter,
     } from '@plurid/plurid-icons-react';
     // #endregion libraries
 
@@ -25,6 +26,11 @@
     import hypodLogo from '../../assets/hypod-logo.png';
 
     import Imagene from '#kernel-components/Imagene';
+
+    import client from '#kernel-services/graphql/client';
+    import {
+        LOGOUT
+    } from '#kernel-services/graphql/mutate';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -146,6 +152,20 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         window.open('https://manual.plurid.com/hypod', '_blank');
     }
 
+    const logout = async () => {
+        try {
+            // change view
+
+            await client.mutate({
+                mutation: LOGOUT,
+            });
+
+            return;
+        } catch (error) {
+            return;
+        }
+    }
+
     const setSelectedView = (
         view: string,
     ) => {
@@ -263,6 +283,23 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                                 </div>
 
                                                 <PluridIconExternalLink/>
+                                            </>
+                                        )}
+                                    </StyledGeneralHelpItem>
+
+                                    <StyledGeneralHelpItem
+                                        onClick={() => logout()}
+                                        compactSelectors={stateViewCompactSelectors}
+                                    >
+                                        <PluridIconEnter />
+
+                                        {!stateViewCompactSelectors && (
+                                            <>
+                                                <div>
+                                                    logout (identonym)
+                                                </div>
+
+                                                <div />
                                             </>
                                         )}
                                     </StyledGeneralHelpItem>
