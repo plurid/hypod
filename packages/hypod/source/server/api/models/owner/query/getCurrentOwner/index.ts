@@ -6,6 +6,7 @@
 
     import {
         PRIVATE_USAGE,
+        PRIVATE_OWNER_IDENTONYM,
         PRIVATE_TOKEN,
 
         COOKIE_PRIVATE_TOKEN,
@@ -20,7 +21,6 @@ const getCurrentOwner = async (
     context: Context,
 ) => {
     try {
-
         const {
             request,
         } = context;
@@ -37,16 +37,11 @@ const getCurrentOwner = async (
         }
 
         if (PRIVATE_USAGE) {
-            console.log('request.cookies', request.cookies);
-
             const cookiePrivateToken = request.cookies[COOKIE_PRIVATE_TOKEN];
 
             const token = Buffer
                 .from(cookiePrivateToken, 'base64')
                 .toString('utf-8');
-
-            console.log('cookiePrivateToken', cookiePrivateToken);
-            console.log('token', token);
 
             if (token !== PRIVATE_TOKEN) {
                 return {
@@ -56,6 +51,9 @@ const getCurrentOwner = async (
 
             return {
                 status: true,
+                data: {
+                    id: PRIVATE_OWNER_IDENTONYM,
+                },
             };
         }
 

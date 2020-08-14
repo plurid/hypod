@@ -89,6 +89,8 @@ const Home: React.FC<HomeProperties> = (
     useEffect(() => {
         const loadData = async () => {
             try {
+                let generalView = '';
+
                 /** Get usage type */
                 {
                     const query = await client.query({
@@ -102,10 +104,7 @@ const Home: React.FC<HomeProperties> = (
 
                         switch (usageType) {
                             case 'PRIVATE_USAGE':
-                                dispatchSetViewType({
-                                    type: 'indexGeneralView',
-                                    value: 'private',
-                                });
+                                generalView = 'private';
                                 break;
                         }
 
@@ -143,10 +142,16 @@ const Home: React.FC<HomeProperties> = (
                             response.data,
                         );
 
+                        generalView = 'general';
+
                         dispatchSetViewOwnerID(owner.id);
                     }
                 }
 
+                dispatchSetViewType({
+                    type: 'indexGeneralView',
+                    value: generalView,
+                });
                 dispatchSetViewLoading(false);
             } catch (error) {
                 dispatchSetViewLoading(false);
