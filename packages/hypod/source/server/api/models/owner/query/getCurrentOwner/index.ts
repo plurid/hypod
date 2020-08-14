@@ -6,11 +6,11 @@
 
     import {
         PRIVATE_USAGE,
-        PRIVATE_OWNER_IDENTONYM,
-        PRIVATE_TOKEN,
-
-        COOKIE_PRIVATE_TOKEN,
     } from '#server/data/constants';
+
+    import {
+        getPrivateOwner,
+    } from '#server/logic/privateUsage';
     // #endregion external
 // #endregion imports
 
@@ -37,13 +37,9 @@ const getCurrentOwner = async (
         }
 
         if (PRIVATE_USAGE) {
-            const cookiePrivateToken = request.cookies[COOKIE_PRIVATE_TOKEN];
+            const privateOwnerIdentonym = getPrivateOwner(request);
 
-            const token = Buffer
-                .from(cookiePrivateToken, 'base64')
-                .toString('utf-8');
-
-            if (token !== PRIVATE_TOKEN) {
+            if (!privateOwnerIdentonym) {
                 return {
                     status: false,
                 };
@@ -52,7 +48,7 @@ const getCurrentOwner = async (
             return {
                 status: true,
                 data: {
-                    id: PRIVATE_OWNER_IDENTONYM,
+                    id: privateOwnerIdentonym,
                 },
             };
         }

@@ -7,6 +7,10 @@
     import {
         PRIVATE_USAGE,
     } from '#server/data/constants';
+
+    import {
+        getPrivateOwner,
+    } from '#server/logic/privateUsage';
     // #endregion external
 // #endregion imports
 
@@ -36,6 +40,14 @@ const getImagenes = async (
         }
 
         if (PRIVATE_USAGE) {
+            const privateOwnerIdentonym = getPrivateOwner(request);
+
+            if (!privateOwnerIdentonym) {
+                return {
+                    status: false,
+                };
+            }
+
             return {
                 status: true,
                 data: [
