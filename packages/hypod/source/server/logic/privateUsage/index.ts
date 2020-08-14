@@ -23,7 +23,6 @@ const getPrivateOwner = (
     request: Request,
 ) => {
     const cookiePrivateToken = request.cookies[COOKIE_PRIVATE_TOKEN];
-    console.log('cookiePrivateToken', cookiePrivateToken);
 
     const token = Buffer
         .from(cookiePrivateToken, 'base64')
