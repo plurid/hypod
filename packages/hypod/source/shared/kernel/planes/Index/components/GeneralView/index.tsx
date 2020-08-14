@@ -90,6 +90,8 @@ export interface GeneralViewStateProperties {
     stateIndexGeneralSelector: string;
     stateIndexGeneralView: string;
     stateViewCompactSelectors: boolean;
+    stateViewOwnerID: string;
+    stateViewUsageType: string,
 }
 
 export interface GeneralViewDispatchProperties {
@@ -129,6 +131,8 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         stateIndexGeneralSelector,
         stateIndexGeneralView,
         stateViewCompactSelectors,
+        stateViewOwnerID,
+        stateViewUsageType,
         // #endregion state
 
         // #region dispatch
@@ -154,7 +158,10 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
     const logout = async () => {
         try {
-            // change view
+            dispatchSetViewType({
+                type: 'indexGeneralView',
+                value: 'private',
+            });
 
             await client.mutate({
                 mutation: LOGOUT,
@@ -213,6 +220,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                         onMouseLeave={() => setMouseOverSelectors(false)}
                         theme={stateGeneralTheme}
                         compactSelectors={stateViewCompactSelectors}
+                        viewUsageType={stateViewUsageType}
                     >
                         <StyledGeneralPeformer
                             compactSelectors={stateViewCompactSelectors}
@@ -287,22 +295,24 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                         )}
                                     </StyledGeneralHelpItem>
 
-                                    <StyledGeneralHelpItem
-                                        onClick={() => logout()}
-                                        compactSelectors={stateViewCompactSelectors}
-                                    >
-                                        <PluridIconEnter />
+                                    {stateViewUsageType === 'PRIVATE_USAGE' && (
+                                        <StyledGeneralHelpItem
+                                            onClick={() => logout()}
+                                            compactSelectors={stateViewCompactSelectors}
+                                        >
+                                            <PluridIconEnter />
 
-                                        {!stateViewCompactSelectors && (
-                                            <>
-                                                <div>
-                                                    logout (identonym)
-                                                </div>
+                                            {!stateViewCompactSelectors && (
+                                                <>
+                                                    <div>
+                                                        logout ({stateViewOwnerID})
+                                                    </div>
 
-                                                <div />
-                                            </>
-                                        )}
-                                    </StyledGeneralHelpItem>
+                                                    <div />
+                                                </>
+                                            )}
+                                        </StyledGeneralHelpItem>
+                                    )}
                                 </ul>
                             )}
                         </StyledGeneralHelp>
@@ -342,6 +352,8 @@ const mapStateToProperties = (
     stateIndexGeneralSelector: selectors.view.getIndexGeneralSelector(state),
     stateIndexGeneralView: selectors.view.getIndexGeneralView(state),
     stateViewCompactSelectors: selectors.view.getViewCompactSelectors(state),
+    stateViewOwnerID: selectors.view.getViewOwnerID(state),
+    stateViewUsageType: selectors.view.getViewUsageType(state),
 });
 
 

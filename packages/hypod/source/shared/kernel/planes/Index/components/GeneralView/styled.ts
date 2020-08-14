@@ -31,13 +31,24 @@ export const StyledGeneralView = styled.div<IStyledGeneralView>`
 export interface IStyledGeneralSelectors {
     theme: Theme;
     compactSelectors: boolean;
+    viewUsageType: string;
 }
 
 export const StyledGeneralSelectors = styled.div<IStyledGeneralSelectors>`
     display: grid;
     justify-content: space-between;
     grid-template-columns: 1fr;
-    grid-template-rows: 100px auto 80px;
+    grid-template-rows: ${
+        ({
+            viewUsageType,
+        }: IStyledGeneralSelectors) => {
+            if (viewUsageType) {
+                return '100px auto 80px';
+            }
+
+            return '100px auto 40px';
+        }
+    };
 
     background-color: ${
         ({
