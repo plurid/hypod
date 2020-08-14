@@ -86,6 +86,25 @@ node server.js
 + a completely private registry (with only one owner);
 + a registry with multiple owning accounts (requires custom logic);
 
+In order to use `hypod` as a multi-owned registry the custom logic needs to implement the [`HypodLogic` interface](https://github.com/plurid/hypod/blob/84661ba76a53ad72abea712c4938fa8db0eea6b2/packages/hypod/source/server/data/interfaces/index.ts#L108z) and pass the methods to `hypodSetup` before starting the `hypodServer`
+
+
+``` typescript
+// server.js
+import hypodServer, {
+    hypodSetup,
+    HypodLogic,
+} from '@plurid/hypod';
+
+
+const hypodLogic: HypodLogic = {
+    // ...
+};
+
+hypodSetup(hypodLogic);
+hypodServer.start();
+```
+
 
 
 ## Building
