@@ -80,8 +80,24 @@ node server.js
 ``` bash
 docker build --file ./configurations/production.dockerfile \
     --tag hypod \
+    --build-arg HYPOD_PORT= \
+    --build-arg HYPOD_QUIET= \
     --build-arg HYPOD_DOCKER_REALM_BASE= \
     --build-arg HYPOD_DOCKER_SERVICE= \
+    --build-arg HYPOD_DATABASE_TYPE= \
+    --build-arg HYPOD_STORAGE_TYPE= \
+    --build-arg HYPOD_STORAGE_BUCKET= \
+    --build-arg HYPOD_STORAGE_ROOT_PATH= \
+    --build-arg HYPOD_PRIVATE_OWNER_IDENTONYM= \
+    --build-arg HYPOD_PRIVATE_OWNER_KEY= \
+    --build-arg HYPOD_PRIVATE_TOKEN= \
+    --build-arg HYPOD_AWS_API_VERSION= \
+    --build-arg HYPOD_AWS_REGION= \
+    --build-arg HYPOD_AWS_ACCESS_KEY_ID= \
+    --build-arg HYPOD_AWS_SECRET_ACCESS_KEY= \
+    --build-arg GOOGLE_APPLICATION_CREDENTIALS= \
+    --build-arg HYPOD_CUSTOM_LOGIC= \
+    --build-arg HYPOD_PRIVATE_USAGE= \
     --build-arg HYPOD_PRIVATE_OWNER_IDENTONYM= \
     --build-arg HYPOD_PRIVATE_OWNER_KEY= \
     --build-arg HYPOD_PRIVATE_TOKEN= \
