@@ -45,23 +45,23 @@ const InitialView: React.FC<InitialViewProperties> = (
     properties,
 ) => {
     // #region properties
-    const {
-        // #region required
-            // #region values
-            // #endregion values
+    // const {
+    //     // #region required
+    //         // #region values
+    //         // #endregion values
 
-            // #region methods
-            // #endregion methods
-        // #endregion required
+    //         // #region methods
+    //         // #endregion methods
+    //     // #endregion required
 
-        // #region optional
-            // #region values
-            // #endregion values
+    //     // #region optional
+    //         // #region values
+    //         // #endregion values
 
-            // #region methods
-            // #endregion methods
-        // #endregion optional
-    } = properties;
+    //         // #region methods
+    //         // #endregion methods
+    //     // #endregion optional
+    // } = properties;
     // #endregion properties
 
 
