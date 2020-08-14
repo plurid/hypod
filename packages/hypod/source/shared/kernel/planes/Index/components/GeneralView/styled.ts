@@ -37,7 +37,7 @@ export const StyledGeneralSelectors = styled.div<IStyledGeneralSelectors>`
     display: grid;
     justify-content: space-between;
     grid-template-columns: 1fr;
-    grid-template-rows: 100px auto 40px;
+    grid-template-rows: 100px auto 80px;
 
     background-color: ${
         ({
