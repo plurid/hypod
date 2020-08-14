@@ -33,36 +33,42 @@ const obliterateImageneTag = async (
     input: any,
     context: Context,
 ) => {
-    const {
-        request,
-    } = context;
+    try {
+        const {
+            request,
+        } = context;
 
-    const logic = request.hypodLogic;
+        const logic = request.hypodLogic;
 
-    const {
-        id,
-        tag,
-    } = input;
+        const {
+            id,
+            tag,
+        } = input;
 
-    if (logic) {
-        const status = await logic.obliterateOwnerImageneTag(
+        if (logic) {
+            const status = await logic.obliterateOwnerImageneTag(
+                id,
+                tag,
+            );
+
+            return {
+                status,
+            };
+        }
+
+        await deregisterImageneTag(
             id,
             tag,
         );
 
         return {
-            status,
+            status: true,
+        };
+    } catch (error) {
+        return {
+            status: false,
         };
     }
-
-    await deregisterImageneTag(
-        id,
-        tag,
-    );
-
-    return {
-        status: true,
-    };
 }
 // #endregion module
 

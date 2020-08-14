@@ -16,28 +16,35 @@
 const getUsageType = async (
     context: Context,
 ) => {
-    const {
-        request,
-    } = context;
+    try {
+        const {
+            request,
+        } = context;
 
-    if (request.hypodLogic) {
+        if (request.hypodLogic) {
+            return {
+                status: true,
+                data: 'CUSTOM_LOGIC',
+            };
+        }
+
+        if (PRIVATE_USAGE) {
+            return {
+                status: true,
+                data: 'PRIVATE_USAGE'
+            };
+        }
+
         return {
             status: true,
-            data: 'CUSTOM_LOGIC',
+            data: 'PUBLIC',
         };
-    }
-
-    if (PRIVATE_USAGE) {
+    } catch (error) {
         return {
             status: true,
-            data: 'PRIVATE_USAGE'
+            data: 'PUBLIC',
         };
     }
-
-    return {
-        status: true,
-        data: 'PUBLIC',
-    };
 }
 // #endregion module
 

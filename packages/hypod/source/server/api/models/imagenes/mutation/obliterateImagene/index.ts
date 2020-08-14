@@ -32,31 +32,37 @@ const obliterateImagene = async (
     input: any,
     context: Context,
 ) => {
-    const {
-        request,
-    } = context;
+    try {
+        const {
+            request,
+        } = context;
 
-    const logic = request.hypodLogic;
+        const logic = request.hypodLogic;
 
-    const {
-        value
-    } = input;
+        const {
+            value
+        } = input;
 
-    if (logic) {
-        const status = await logic.obliterateOwnerImagene(
-            value,
-        );
+        if (logic) {
+            const status = await logic.obliterateOwnerImagene(
+                value,
+            );
+
+            return {
+                status,
+            };
+        }
+
+        await deregisterImagene(value);
 
         return {
-            status,
+            status: true,
+        };
+    } catch (error) {
+        return {
+            status: false,
         };
     }
-
-    await deregisterImagene(value);
-
-    return {
-        status: true,
-    };
 }
 // #endregion module
 

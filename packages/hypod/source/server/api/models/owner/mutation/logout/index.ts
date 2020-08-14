@@ -6,6 +6,8 @@
 
     import {
         PRIVATE_USAGE,
+
+        COOKIE_PRIVATE_TOKEN,
     } from '#server/data/constants';
     // #endregion external
 // #endregion imports
@@ -16,32 +18,33 @@
 const logout = async (
     context: Context,
 ) => {
-//     const {
-//         request,
-//     } = context;
+    try {
+        const {
+            response,
+        } = context;
 
-//     const logic = request.hypodLogic;
+        if (PRIVATE_USAGE) {
+            response.cookie(
+                COOKIE_PRIVATE_TOKEN,
+                '',
+                {
+                    httpOnly: true,
+                },
+            );
 
-//     if (logic) {
-//         const owner = await logic.getCurrentOwner();
+            return {
+                status: true,
+            };
+        }
 
-//         return {
-//             status: true,
-//             data: owner,
-//         };
-//     }
-
-//     if (PRIVATE_USAGE) {
-//         // TODO
-//         // check if user
-//         return {
-//             status: false,
-//         };
-//     }
-
-    return {
-        status: false,
-    };
+        return {
+            status: false,
+        };
+    } catch (error) {
+        return {
+            status: false,
+        };
+    }
 }
 // #endregion module
 

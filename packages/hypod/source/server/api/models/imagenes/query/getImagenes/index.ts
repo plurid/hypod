@@ -16,15 +16,33 @@
 const getImagenes = async (
     context: Context,
 ) => {
-    const {
-        imagenes,
-        request,
-    } = context;
+    try {
+        const {
+            imagenes,
+            request,
+        } = context;
 
-    const logic = request.hypodLogic;
+        const logic = request.hypodLogic;
 
-    if (logic) {
-        const imagenes = await logic.getOwnerImagenes();
+        if (logic) {
+            const imagenes = await logic.getOwnerImagenes();
+
+            return {
+                status: true,
+                data: [
+                    ...imagenes,
+                ],
+            };
+        }
+
+        if (PRIVATE_USAGE) {
+            return {
+                status: true,
+                data: [
+                    ...imagenes,
+                ],
+            };
+        }
 
         return {
             status: true,
@@ -32,23 +50,11 @@ const getImagenes = async (
                 ...imagenes,
             ],
         };
-    }
-
-    if (PRIVATE_USAGE) {
+    } catch (error) {
         return {
-            status: true,
-            data: [
-                ...imagenes,
-            ],
+            status: false,
         };
     }
-
-    return {
-        status: true,
-        data: [
-            ...imagenes,
-        ],
-    };
 }
 // #endregion module
 

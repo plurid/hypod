@@ -19,47 +19,54 @@
 const getCurrentOwner = async (
     context: Context,
 ) => {
-    const {
-        request,
-    } = context;
+    try {
 
-    const logic = request.hypodLogic;
+        const {
+            request,
+        } = context;
 
-    if (logic) {
-        const owner = await logic.getCurrentOwner();
+        const logic = request.hypodLogic;
 
-        return {
-            status: true,
-            data: owner,
-        };
-    }
+        if (logic) {
+            const owner = await logic.getCurrentOwner();
 
-    if (PRIVATE_USAGE) {
-        console.log('request.cookies', request.cookies);
-
-        const cookiePrivateToken = request.cookies[COOKIE_PRIVATE_TOKEN];
-
-        const token = Buffer
-            .from(cookiePrivateToken, 'base64')
-            .toString('utf-8');
-
-        console.log('cookiePrivateToken', cookiePrivateToken);
-        console.log('token', token);
-
-        if (token !== PRIVATE_TOKEN) {
             return {
-                status: false,
+                status: true,
+                data: owner,
+            };
+        }
+
+        if (PRIVATE_USAGE) {
+            console.log('request.cookies', request.cookies);
+
+            const cookiePrivateToken = request.cookies[COOKIE_PRIVATE_TOKEN];
+
+            const token = Buffer
+                .from(cookiePrivateToken, 'base64')
+                .toString('utf-8');
+
+            console.log('cookiePrivateToken', cookiePrivateToken);
+            console.log('token', token);
+
+            if (token !== PRIVATE_TOKEN) {
+                return {
+                    status: false,
+                };
+            }
+
+            return {
+                status: true,
             };
         }
 
         return {
-            status: true,
+            status: false,
+        };
+    } catch (error) {
+        return {
+            status: false,
         };
     }
-
-    return {
-        status: false,
-    };
 }
 // #endregion module
 

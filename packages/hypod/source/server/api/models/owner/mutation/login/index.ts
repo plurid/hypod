@@ -22,41 +22,47 @@ const login = async (
     input: any,
     context: Context,
 ) => {
-    const {
-        response,
-    } = context;
+    try {
+        const {
+            response,
+        } = context;
 
-    const {
-        identonym,
-        key,
-    } = input;
+        const {
+            identonym,
+            key,
+        } = input;
 
-    if (PRIVATE_USAGE) {
-        if (
-            identonym === PRIVATE_OWNER_IDENTONYM
-            && key === PRIVATE_OWNER_KEY
-        ) {
-            const base64Token = Buffer
-                .from(PRIVATE_TOKEN)
-                .toString('base64');
+        if (PRIVATE_USAGE) {
+            if (
+                identonym === PRIVATE_OWNER_IDENTONYM
+                && key === PRIVATE_OWNER_KEY
+            ) {
+                const base64Token = Buffer
+                    .from(PRIVATE_TOKEN)
+                    .toString('base64');
 
-            response.cookie(
-                COOKIE_PRIVATE_TOKEN,
-                base64Token,
-                {
-                    httpOnly: true,
-                },
-            );
+                response.cookie(
+                    COOKIE_PRIVATE_TOKEN,
+                    base64Token,
+                    {
+                        httpOnly: true,
+                    },
+                );
 
-            return {
-                status: true,
-            };
+                return {
+                    status: true,
+                };
+            }
         }
-    }
 
-    return {
-        status: false,
-    };
+        return {
+            status: false,
+        };
+    } catch (error) {
+        return {
+            status: false,
+        };
+    }
 }
 // #endregion module
 
