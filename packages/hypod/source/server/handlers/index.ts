@@ -1,6 +1,7 @@
 // #region imports
     // #region libraries
     import bodyParser from 'body-parser';
+    import cookieParser from 'cookie-parser';
 
     import PluridServer from '@plurid/plurid-react-server';
     // #endregion libraries
@@ -37,6 +38,7 @@ const setupHandlers = (
     const instance = server.instance();
 
     instance.use(
+        cookieParser(),
         /** Attach logic */
         (request, _, next) => {
             if (logic) {
