@@ -77,15 +77,16 @@ const imageneRowRenderer = (
         id,
         name,
         latest,
-        size,
-        digest,
+        tags,
         isPublic,
     } = imagene;
 
     const imageneAddress = environment.dockerService + '/' + name + ':' + latest;
 
-    const textSize = size + ' MB';
-    const shortDigest = digest.slice(0, 12) + '…';
+    const latestTag = tags[0];
+
+    const textSize = latestTag.size + ' MB';
+    const shortDigest = latestTag.digest.slice(0, 12) + '…';
 
     return (
         <>
@@ -107,7 +108,7 @@ const imageneRowRenderer = (
 
             <StyledLine>
                 <PluridIconCopy
-                    atClick={() => clipboard.copy(digest)}
+                    atClick={() => clipboard.copy(latestTag.digest)}
                 />
 
                 {shortDigest}
@@ -142,12 +143,13 @@ const createSearchTerms = (
                 id,
                 name,
                 latest,
-                size,
-                digest,
+                tags,
                 isPublic,
             } = imagene;
 
-            const textSize = size + ' MB';
+            const latestTag = tags[0];
+
+            const textSize = latestTag.size + ' MB';
             const textPublic = isPublic ? 'public' : 'private';
 
             const searchTerm = {
@@ -156,7 +158,7 @@ const createSearchTerms = (
                     name.toLowerCase(),
                     latest.toLowerCase(),
                     textSize.toLowerCase(),
-                    digest.toLowerCase(),
+                    latestTag.digest.toLowerCase(),
                     textPublic,
                 ],
             };
