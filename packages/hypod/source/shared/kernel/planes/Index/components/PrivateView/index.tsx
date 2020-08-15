@@ -167,6 +167,14 @@ const PrivateView: React.FC<PrivateViewProperties> = (
             return;
         }
     }
+
+    const handleEnter = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+        if (event.key === 'Enter') {
+            login();
+        }
+    }
     // #endregion handlers
 
 
@@ -190,6 +198,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
                     text={identonym}
                     placeholder="identonym"
                     atChange={(event) => setIdentonym(event.target.value)}
+                    atKeyDown={(event) => handleEnter(event)}
                     level={2}
                 />
 
@@ -198,11 +207,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
                     placeholder="key"
                     type="password"
                     atChange={(event) => setKey(event.target.value)}
-                    atKeyDown={(event) => {
-                        if (event.key === 'Enter') {
-                            login();
-                        }
-                    }}
+                    atKeyDown={(event) => handleEnter(event)}
                     level={2}
                 />
 
