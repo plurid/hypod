@@ -7,6 +7,8 @@
         DatabaseUpdate,
         DatabaseObliterate,
     } from '#server/data/interfaces';
+
+    import filesystemStorage from '#server/logic/storage/filesystem';
     // #endregion external
 // #endregion imports
 
@@ -24,7 +26,17 @@ const get: DatabaseGet = async (
 const store: DatabaseStore = async (
     entity,
     id,
+    data,
 ) => {
+    switch (entity) {
+        case 'metadata':
+            // filesystemStorage.upload(
+            //     '',
+            //     '',
+            // );
+            break;
+    }
+
     return;
 }
 

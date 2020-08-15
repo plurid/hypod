@@ -95,6 +95,7 @@ export type DatabaseGet = (
 export type DatabaseStore = (
     entity: string,
     id: string,
+    data: any,
 ) => Promise<any>;
 export type DatabaseUpdate = (
     entity: string,

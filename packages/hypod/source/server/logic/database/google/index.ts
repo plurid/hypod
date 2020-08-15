@@ -24,6 +24,7 @@ const get: DatabaseGet = async (
 const store: DatabaseStore = async (
     entity,
     id,
+    data,
 ) => {
     return;
 }

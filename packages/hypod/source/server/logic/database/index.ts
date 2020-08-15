@@ -54,22 +54,26 @@ class Database {
     public store(
         entity: string,
         id: string,
+        data: any,
     ) {
         switch (this.type) {
             case databaseType.filesystem:
                 return filesystemDatabase.store(
                     entity,
                     id,
+                    data,
                 );
             case databaseType.amazon:
                 return amazonDatabase.store(
                     entity,
                     id,
+                    data,
                 );
             case databaseType.google:
                 return googleDatabase.store(
                     entity,
                     id,
+                    data,
                 );
         }
     }
