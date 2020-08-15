@@ -5,6 +5,10 @@
     } from 'express';
 
     import {
+        ungzip,
+    } from 'node-gzip';
+
+    import {
         uuid,
     } from '@plurid/plurid-functions';
     // #endregion libraries
@@ -66,10 +70,22 @@ const registerImageneManifest = async (
     let size = 0;
 
     for (const layer of manifest.layers) {
-        // todo
-        // unzip
-        // compute size
-        size += layer.size;
+        try {
+            const layerPath = layer.digest.replace(':', '/');
+            const imageneLayerPath = BASE_PATH_IMAGENES + layerPath;
+    
+            const layerData = await storage.download(
+                imageneLayerPath,
+            );
+                
+            if (layerData) {
+                const decompressed = await ungzip(Buffer.from(layerData, 'binary'));
+                const byteLength = Buffer.byteLength(decompressed);
+                size += byteLength;
+            }
+        } catch (error) {
+            continue;
+        }
     }
 
     const imageneTag: ImageneTag = {
