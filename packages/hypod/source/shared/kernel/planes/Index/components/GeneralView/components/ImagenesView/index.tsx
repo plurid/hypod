@@ -303,11 +303,17 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
 
 
     // #region state
-    const [searchTerms, setSearchTerms] = useState(
+    const [
+        searchTerms, 
+        setSearchTerms,
+    ] = useState(
         createSearchTerms(stateImagenes),
     );
 
-    const [filteredRows, setFilteredRows] = useState(
+    const [
+        filteredRows, 
+        setFilteredRows,
+    ] = useState(
         stateImagenes.map(
             imagene => imageneRowRenderer(
                 imagene,

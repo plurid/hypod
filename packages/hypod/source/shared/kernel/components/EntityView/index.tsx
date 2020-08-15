@@ -138,7 +138,7 @@ const EntityView: React.FC<EntityViewProperties> = (
 
             {rows.length === 0 && (
                 <StyledNoRows>
-                    {noRows}
+                    {noRows} {searchValue ? 'for this filter' : ''}
                 </StyledNoRows>
             )}
 
