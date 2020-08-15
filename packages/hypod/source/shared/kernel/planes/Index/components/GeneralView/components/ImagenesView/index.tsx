@@ -71,7 +71,8 @@ const imageneRowRenderer = (
         id: string,
     ) => void,
     handleToggleImagePublic: (
-        isPublic: boolean,
+        id: string,
+        value: boolean,
     ) => void,
 ) => {
     const {
@@ -123,11 +124,11 @@ const imageneRowRenderer = (
             <div>
                 {isPublic ? (
                     <PluridIconUnlocked
-                        atClick={() => handleToggleImagePublic(true)}
+                        atClick={() => handleToggleImagePublic(id, true)}
                     />
                 ) : (
                     <PluridIconLocked
-                        atClick={() => handleToggleImagePublic(false)}
+                        atClick={() => handleToggleImagePublic(id, false)}
                     />
                 )}
             </div>
@@ -205,6 +206,7 @@ export interface ImagenesViewStateProperties {
 
 export interface ImagenesViewDispatchProperties {
     dispatchRemoveEntity: typeof actions.data.removeEntity;
+    dispatchTogglePublicImagene: typeof actions.data.togglePublicImagene;
 }
 
 export type ImagenesViewProperties = ImagenesViewOwnProperties
@@ -240,6 +242,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
 
         // #region dispatch
         dispatchRemoveEntity,
+        dispatchTogglePublicImagene,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -271,9 +274,15 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
     }
 
     const handleToggleImagePublic = async (
-        isPublic: boolean,
+        id: string,
+        value: boolean,
     ) => {
+        dispatchTogglePublicImagene({
+            id,
+            value,
+        });
 
+        // TODO mutate the API
     }
     // #endregion handlers
 
@@ -414,6 +423,11 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch(
         actions.data.removeEntity(payload),
+    ),
+    dispatchTogglePublicImagene: (
+        payload,
+    ) => dispatch(
+        actions.data.togglePublicImagene(payload),
     ),
 });
 // #endregion module
