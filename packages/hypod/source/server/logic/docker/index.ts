@@ -56,7 +56,7 @@ const registerImageneManifest = async (
     const manifestData = await storage.download(
         manifestPath,
     );
-
+    
     if (!manifestData) {
         return;
     }
@@ -427,15 +427,15 @@ export const putNameManifestsReference = async (
     const parsedData = JSON.parse(data);
     const digest = parsedData?.config?.digest || '';
 
+    await storage.upload(
+        location,
+        data,
+    );
+
     registerImageneManifest(
         name,
         reference,
         digest,
-    );
-
-    await storage.upload(
-        location,
-        data,
     );
 
     response.setHeader(
