@@ -31,7 +31,7 @@ export const inputs = gql`
 
     input InputTogglePublicImagene {
         id: String!
-        value: String!
+        value: Boolean!
     }
 `;
 
