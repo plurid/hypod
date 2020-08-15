@@ -37,6 +37,7 @@
 
     import {
         Imagene,
+        ImageneTag,
     } from '#server/data/interfaces';
 
     import EntityView from '#kernel-components/EntityView';
@@ -52,6 +53,10 @@
     import actions from '#kernel-services/state/actions';
 
     import {
+        StyledElementsInLine,
+    } from '#kernel-services/styled';
+
+    import {
         getFilterIDs,
         formatBytes,
     } from '#kernel-services/utilities';
@@ -61,15 +66,26 @@
 
 
     // #region internal
-    import {
-        StyledLine,
-    } from './styled';
     // #endregion internal
 // #endregion imports
 
 
 
 // #region module
+const findLatestTag = (
+    latest: string,
+    tags: ImageneTag[],
+) => {
+    if (tags.length === 0) {
+        return;
+    }
+
+    const latestTag = tags.find(tag => tag.name === latest);
+
+    return latestTag;
+}
+
+
 const imageneRowRenderer = (
     imagene: Imagene,
     handleImageneObliterate: (
@@ -90,7 +106,54 @@ const imageneRowRenderer = (
 
     const imageneAddress = environment.dockerService + '/' + name + ':' + latest;
 
-    const latestTag = tags[0];
+    const latestTag = findLatestTag(
+        latest,
+        tags,
+    );
+
+    if (!latestTag) {
+        return (
+            <>
+                <StyledElementsInLine>
+                    <PluridIconCopy
+                        atClick={() => clipboard.copy(imageneAddress)}
+                    />
+
+                    <div>
+                        <PluridLink
+                            route={'/imagene/' + id}
+                        >
+                            {name}
+                        </PluridLink>
+                    </div>
+                </StyledElementsInLine>
+
+                <div />
+
+                <div />
+
+                <div />
+
+                <div />
+
+                <div>
+                    {isPublic ? (
+                        <PluridIconUnlocked
+                            atClick={() => handleToggleImagePublic(id, false)}
+                        />
+                    ) : (
+                        <PluridIconLocked
+                            atClick={() => handleToggleImagePublic(id, true)}
+                        />
+                    )}
+                </div>
+
+                <PluridIconDelete
+                    atClick={() => handleImageneObliterate(id)}
+                />
+            </>
+        );
+    }
 
     const textDate = new Date(latestTag.generatedAt * 1000).toLocaleString();
     const textSize = formatBytes(latestTag.size);
@@ -98,7 +161,7 @@ const imageneRowRenderer = (
 
     return (
         <>
-            <StyledLine>
+            <StyledElementsInLine>
                 <PluridIconCopy
                     atClick={() => clipboard.copy(imageneAddress)}
                 />
@@ -110,7 +173,7 @@ const imageneRowRenderer = (
                         {name}
                     </PluridLink>
                 </div>
-            </StyledLine>
+            </StyledElementsInLine>
 
             <div>
                 {latest}
@@ -124,13 +187,13 @@ const imageneRowRenderer = (
                 {textSize}
             </div>
 
-            <StyledLine>
+            <StyledElementsInLine>
                 <PluridIconCopy
                     atClick={() => clipboard.copy(latestTag.digest)}
                 />
 
                 {shortDigest}
-            </StyledLine>
+            </StyledElementsInLine>
 
             <div>
                 {isPublic ? (
@@ -165,11 +228,27 @@ const createSearchTerms = (
                 isPublic,
             } = imagene;
 
-            const latestTag = tags[0];
+            const textPublic = isPublic ? 'public' : 'private';
+
+            const latestTag = findLatestTag(
+                latest,
+                tags,
+            );
+
+            if (!latestTag) {
+                const searchTerm = {
+                    id,
+                    data: [
+                        name.toLowerCase(),
+                        textPublic,
+                    ],
+                };
+
+                return searchTerm;
+            }
 
             const textDate = new Date(latestTag.generatedAt * 1000).toLocaleString();
             const textSize = formatBytes(latestTag.size);
-            const textPublic = isPublic ? 'public' : 'private';
 
             const searchTerm = {
                 id,
@@ -314,14 +393,14 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
 
     // #region state
     const [
-        searchTerms, 
+        searchTerms,
         setSearchTerms,
     ] = useState(
         createSearchTerms(stateImagenes),
     );
 
     const [
-        filteredRows, 
+        filteredRows,
         setFilteredRows,
     ] = useState(
         stateImagenes.map(

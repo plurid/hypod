@@ -120,7 +120,7 @@ export const obliterateImageneTag = (
 
         const updatedImagene: Imagene = {
             ...imagene,
-            tags,
+            tags: tags || [],
         };
 
         return updatedImagene;

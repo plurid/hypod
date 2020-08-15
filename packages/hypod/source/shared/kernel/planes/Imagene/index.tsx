@@ -44,18 +44,23 @@
         getFilterIDs,
         formatBytes,
     } from '#kernel-services/utilities';
-    
+
     import EntityView from '#kernel-components/EntityView';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
     import actions from '#kernel-services/state/actions';
 
-    import environment from '#kernel-services/utilities/environment';
+    import client from '#kernel-services/graphql/client';
+    import {
+        OBLITERATE_IMAGENE_TAG,
+    } from '#kernel-services/graphql/mutate';
 
     import {
         StyledElementsInLine,
     } from '#kernel-services/styled';
+
+    import environment from '#kernel-services/utilities/environment';
     // #endregion external
 
 
@@ -170,6 +175,7 @@ export interface PageStateProperties {
 }
 
 export interface PageDispatchProperties {
+    dispatchObliterateImageneTag: typeof actions.data.obliterateImageneTag;
 }
 
 export type PageProperties = PageOwnProperties
@@ -190,6 +196,10 @@ const Page: React.FC<PageProperties> = (
         stateInteractionTheme,
         stateImagenes,
         // #endregion state
+
+        // #region dispatch
+        dispatchObliterateImageneTag,
+        // #endregion dispatch
     } = properties;
 
     const imageneID = plurid.route.plane.parameters.id;
@@ -199,24 +209,47 @@ const Page: React.FC<PageProperties> = (
 
 
     // #region handlers
-    const handleImageneTagObliterate = (
-        id: string,
+    const handleImageneTagObliterate = async (
+        tagID: string,
     ) => {
+        if (!imagene) {
+            return;
+        }
 
+        dispatchObliterateImageneTag({
+            imageneID: imagene.id,
+            tagID,
+        });
+
+        try {
+            const input = {
+                imageneID: imagene.id,
+                tagID,
+            };
+
+            await client.mutate({
+                mutation: OBLITERATE_IMAGENE_TAG,
+                variables: {
+                    input,
+                },
+            });
+        } catch (error) {
+            return;
+        }
     }
     // #endregion handlers
 
 
     // #region state
     const [
-        searchTerms, 
+        searchTerms,
         setSearchTerms,
     ] = useState(
         imagene ? createSearchTerms(imagene.tags) : [],
     );
 
     const [
-        filteredRows, 
+        filteredRows,
         setFilteredRows,
     ] = useState(
         imagene ? imagene.tags.map(
@@ -283,7 +316,7 @@ const Page: React.FC<PageProperties> = (
                     handleImageneTagObliterate,
                 ),
             );
-    
+
             setSearchTerms(searchTerms);
             setFilteredRows(filteredRows);
         }
@@ -355,6 +388,11 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): PageDispatchProperties => ({
+    dispatchObliterateImageneTag: (
+        payload,
+    ) => dispatch(
+        actions.data.obliterateImageneTag(payload),
+    ),
 });
 // #endregion module
 
