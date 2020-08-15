@@ -103,11 +103,13 @@ const imageneRowRenderer = (
                     atClick={() => clipboard.copy(imageneAddress)}
                 />
 
-                <PluridLink
-                    route={'/imagene/' + id}
-                >
-                    {name}
-                </PluridLink>
+                <div>
+                    <PluridLink
+                        route={'/imagene/' + id}
+                    >
+                        {name}
+                    </PluridLink>
+                </div>
             </StyledLine>
 
             <div>
