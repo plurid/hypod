@@ -15,9 +15,11 @@ const GET_IMAGENES = gql`
                 id
                 name
                 latest
-                tags
-                size
-                digest
+                tags {
+                    name
+                    size
+                    digest
+                }
                 isPublic
             }
         }
