@@ -38,7 +38,7 @@ export const types = gql`
     }
 
     type Imagene {
-        id: String!
+        id: ID!
         name: String!
         latest: String!
         tags: [ImageneTag!]!
@@ -46,6 +46,8 @@ export const types = gql`
     }
 
     type ImageneTag {
+        id: ID!
+        generatedAt: Int!
         name: String!
         size: Float!
         digest: String!

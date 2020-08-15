@@ -89,6 +89,8 @@ const registerImageneManifest = async (
     }
 
     const imageneTag: ImageneTag = {
+        id: uuid.generate(),
+        generatedAt: Math.floor(Date.now() / 1000),
         name: reference,
         size,
         digest,

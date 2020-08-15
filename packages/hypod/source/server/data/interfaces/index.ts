@@ -90,6 +90,8 @@ export interface Imagene {
 }
 
 export interface ImageneTag {
+    id: string;
+    generatedAt: number;
     name: string;
     size: number;
     digest: string;
