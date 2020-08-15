@@ -40,6 +40,7 @@
     import client from '#kernel-services/graphql/client';
     import {
         OBLITERATE_IMAGENE,
+        TOGGLE_PUBLIC_IMAGENE,
     } from '#kernel-services/graphql/mutate';
 
     import { AppState } from '#kernel-services/state/store';
@@ -282,7 +283,21 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             value,
         });
 
-        // TODO mutate the API
+        try {
+            const input = {
+                id,
+                value,
+            };
+
+            await client.mutate({
+                mutation: TOGGLE_PUBLIC_IMAGENE,
+                variables: {
+                    input,
+                },
+            });
+        } catch (error) {
+            return;
+        }
     }
     // #endregion handlers
 
