@@ -64,6 +64,31 @@
 
 
 // #region module
+const bytesUnits = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+/**
+ * Convert from bytes to human-readable format
+ * 
+ * https://stackoverflow.com/a/39906526
+ * 
+ * @param x 
+ */
+export const formatBytes = (
+    x: any,
+) => {
+    let l = 0;
+    let n = parseInt(x, 10) || 0;
+
+    while (n >= 1024 && ++l) {
+        n = n/1024;
+    }
+  
+    // include a decimal point and a tenths-place digit if presenting 
+    // less than ten of KB or greater units
+    return(n.toFixed(n < 10 && l > 0 ? 1 : 0) + ' ' + bytesUnits[l]);
+}
+
+
 const imageneRowRenderer = (
     imagene: Imagene,
     handleImageneObliterate: (
@@ -85,7 +110,7 @@ const imageneRowRenderer = (
 
     const latestTag = tags[0];
 
-    const textSize = latestTag.size + ' MB';
+    const textSize = formatBytes(latestTag.size);
     const shortDigest = latestTag.digest.slice(0, 12) + '…';
 
     return (
@@ -149,7 +174,7 @@ const createSearchTerms = (
 
             const latestTag = tags[0];
 
-            const textSize = latestTag.size + ' MB';
+            const textSize = formatBytes(latestTag.size);
             const textPublic = isPublic ? 'public' : 'private';
 
             const searchTerm = {
