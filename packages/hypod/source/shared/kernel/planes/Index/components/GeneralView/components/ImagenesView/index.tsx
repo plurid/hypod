@@ -86,7 +86,7 @@ const imageneRowRenderer = (
 
     const latestTag = tags[0];
 
-    const textDate = new Date(latestTag.generatedAt * 1000).c();
+    const textDate = new Date(latestTag.generatedAt * 1000).toLocaleString();
     const textSize = formatBytes(latestTag.size);
     const shortDigest = latestTag.digest.slice(0, 12) + '…';
 
