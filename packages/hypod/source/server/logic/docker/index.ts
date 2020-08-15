@@ -20,6 +20,7 @@
 
     import {
         Imagene,
+        ImageneTag,
         HypodRequest,
     } from '#server/data/interfaces';
 
@@ -45,6 +46,51 @@
 
 
 // #region module
+const registerImageneManifest = async (
+    name: string,
+    reference: string,
+    digest: string,
+) => {
+    const manifestPath = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
+
+    const manifestData = await storage.download(
+        manifestPath,
+    );
+
+    if (!manifestData) {
+        return;
+    }
+
+    const manifest = JSON.parse(manifestData);
+
+    let size = 0;
+
+    for (const layer of manifest.layers) {
+        // todo
+        // unzip
+        // compute size
+        size += layer.size;
+    }
+
+    const imageneTag: ImageneTag = {
+        name: reference,
+        size,
+        digest,
+    };
+
+    const imagene: Imagene = {
+        id: uuid.generate(),
+        name,
+        latest: reference,
+        tags: [
+            imageneTag,
+        ],
+        isPublic: false,
+    };
+    registerImagene(imagene);
+}
+
+
 /** GET */
 export const getNameTagsList = async (
     request: HypodRequest,
@@ -381,18 +427,11 @@ export const putNameManifestsReference = async (
     const parsedData = JSON.parse(data);
     const digest = parsedData?.config?.digest || '';
 
-    const imagene: Imagene = {
-        id: uuid.generate(),
+    registerImageneManifest(
         name,
-        size: 0,
-        latest: reference,
-        tags: [
-            reference,
-        ],
+        reference,
         digest,
-        isPublic: false,
-    };
-    registerImagene(imagene);
+    );
 
     await storage.upload(
         location,

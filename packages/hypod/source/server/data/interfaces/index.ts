@@ -85,10 +85,14 @@ export interface Imagene {
     id: string;
     name: string;
     latest: string;
-    tags: string[];
+    tags: ImageneTag[];
+    isPublic: boolean;
+}
+
+export interface ImageneTag {
+    name: string;
     size: number;
     digest: string;
-    isPublic: boolean;
 }
 
 

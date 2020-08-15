@@ -41,10 +41,14 @@ export const types = gql`
         id: String!
         name: String!
         latest: String!
-        tags: [String!]!
+        tags: [ImageneTag!]!
+        isPublic: Boolean!
+    }
+
+    type ImageneTag {
+        name: String!
         size: Float!
         digest: String!
-        isPublic: Boolean!
     }
 `;
 // #endregion module
