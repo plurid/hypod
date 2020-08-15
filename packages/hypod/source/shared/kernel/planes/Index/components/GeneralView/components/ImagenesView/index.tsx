@@ -14,6 +14,10 @@
     } from '@plurid/plurid-themes';
 
     import {
+        clipboard,
+    } from '@plurid/plurid-functions';
+
+    import {
         PluridIconDelete,
         PluridIconCopy,
         PluridIconLocked,
@@ -21,8 +25,8 @@
     } from '@plurid/plurid-icons-react';
 
     import {
-        clipboard,
-    } from '@plurid/plurid-functions';
+        PluridLink,
+    } from '@plurid/plurid-react';
     // #endregion libraries
 
 
@@ -99,7 +103,11 @@ const imageneRowRenderer = (
                     atClick={() => clipboard.copy(imageneAddress)}
                 />
 
-                {name}
+                <PluridLink
+                    route={'/imagene/' + id}
+                >
+                    {name}
+                </PluridLink>
             </StyledLine>
 
             <div>
@@ -345,7 +353,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
         });
 
         const sortedImagenes = filteredImagenes.sort(
-            compareValues('date', 'desc'),
+            compareValues('name', 'desc'),
         );
 
         setFilteredRows(

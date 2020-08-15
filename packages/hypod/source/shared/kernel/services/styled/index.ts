@@ -30,4 +30,12 @@ export const StyledPluridLinkButton = styled(PluridLinkButton)`
     place-content: center;
     margin: 30px auto;
 `;
+
+
+export const StyledElementsInLine = styled.div`
+    display: grid;
+    grid-template-columns: 16px auto;
+    align-items: center;
+    grid-gap: 0.5rem;
+`;
 // #endregion module
