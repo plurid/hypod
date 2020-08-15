@@ -41,14 +41,14 @@ const obliterateImageneTag = async (
         const logic = request.hypodLogic;
 
         const {
-            id,
-            tag,
+            imageneID,
+            tagID,
         } = input;
 
         if (logic) {
             const status = await logic.obliterateOwnerImageneTag(
-                id,
-                tag,
+                imageneID,
+                tagID,
             );
 
             return {
@@ -57,8 +57,8 @@ const obliterateImageneTag = async (
         }
 
         await deregisterImageneTag(
-            id,
-            tag,
+            imageneID,
+            tagID,
         );
 
         return {

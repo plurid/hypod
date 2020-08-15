@@ -25,8 +25,8 @@ export const mutations = gql`
 
 export const inputs = gql`
     input InputObliterateImageneTag {
-        id: String!
-        tag: String!
+        imageneID: String!
+        tagID: String!
     }
 
     input InputTogglePublicImagene {
