@@ -37,6 +37,17 @@ export interface SetImagenesAction {
 }
 
 
+export const TOGGLE_IMAGENE_PUBLIC = 'TOGGLE_IMAGENE_PUBLIC';
+export interface ToggleImagenePublicPayload {
+    id: string;
+    value: boolean;
+}
+export interface ToggleImagenePublicAction {
+    type: typeof TOGGLE_IMAGENE_PUBLIC;
+    payload: ToggleImagenePublicPayload;
+}
+
+
 
 export interface State {
     activeProviderID: string;
@@ -47,5 +58,6 @@ export interface State {
 export type Actions =
     | RemoveEntityAction
     | SetActiveProviderIDAction
-    | SetImagenesAction;
+    | SetImagenesAction
+    | ToggleImagenePublicAction;
 // #endregion module

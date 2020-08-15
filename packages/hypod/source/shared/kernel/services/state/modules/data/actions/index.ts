@@ -41,11 +41,22 @@ export const setImagenes = (
 }
 
 
+export const togglePublicImagene = (
+    payload: Types.ToggleImagenePublicPayload,
+): Types.ToggleImagenePublicAction => {
+    return {
+        type: Types.TOGGLE_IMAGENE_PUBLIC,
+        payload,
+    };
+}
+
+
 
 const actions = {
     removeEntity,
     setActiveProviderID,
     setImagenes,
+    togglePublicImagene,
 };
 // #endregion module
 

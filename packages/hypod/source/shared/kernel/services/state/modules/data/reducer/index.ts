@@ -20,6 +20,8 @@ const reducer = (
             return resolvers.setActiveProviderID(state, action);
         case Types.SET_IMAGENES:
             return resolvers.setImagenes(state, action);
+        case Types.TOGGLE_IMAGENE_PUBLIC:
+            return resolvers.togglePublicImagene(state, action);
         default:
             return {
                 ...state,

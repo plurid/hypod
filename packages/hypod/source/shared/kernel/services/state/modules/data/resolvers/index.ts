@@ -1,5 +1,9 @@
 // #region imports
     // #region external
+    import {
+        Imagene,
+    } from '#server/data/interfaces';
+
     import * as Types from '../types';
     // #endregion external
 // #endregion imports
@@ -65,11 +69,43 @@ export const setImagenes = (
 }
 
 
+export const togglePublicImagene = (
+    state: Types.State,
+    action: Types.ToggleImagenePublicAction,
+): Types.State => {
+    const {
+        id,
+        value,
+    } = action.payload;
+
+    const imagenes = state.imagenes.map(imagene => {
+        if (imagene.id !== id) {
+            return {
+                ...imagene,
+            };
+        }
+
+        const updatedImagene: Imagene = {
+            ...imagene,
+            isPublic: value,
+        };
+
+        return updatedImagene;
+    });
+
+    return {
+        ...state,
+        imagenes,
+    };
+}
+
+
 
 const resolvers = {
     removeEntity,
     setActiveProviderID,
     setImagenes,
+    togglePublicImagene,
 };
 // #endregion module
 
