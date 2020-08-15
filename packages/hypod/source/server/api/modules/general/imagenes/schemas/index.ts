@@ -18,7 +18,7 @@ export const mutations = gql`
     extend type Mutation {
         obliterateImagene(input: InputValueString!): Response!
         obliterateImageneTag(input: InputObliterateImageneTag!): Response!
-        togglePublicImageneTag(input: InputTogglePublicImageneTag!): Response!
+        togglePublicImagene(input: InputTogglePublicImagene!): Response!
     }
 `;
 
@@ -29,7 +29,7 @@ export const inputs = gql`
         tag: String!
     }
 
-    input InputTogglePublicImageneTag {
+    input InputTogglePublicImagene {
         id: String!
         value: String!
     }

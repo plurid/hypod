@@ -30,11 +30,11 @@ const Mutation = {
         input,
         context,
     ),
-    togglePublicImageneTag: (
+    togglePublicImagene: (
         _: any,
         { input }: any,
         context: Context,
-    ) => Imagenes.Mutation.togglePublicImageneTag(
+    ) => Imagenes.Mutation.togglePublicImagene(
         input,
         context,
     ),

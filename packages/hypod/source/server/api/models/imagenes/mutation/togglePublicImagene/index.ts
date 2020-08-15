@@ -13,7 +13,7 @@
 
 
 // #region module
-const togglePublicImageneTag = async (
+const togglePublicImagene = async (
     input: any,
     context: Context,
 ) => {
@@ -51,5 +51,5 @@ const togglePublicImageneTag = async (
 
 
 // #region exports
-export default togglePublicImageneTag;
+export default togglePublicImagene;
 // #endregion exports

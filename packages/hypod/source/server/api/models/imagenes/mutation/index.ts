@@ -2,7 +2,7 @@
     // #region internal
     import obliterateImagene from './obliterateImagene';
     import obliterateImageneTag from './obliterateImageneTag';
-    import togglePublicImageneTag from './togglePublicImageneTag';
+    import togglePublicImagene from './togglePublicImagene';
     // #endregion internal
 // #endregion imports
 
@@ -12,6 +12,6 @@
 export default {
     obliterateImagene,
     obliterateImageneTag,
-    togglePublicImageneTag,
+    togglePublicImagene,
 };
 // #endregion exports

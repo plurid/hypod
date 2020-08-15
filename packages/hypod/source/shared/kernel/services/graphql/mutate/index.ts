@@ -35,6 +35,20 @@ const OBLITERATE_IMAGENE_TAG = gql`
 `;
 
 
+const TOGGLE_PUBLIC_IMAGENE = gql`
+    mutation TogglePublicImagene($input: InputTogglePublicImagene!) {
+        togglePublicImagene(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
 const LOGIN = gql`
     mutation Login($input: InputLogin!) {
         login(input: $input) {
@@ -72,6 +86,7 @@ const LOGOUT = gql`
 export {
     OBLITERATE_IMAGENE,
     OBLITERATE_IMAGENE_TAG,
+    TOGGLE_PUBLIC_IMAGENE,
     LOGIN,
     LOGOUT,
 };
