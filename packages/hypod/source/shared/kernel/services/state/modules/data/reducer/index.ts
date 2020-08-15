@@ -22,6 +22,8 @@ const reducer = (
             return resolvers.setImagenes(state, action);
         case Types.TOGGLE_IMAGENE_PUBLIC:
             return resolvers.togglePublicImagene(state, action);
+        case Types.OBLITERATE_IMAGENE_TAG:
+            return resolvers.obliterateImageneTag(state, action);
         default:
             return {
                 ...state,

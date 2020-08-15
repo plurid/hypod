@@ -100,12 +100,46 @@ export const togglePublicImagene = (
 }
 
 
+export const obliterateImageneTag = (
+    state: Types.State,
+    action: Types.ObliterateImageneTagAction,
+): Types.State => {
+    const {
+        imageneID,
+        tagID,
+    } = action.payload;
+
+    const imagenes = state.imagenes.map(imagene => {
+        if (imagene.id !== imageneID) {
+            return {
+                ...imagene,
+            };
+        }
+
+        const tags = imagene.tags.filter(imageneTag => imageneTag.id !== tagID);
+
+        const updatedImagene: Imagene = {
+            ...imagene,
+            tags,
+        };
+
+        return updatedImagene;
+    });
+
+    return {
+        ...state,
+        imagenes,
+    };
+}
+
+
 
 const resolvers = {
     removeEntity,
     setActiveProviderID,
     setImagenes,
     togglePublicImagene,
+    obliterateImageneTag,
 };
 // #endregion module
 

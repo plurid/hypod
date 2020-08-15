@@ -48,6 +48,17 @@ export interface ToggleImagenePublicAction {
 }
 
 
+export const OBLITERATE_IMAGENE_TAG = 'OBLITERATE_IMAGENE_TAG';
+export interface ObliterateImageneTagPayload {
+    imageneID: string;
+    tagID: string;
+}
+export interface ObliterateImageneTagAction {
+    type: typeof OBLITERATE_IMAGENE_TAG;
+    payload: ObliterateImageneTagPayload;
+}
+
+
 
 export interface State {
     activeProviderID: string;
@@ -59,5 +70,6 @@ export type Actions =
     | RemoveEntityAction
     | SetActiveProviderIDAction
     | SetImagenesAction
-    | ToggleImagenePublicAction;
+    | ToggleImagenePublicAction
+    | ObliterateImageneTagAction;
 // #endregion module

@@ -51,12 +51,23 @@ export const togglePublicImagene = (
 }
 
 
+export const obliterateImageneTag = (
+    payload: Types.ObliterateImageneTagPayload,
+): Types.ObliterateImageneTagAction => {
+    return {
+        type: Types.OBLITERATE_IMAGENE_TAG,
+        payload,
+    };
+}
+
+
 
 const actions = {
     removeEntity,
     setActiveProviderID,
     setImagenes,
     togglePublicImagene,
+    obliterateImageneTag,
 };
 // #endregion module
 
