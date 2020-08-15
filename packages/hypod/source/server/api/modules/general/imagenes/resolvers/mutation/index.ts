@@ -30,6 +30,14 @@ const Mutation = {
         input,
         context,
     ),
+    togglePublicImageneTag: (
+        _: any,
+        { input }: any,
+        context: Context,
+    ) => Imagenes.Mutation.togglePublicImageneTag(
+        input,
+        context,
+    ),
 };
 // #endregion module
 

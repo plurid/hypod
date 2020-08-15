@@ -18,6 +18,7 @@ export const mutations = gql`
     extend type Mutation {
         obliterateImagene(input: InputValueString!): Response!
         obliterateImageneTag(input: InputObliterateImageneTag!): Response!
+        togglePublicImageneTag(input: InputTogglePublicImageneTag!): Response!
     }
 `;
 
@@ -26,6 +27,11 @@ export const inputs = gql`
     input InputObliterateImageneTag {
         id: String!
         tag: String!
+    }
+
+    input InputTogglePublicImageneTag {
+        id: String!
+        value: String!
     }
 `;
 
