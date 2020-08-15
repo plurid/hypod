@@ -122,6 +122,7 @@ const imageneRowRenderer = (
                     <div>
                         <PluridLink
                             route={'/imagene/' + id}
+                            key={id}
                         >
                             {name}
                         </PluridLink>

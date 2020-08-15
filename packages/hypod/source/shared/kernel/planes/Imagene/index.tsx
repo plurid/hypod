@@ -20,8 +20,6 @@
     import {
         PluridIconDelete,
         PluridIconCopy,
-        PluridIconLocked,
-        PluridIconUnlocked,
     } from '@plurid/plurid-icons-react';
 
     import {
