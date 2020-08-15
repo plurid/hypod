@@ -86,6 +86,7 @@ const imageneRowRenderer = (
 
     const latestTag = tags[0];
 
+    const textDate = new Date(latestTag.generatedAt * 1000).c();
     const textSize = formatBytes(latestTag.size);
     const shortDigest = latestTag.digest.slice(0, 12) + '…';
 
@@ -101,6 +102,10 @@ const imageneRowRenderer = (
 
             <div>
                 {latest}
+            </div>
+
+            <div>
+                {textDate}
             </div>
 
             <div>
@@ -150,6 +155,7 @@ const createSearchTerms = (
 
             const latestTag = tags[0];
 
+            const textDate = new Date(latestTag.generatedAt * 1000).toLocaleString();
             const textSize = formatBytes(latestTag.size);
             const textPublic = isPublic ? 'public' : 'private';
 
@@ -158,6 +164,7 @@ const createSearchTerms = (
                 data: [
                     name.toLowerCase(),
                     latest.toLowerCase(),
+                    textDate.toLowerCase(),
                     textSize.toLowerCase(),
                     latestTag.digest.toLowerCase(),
                     textPublic,
@@ -357,6 +364,10 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             </div>
 
             <div>
+                generated on
+            </div>
+
+            <div>
                 size
             </div>
 
@@ -375,7 +386,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 90px 90px 160px 30px 30px"
+            rowTemplate="auto 90px 180px 90px 160px 30px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no imagenes"

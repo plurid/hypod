@@ -16,6 +16,8 @@ const GET_IMAGENES = gql`
                 name
                 latest
                 tags {
+                    id
+                    generatedAt
                     name
                     size
                     digest
