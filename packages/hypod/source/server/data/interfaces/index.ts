@@ -40,6 +40,31 @@ export interface StorageTypeData {
     google: StorageTypeGoogle;
 }
 
+export interface Storage {
+    download: StorageDownload;
+    downloadAll: StorageDownloadAll;
+    upload: StorageUpload;
+    obliterate: StorageObliterate;
+    generateLocations: StorageGenerateLocations;
+}
+
+export type StorageDownload = (
+    filename: string,
+) => Promise<string | undefined>;
+export type StorageDownloadAll = (
+    directory: string,
+) => Promise<any[] | undefined>;
+export type StorageUpload = (
+    filename: string, 
+    data: Buffer, 
+    kind?: StorageUploadKind,
+) => Promise<true | void>;
+export type StorageObliterate = (
+    filename: string,
+) => Promise<true | undefined>;
+export type StorageGenerateLocations = () => Promise<true | undefined>;
+
+
 
 export type DatabaseType =
     | DatabaseTypeFilesystem
@@ -55,6 +80,32 @@ export interface DatabaseTypeData {
     amazon: DatabaseTypeAmazon;
     google: DatabaseTypeGoogle;
 }
+
+export interface Database {
+    get: DatabaseGet;
+    store: DatabaseStore;
+    update: DatabaseUpdate;
+    obliterate: DatabaseObliterate;
+}
+
+export type DatabaseGet = (
+    entity: string,
+    id: string,
+) => Promise<any>;
+export type DatabaseStore = (
+    entity: string,
+    id: string,
+) => Promise<any>;
+export type DatabaseUpdate = (
+    entity: string,
+    id: string,
+    field: string,
+    value: any,
+) => Promise<any>;
+export type DatabaseObliterate = (
+    entity: string,
+    id: string,
+) => Promise<any>;
 
 
 export type StorageUploadKind =

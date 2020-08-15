@@ -22,7 +22,12 @@
     } from '#server/data/constants';
 
     import {
-        StorageUploadKind,
+        Storage,
+        StorageDownload,
+        StorageDownloadAll,
+        StorageUpload,
+        StorageObliterate,
+        StorageGenerateLocations,
     } from '#server/data/interfaces';
     // #endregion external
 // #endregion imports
@@ -106,8 +111,8 @@ const loadDataFromFiles = async <T>(
 }
 
 
-const storageDownload = async (
-    filename: string,
+const storageDownload: StorageDownload = async (
+    filename,
 ) => {
     try {
         const filepath = path.join(
@@ -135,8 +140,8 @@ const storageDownload = async (
 }
 
 
-const storageDownloadAll = async (
-    directory: string,
+const storageDownloadAll: StorageDownloadAll = async (
+    directory,
 ) => {
     try {
         const filespath = path.join(
@@ -157,10 +162,10 @@ const storageDownloadAll = async (
 }
 
 
-const storageUpload = async (
-    filename: string,
-    data: Buffer,
-    kind?: StorageUploadKind,
+const storageUpload: StorageUpload = async (
+    filename,
+    data,
+    kind?,
 ) => {
     try {
         const filepath = path.join(
@@ -195,8 +200,8 @@ const storageUpload = async (
 }
 
 
-const storageObliterate = async (
-    filename: string,
+const storageObliterate: StorageObliterate = async (
+    filename,
 ) => {
     try {
         const filepath = path.join(
@@ -219,7 +224,7 @@ const storageObliterate = async (
 }
 
 
-const storageGenerateLocations = async () => {
+const storageGenerateLocations: StorageGenerateLocations = async () => {
     try {
         await makeDirectory(blobsPath);
         await makeDirectory(imagenesPath);
@@ -239,7 +244,7 @@ const storageGenerateLocations = async () => {
 
 
 
-const filesystemStorage = {
+const filesystemStorage: Storage = {
     download: storageDownload,
     downloadAll: storageDownloadAll,
     upload: storageUpload,
