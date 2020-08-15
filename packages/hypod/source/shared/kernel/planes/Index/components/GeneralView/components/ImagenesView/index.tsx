@@ -124,11 +124,11 @@ const imageneRowRenderer = (
             <div>
                 {isPublic ? (
                     <PluridIconUnlocked
-                        atClick={() => handleToggleImagePublic(id, true)}
+                        atClick={() => handleToggleImagePublic(id, false)}
                     />
                 ) : (
                     <PluridIconLocked
-                        atClick={() => handleToggleImagePublic(id, false)}
+                        atClick={() => handleToggleImagePublic(id, true)}
                     />
                 )}
             </div>
