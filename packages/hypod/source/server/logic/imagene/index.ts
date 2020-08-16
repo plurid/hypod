@@ -47,10 +47,26 @@ export const registerImagene = async (
 export const deregisterImagene = async (
     id: string,
 ) => {
-    const metadataPath = BASE_PATH_METADATA + id;
+    const imagene: Imagene | undefined = await database.query(
+        'imagene',
+        'id',
+        id,
+    );
 
-    await storage.obliterate(
-        metadataPath,
+    if (!imagene) {
+        return;
+    }
+
+    for (const tag of imagene.tags) {
+        await deregisterImageneTag(
+            id,
+            tag.id,
+        );
+    }
+
+    await database.obliterate(
+        'imagene',
+        id,
     );
 }
 
@@ -180,6 +196,10 @@ export const deregisterImageneTag = async (
 
     await storage.obliterate(
         configPath,
+    );
+
+    await storage.obliterate(
+        referenceManifestPath,
     );
 
 
