@@ -2,11 +2,14 @@
     // #region external
     import {
         Context,
+        Imagene,
     } from '#server/data/interfaces';
 
     import {
         PRIVATE_USAGE,
     } from '#server/data/constants';
+
+    import database from '#server/services/database';
     // #endregion external
 // #endregion imports
 
@@ -30,12 +33,17 @@ const togglePublicImagene = async (
         } = input;
 
         if (logic) {
-           
         }
 
         if (PRIVATE_USAGE) {
-
         }
+
+        await database.update(
+            'imagene',
+            id,
+            'isPublic',
+            value,
+        );
 
         return {
             status: true,
