@@ -20,8 +20,10 @@
 
     import {
         HypodRequest,
+        Imagene,
     } from '#server/data/interfaces';
 
+    import database from '#server/services/database';
     import storage from '#server/services/storage';
 
     import {
@@ -95,6 +97,22 @@ export const getNameManifestsReference = async (
     );
     if (!reference) {
         response.status(400).end();
+        return;
+    }
+
+    const imagene: Imagene | undefined = await database.query(
+        'imagene',
+        'name',
+        name,
+    );
+
+    if (!imagene) {
+        response.status(404).end();
+        return;
+    }
+
+    if (!imagene.isPublic) {
+        response.status(404).end();
         return;
     }
 
