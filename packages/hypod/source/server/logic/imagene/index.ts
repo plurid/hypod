@@ -146,6 +146,39 @@ export const registerImageneManifest = async (
 }
 
 
+export const checkImageneLayerUniqueness = async (
+    digest: string,
+) => {
+    const manifests = await storage.downloadAll(
+        BASE_PATH_IMAGENES_MANIFEST,
+    );
+
+    if (!manifests) {
+        return;
+    }
+
+    let occurences = 0;
+
+    for (const manifest of manifests) {
+        try {
+            for (const layer of manifest.layers) {
+                if (layer.digest === digest) {
+                    occurences += 1;
+                }
+            }
+
+            if (occurences > 1) {
+                return;
+            }
+        } catch (error) {
+            continue;
+        }
+    }
+
+    return true;
+}
+
+
 export const deregisterImageneTag = async (
     imageneID: string,
     tagID: string,
@@ -183,7 +216,13 @@ export const deregisterImageneTag = async (
     const referenceManifest = JSON.parse(referenceManifestData);
 
     for (const layer of referenceManifest.layers) {
-        // check if the layer is not used by any other imagene
+        const unique = await checkImageneLayerUniqueness(
+            layer.digest,
+        );
+
+        if (!unique) {
+            continue;
+        }
 
         const digest = layer.digest.replace(':', '/');
         const layerPath = BASE_PATH_IMAGENES + digest;

@@ -89,16 +89,42 @@ const loadDataFromFile = async (
 }
 
 
+const getFiles = async (
+    path: string,
+) => {
+    const entries = await fs.readdir(path, { withFileTypes: true });
+
+    // Get files within the current directory and add a path key to the file objects
+    const files = entries
+        .filter(file => !file.isDirectory())
+        .map(file => ({ ...file, path: path + file.name }));
+
+    // Get folders within the current directory
+    const folders = entries.filter(folder => folder.isDirectory());
+
+    for (const folder of folders) {
+        /*
+          Add the found files within the subdirectory to the files array by calling the
+          current function itself
+        */
+        files.push(...await getFiles(`${path}${folder.name}/`));
+    }
+
+    return files;
+}
+
+
 const loadDataFromFiles = async <T>(
     filespath: string,
 ): Promise<T[]> => {
     try {
-        const files = await fs.readdir(filespath);
+        const files = await getFiles(filespath);
+
         const items: T[] = [];
 
         for (const file of files) {
-            const filepath = path.join(filespath, file);
-            const item = await loadDataFromFile(filepath);
+            // const filepath = path.join(filespath, file);
+            const item = await loadDataFromFile(file.path);
             if (item) {
                 items.push(item);
             }
