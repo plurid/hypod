@@ -51,21 +51,22 @@
 
 // #region module
 const registerImageneManifest = async (
+    manifest: any,
     name: string,
     reference: string,
     digest: string,
 ) => {
-    const manifestPath = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
+    // const manifestPath = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
 
-    const manifestData = await storage.download(
-        manifestPath,
-    );
-    
-    if (!manifestData) {
-        return;
-    }
+    // const manifestData = await storage.download(
+    //     manifestPath,
+    // );
 
-    const manifest = JSON.parse(manifestData);
+    // if (!manifestData) {
+    //     return;
+    // }
+
+    // const manifest = JSON.parse(manifestData);
 
     let size = 0;
 
@@ -73,11 +74,11 @@ const registerImageneManifest = async (
         try {
             const layerPath = layer.digest.replace(':', '/');
             const imageneLayerPath = BASE_PATH_IMAGENES + layerPath;
-    
+
             const layerData = await storage.download(
                 imageneLayerPath,
             );
-                
+
             if (layerData) {
                 const decompressed = await ungzip(Buffer.from(layerData, 'binary'));
                 const byteLength = Buffer.byteLength(decompressed);
@@ -95,6 +96,9 @@ const registerImageneManifest = async (
         size,
         digest,
     };
+
+    // check if the imagene should be updated in the database
+    // or if a new imagene should be generated
 
     const imagene: Imagene = {
         id: uuid.generate(),
@@ -451,6 +455,7 @@ export const putNameManifestsReference = async (
     );
 
     registerImageneManifest(
+        parsedData,
         name,
         reference,
         digest,

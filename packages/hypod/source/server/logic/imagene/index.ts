@@ -20,7 +20,7 @@ export const registerImagene = async (
 ) => {
     const metadataPath = BASE_PATH_METADATA + data.id;
 
-    const buffer = Buffer.from(JSON.stringify(data));
+    const buffer = Buffer.from(JSON.stringify(data, null, 4));
 
     await storage.upload(
         metadataPath,
