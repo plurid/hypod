@@ -108,6 +108,16 @@ const obliterate: DatabaseObliterate = async (
     entity,
     id,
 ) => {
+    switch (entity) {
+        case 'imagene': {
+            const filepath = BASE_PATH_METADATA + id;
+
+            await filesystemStorage.obliterate(
+                filepath,
+            );
+        }
+    }
+
     return;
 }
 
