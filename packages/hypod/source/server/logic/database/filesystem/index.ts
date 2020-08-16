@@ -7,7 +7,13 @@
         DatabaseStore,
         DatabaseUpdate,
         DatabaseObliterate,
+
+        Imagene,
     } from '#server/data/interfaces';
+
+    import {
+        BASE_PATH_METADATA,
+    } from '#server/data/constants';
 
     import filesystemStorage from '#server/logic/storage/filesystem';
     // #endregion external
@@ -29,6 +35,16 @@ const query: DatabaseQuery = async (
     field,
     value,
 ) => {
+    switch (entity) {
+        case 'imagene': {
+            const imagenes: Imagene[] = await filesystemStorage.downloadAll(BASE_PATH_METADATA) || [];
+            const imagene = imagenes.find(imagene => imagene[field] === value);
+
+            return imagene;
+        }
+    }
+
+
     return;
 }
 
@@ -39,12 +55,16 @@ const store: DatabaseStore = async (
     data,
 ) => {
     switch (entity) {
-        case 'metadata':
-            // filesystemStorage.upload(
-            //     '',
-            //     '',
-            // );
-            break;
+        case 'imagene': {
+            const filepath = BASE_PATH_METADATA + id;
+
+            await filesystemStorage.upload(
+                filepath,
+                Buffer.from(JSON.stringify(data, null, 4), 'utf-8'),
+            );
+
+            return true;
+        }
     }
 
     return;
@@ -57,6 +77,29 @@ const update: DatabaseUpdate = async (
     field,
     value,
 ) => {
+    switch (entity) {
+        case 'imagene': {
+            const filepath = BASE_PATH_METADATA + id;
+
+            const imageneData = await filesystemStorage.download(filepath);
+
+            if (!imageneData) {
+                return;
+            }
+
+            const imagene = JSON.parse(imageneData);
+
+            imagene[field] = value;
+
+            await filesystemStorage.upload(
+                filepath,
+                Buffer.from(JSON.stringify(imagene, null, 4), 'utf-8'),
+            );
+
+            return true;
+        }
+    }
+
     return;
 }
 

@@ -108,7 +108,7 @@ export const registerImageneManifest = async (
 
         await database.store(
             'imagene',
-            existingImagene.id,
+            imagene.id,
             imagene,
         );
 
