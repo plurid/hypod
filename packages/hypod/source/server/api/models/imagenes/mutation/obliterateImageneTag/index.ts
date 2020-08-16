@@ -1,34 +1,22 @@
 // #region imports
     // #region external
-    // import {
-    //     imagenesPath,
-    // } from '#server/data/constants';
+    import {
+        PRIVATE_USAGE,
+    } from '#server/data/constants';
 
     import {
         Context,
     } from '#server/data/interfaces';
 
     import {
-        PRIVATE_USAGE,
-    } from '#server/data/constants';
+        deregisterImageneTag,
+    } from '#server/logic/imagene';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const deregisterImageneTag = async (
-    id: string,
-    tag: string,
-) => {
-    try {
-        return;
-    } catch (error) {
-        return;
-    }
-}
-
-
 const obliterateImageneTag = async (
     input: any,
     context: Context,
@@ -54,6 +42,10 @@ const obliterateImageneTag = async (
             return {
                 status,
             };
+        }
+
+        if (PRIVATE_USAGE) {
+
         }
 
         await deregisterImageneTag(

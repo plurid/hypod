@@ -13,6 +13,7 @@
     // #region external
     import {
         BASE_PATH_METADATA,
+        BASE_PATH_IMAGENES_MANIFEST,
         BASE_PATH_IMAGENES,
     } from '#server/data/constants';
 
@@ -125,6 +126,73 @@ export const registerImageneManifest = async (
         existingImagene.id,
         'tags',
         updatedTags,
+    );
+}
+
+
+export const deregisterImageneTag = async (
+    imageneID: string,
+    tagID: string,
+) => {
+    const imagene: Imagene | undefined = await database.query(
+        'imagene',
+        'id',
+        imageneID,
+    );
+
+    if (!imagene) {
+        return;
+    }
+
+    const deregisteredTag = imagene.tags.find(imageneTag => imageneTag.id === tagID);
+
+    if (!deregisteredTag) {
+        return;
+    }
+
+
+    const name = imagene.name;
+    const reference = deregisteredTag.name;
+
+    const referenceManifestPath = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
+
+    const referenceManifestData = await storage.download(
+        referenceManifestPath,
+    );
+
+    if (!referenceManifestData) {
+        return;
+    }
+
+    const referenceManifest = JSON.parse(referenceManifestData);
+
+    for (const layer of referenceManifest.layers) {
+        const digest = layer.digest.replace(':', '/');
+        const layerPath = BASE_PATH_IMAGENES + digest;
+
+        await storage.obliterate(
+            layerPath,
+        );
+    }
+
+    const configDigest = referenceManifest.config.digest.replace(':', '/');
+    const configPath = BASE_PATH_IMAGENES + configDigest;
+
+    await storage.obliterate(
+        configPath,
+    );
+
+
+    const tags = imagene.tags.filter(imageneTag => imageneTag.id !== tagID);
+
+    imagene.tags = [
+        ...tags,
+    ];
+
+    await database.store(
+        'imagene',
+        imageneID,
+        imagene,
     );
 }
 // #endregion module
