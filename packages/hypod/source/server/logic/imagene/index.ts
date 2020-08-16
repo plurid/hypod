@@ -179,6 +179,33 @@ export const checkImageneLayerUniqueness = async (
 }
 
 
+export const checkImageneConfigDigestUniqueness = async (
+    digest: string,
+) => {
+    const manifests = await storage.downloadAll(
+        BASE_PATH_IMAGENES_MANIFEST,
+    );
+
+    if (!manifests) {
+        return;
+    }
+
+    let occurences = 0;
+
+    for (const manifest of manifests) {
+        if (manifest.config.digest === digest) {
+            occurences += 1;
+        }
+
+        if (occurences > 1) {
+            return;
+        }
+    }
+
+    return true;
+}
+
+
 export const deregisterImageneTag = async (
     imageneID: string,
     tagID: string,
@@ -232,12 +259,19 @@ export const deregisterImageneTag = async (
         );
     }
 
-    const configDigest = referenceManifest.config.digest.replace(':', '/');
-    const configPath = BASE_PATH_IMAGENES + configDigest;
 
-    await storage.obliterate(
-        configPath,
+    const uniqueConfigDigest = await checkImageneConfigDigestUniqueness(
+        referenceManifest.config.digest,
     );
+    if (uniqueConfigDigest) {
+        const configDigest = referenceManifest.config.digest.replace(':', '/');
+        const configPath = BASE_PATH_IMAGENES + configDigest;
+
+        await storage.obliterate(
+            configPath,
+        );
+    }
+
 
     await storage.obliterate(
         referenceManifestPath,
