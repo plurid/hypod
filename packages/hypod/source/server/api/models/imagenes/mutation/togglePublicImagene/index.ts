@@ -10,6 +10,10 @@
     } from '#server/data/constants';
 
     import database from '#server/services/database';
+
+    import {
+        getPrivateOwner,
+    } from '#server/logic/privateUsage';
     // #endregion external
 // #endregion imports
 
@@ -33,20 +37,36 @@ const togglePublicImagene = async (
         } = input;
 
         if (logic) {
+            // update database
+
+            return {
+                status: true,
+            };
         }
 
         if (PRIVATE_USAGE) {
+            const privateOwnerIdentonym = getPrivateOwner(request);
+
+            if (!privateOwnerIdentonym) {
+                return {
+                    status: false,
+                };
+            }
+
+            await database.update(
+                'imagene',
+                id,
+                'isPublic',
+                value,
+            );
+
+            return {
+                status: true,
+            };
         }
 
-        await database.update(
-            'imagene',
-            id,
-            'isPublic',
-            value,
-        );
-
         return {
-            status: true,
+            status: false,
         };
     } catch (error) {
         return {

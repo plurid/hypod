@@ -11,6 +11,10 @@
     import {
         deregisterImageneTag,
     } from '#server/logic/imagene';
+
+    import {
+        getPrivateOwner,
+    } from '#server/logic/privateUsage';
     // #endregion external
 // #endregion imports
 
@@ -45,16 +49,26 @@ const obliterateImageneTag = async (
         }
 
         if (PRIVATE_USAGE) {
+            const privateOwnerIdentonym = getPrivateOwner(request);
 
+            if (!privateOwnerIdentonym) {
+                return {
+                    status: false,
+                };
+            }
+
+            await deregisterImageneTag(
+                imageneID,
+                tagID,
+            );
+
+            return {
+                status: true,
+            };
         }
 
-        await deregisterImageneTag(
-            imageneID,
-            tagID,
-        );
-
         return {
-            status: true,
+            status: false,
         };
     } catch (error) {
         return {
