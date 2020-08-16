@@ -5,10 +5,6 @@
     } from 'express';
 
     import {
-        ungzip,
-    } from 'node-gzip';
-
-    import {
         uuid,
     } from '@plurid/plurid-functions';
     // #endregion libraries
@@ -23,8 +19,6 @@
     } from '#server/data/constants';
 
     import {
-        Imagene,
-        ImageneTag,
         HypodRequest,
     } from '#server/data/interfaces';
 
@@ -35,7 +29,7 @@
     } from '#server/utilities/buffer';
 
     import {
-        registerImagene,
+        registerImageneManifest,
     } from '../imagene';
     // #endregion external
 
@@ -50,69 +44,6 @@
 
 
 // #region module
-const registerImageneManifest = async (
-    manifest: any,
-    name: string,
-    reference: string,
-    digest: string,
-) => {
-    // const manifestPath = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
-
-    // const manifestData = await storage.download(
-    //     manifestPath,
-    // );
-
-    // if (!manifestData) {
-    //     return;
-    // }
-
-    // const manifest = JSON.parse(manifestData);
-
-    let size = 0;
-
-    for (const layer of manifest.layers) {
-        try {
-            const layerPath = layer.digest.replace(':', '/');
-            const imageneLayerPath = BASE_PATH_IMAGENES + layerPath;
-
-            const layerData = await storage.download(
-                imageneLayerPath,
-            );
-
-            if (layerData) {
-                const decompressed = await ungzip(Buffer.from(layerData, 'binary'));
-                const byteLength = Buffer.byteLength(decompressed);
-                size += byteLength;
-            }
-        } catch (error) {
-            continue;
-        }
-    }
-
-    const imageneTag: ImageneTag = {
-        id: uuid.generate(),
-        generatedAt: Math.floor(Date.now() / 1000),
-        name: reference,
-        size,
-        digest,
-    };
-
-    // check if the imagene should be updated in the database
-    // or if a new imagene should be generated
-
-    const imagene: Imagene = {
-        id: uuid.generate(),
-        name,
-        latest: reference,
-        tags: [
-            imageneTag,
-        ],
-        isPublic: false,
-    };
-    registerImagene(imagene);
-}
-
-
 /** GET */
 export const getNameTagsList = async (
     request: HypodRequest,
