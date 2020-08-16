@@ -100,21 +100,21 @@ export const getNameManifestsReference = async (
         return;
     }
 
-    const imagene: Imagene | undefined = await database.query(
-        'imagene',
-        'name',
-        name,
-    );
+    // const imagene: Imagene | undefined = await database.query(
+    //     'imagene',
+    //     'name',
+    //     name,
+    // );
 
-    if (!imagene) {
-        response.status(404).end();
-        return;
-    }
+    // if (!imagene) {
+    //     response.status(404).end();
+    //     return;
+    // }
 
-    if (!imagene.isPublic) {
-        response.status(404).end();
-        return;
-    }
+    // if (!imagene.isPublic) {
+    //     response.status(404).end();
+    //     return;
+    // }
 
     const location = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
 
