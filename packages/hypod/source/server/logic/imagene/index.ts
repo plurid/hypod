@@ -183,6 +183,8 @@ export const deregisterImageneTag = async (
     const referenceManifest = JSON.parse(referenceManifestData);
 
     for (const layer of referenceManifest.layers) {
+        // check if the layer is not used by any other imagene
+
         const digest = layer.digest.replace(':', '/');
         const layerPath = BASE_PATH_IMAGENES + digest;
 

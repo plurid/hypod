@@ -1,9 +1,5 @@
 // #region imports
     // #region external
-    // import {
-    //     imagenesPath,
-    // } from '#server/data/constants';
-
     import {
         Context,
     } from '#server/data/interfaces';
@@ -11,23 +7,16 @@
     import {
         PRIVATE_USAGE,
     } from '#server/data/constants';
+
+    import {
+        deregisterImagene,
+    } from '#server/logic/imagene';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const deregisterImagene = async (
-    id: string,
-) => {
-    try {
-        return;
-    } catch (error) {
-        return;
-    }
-}
-
-
 const obliterateImagene = async (
     input: any,
     context: Context,
@@ -51,6 +40,9 @@ const obliterateImagene = async (
             return {
                 status,
             };
+        }
+
+        if (PRIVATE_USAGE) {
         }
 
         await deregisterImagene(value);
