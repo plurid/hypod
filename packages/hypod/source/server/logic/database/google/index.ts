@@ -3,6 +3,7 @@
     import {
         Database,
         DatabaseGet,
+        DatabaseQuery,
         DatabaseStore,
         DatabaseUpdate,
         DatabaseObliterate,
@@ -16,6 +17,15 @@
 const get: DatabaseGet = async (
     entity,
     id,
+) => {
+    return;
+}
+
+
+const query: DatabaseQuery = async (
+    entity,
+    field,
+    value,
 ) => {
     return;
 }
@@ -50,6 +60,7 @@ const obliterate: DatabaseObliterate = async (
 
 const googleDatabase: Database = {
     get,
+    query,
     store,
     update,
     obliterate,

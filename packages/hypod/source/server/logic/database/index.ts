@@ -51,6 +51,33 @@ class Database {
         }
     }
 
+    public query(
+        entity: string,
+        field: string,
+        value: string,
+    ) {
+        switch (this.type) {
+            case databaseType.filesystem:
+                return filesystemDatabase.query(
+                    entity,
+                    field,
+                    value,
+                );
+            case databaseType.amazon:
+                return amazonDatabase.query(
+                    entity,
+                    field,
+                    value,
+                );
+            case databaseType.google:
+                return googleDatabase.query(
+                    entity,
+                    field,
+                    value,
+                );
+        }
+    }
+
     public store(
         entity: string,
         id: string,

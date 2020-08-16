@@ -55,8 +55,8 @@ export type StorageDownloadAll = (
     directory: string,
 ) => Promise<any[] | undefined>;
 export type StorageUpload = (
-    filename: string, 
-    data: Buffer, 
+    filename: string,
+    data: Buffer,
     kind?: StorageUploadKind,
 ) => Promise<true | void>;
 export type StorageObliterate = (
@@ -83,6 +83,7 @@ export interface DatabaseTypeData {
 
 export interface Database {
     get: DatabaseGet;
+    query: DatabaseQuery;
     store: DatabaseStore;
     update: DatabaseUpdate;
     obliterate: DatabaseObliterate;
@@ -91,6 +92,11 @@ export interface Database {
 export type DatabaseGet = (
     entity: string,
     id: string,
+) => Promise<any>;
+export type DatabaseQuery = (
+    entity: string,
+    field: string,
+    value: string,
 ) => Promise<any>;
 export type DatabaseStore = (
     entity: string,
