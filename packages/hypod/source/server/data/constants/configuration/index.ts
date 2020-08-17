@@ -3,7 +3,7 @@
     import {
         DatabaseType,
         StorageType,
-    } from '../interfaces';
+    } from '#server/data/interfaces';
     // #endregion external
 // #endregion imports
 

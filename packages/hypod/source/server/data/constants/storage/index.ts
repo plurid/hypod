@@ -5,7 +5,7 @@
         StorageTypeFilesystem,
         StorageTypeAmazon,
         StorageTypeGoogle,
-    } from '../interfaces';
+    } from '#server/data/interfaces';
     // #endregion external
 // #endregion imports
 
