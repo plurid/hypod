@@ -7,10 +7,9 @@
 
 
 // #region module
-
-const GENERATE_NAMESPACE = gql`
-    mutation GenerateNamespace($input: InputValueString!) {
-        generateNamespace(input: $input) {
+const REGISTER_NAMESPACE = gql`
+    mutation RegisterNamespace($input: InputValueString!) {
+        registerNamespace(input: $input) {
             status
             error {
                 type
@@ -25,33 +24,6 @@ const GENERATE_NAMESPACE = gql`
 const OBLITERATE_NAMESPACE = gql`
     mutation ObliterateNamespace($input: InputValueString!) {
         obliterateNamespace(input: $input) {
-            status
-            error {
-                type
-                path
-                message
-            }
-        }
-    }
-`;
-
-const OBLITERATE_IMAGENE = gql`
-    mutation ObliterateImagene($input: InputValueString!) {
-        obliterateImagene(input: $input) {
-            status
-            error {
-                type
-                path
-                message
-            }
-        }
-    }
-`;
-
-
-const OBLITERATE_IMAGENE_TAG = gql`
-    mutation ObliterateImageneTag($input: InputObliterateImageneTag!) {
-        obliterateImageneTag(input: $input) {
             status
             error {
                 type
@@ -80,6 +52,34 @@ const GENERATE_PROJECT = gql`
 const OBLITERATE_PROJECT = gql`
     mutation ObliterateProject($input: InputValueString!) {
         obliterateProject(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
+const OBLITERATE_IMAGENE = gql`
+    mutation ObliterateImagene($input: InputValueString!) {
+        obliterateImagene(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
+const OBLITERATE_IMAGENE_TAG = gql`
+    mutation ObliterateImageneTag($input: InputObliterateImageneTag!) {
+        obliterateImageneTag(input: $input) {
             status
             error {
                 type
@@ -140,12 +140,12 @@ const LOGOUT = gql`
 
 // #region exports
 export {
-    GENERATE_NAMESPACE,
+    REGISTER_NAMESPACE,
     OBLITERATE_NAMESPACE,
-    OBLITERATE_IMAGENE,
-    OBLITERATE_IMAGENE_TAG,
     GENERATE_PROJECT,
     OBLITERATE_PROJECT,
+    OBLITERATE_IMAGENE,
+    OBLITERATE_IMAGENE_TAG,
     TOGGLE_PUBLIC_IMAGENE,
     LOGIN,
     LOGOUT,

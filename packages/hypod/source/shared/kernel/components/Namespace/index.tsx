@@ -13,7 +13,7 @@
     // #region external
     import client from '#kernel-services/graphql/client';
     import {
-        GENERATE_NAMESPACE,
+        REGISTER_NAMESPACE,
     } from '#kernel-services/graphql/mutate';
 
     import {
@@ -101,7 +101,7 @@ const Namespace: React.FC<NamespaceProperties> = (
         };
 
         await client.mutate({
-            mutation: GENERATE_NAMESPACE,
+            mutation: REGISTER_NAMESPACE,
             variables: {
                 input,
             },
