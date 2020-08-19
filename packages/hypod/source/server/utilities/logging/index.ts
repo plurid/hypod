@@ -9,7 +9,7 @@ export const generateLog = (
         ? ''
         : ` · ${usage}`;
 
-    const log = `[Performer ${type} : ${state}] :: ${method}` + usageString;
+    const log = `[Hypod ${type} : ${state}] :: ${method}` + usageString;
 
     return log;
 }
