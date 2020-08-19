@@ -2,6 +2,16 @@
 export interface Namespace {
     id: string;
     name: string;
+    generatedAt: number;
+    generatedBy: string;
+}
+
+
+export interface Project {
+    id: string;
+    name: string;
+    generatedAt: number;
+    generatedBy: string;
 }
 
 
@@ -19,12 +29,6 @@ export interface ImageneTag {
     name: string;
     size: number;
     digest: string;
-}
-
-
-export interface Project {
-    id: string;
-    name: string;
 }
 
 

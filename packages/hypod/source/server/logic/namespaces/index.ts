@@ -1,23 +1,40 @@
+// #region imports
+    // #region libraries
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
+
+
+    // #region external
+    import {
+        Namespace,
+    } from '#server/data/interfaces';
+
+    import database from '#server/services/database';
+    // #endregion external
+// #endregion imports
+
+
+
 // #region module
 const registerNamespace = async (
     name: string,
 ) => {
-    // const id = uuid.generate();
+    const id = uuid.generate();
 
-    // const project: Namespace = {
-    //     id,
-    //     name,
-    // };
+    const namespace: Namespace = {
+        id,
+        name,
+        generatedAt: Math.floor(Date.now() / 1000),
+        generatedBy: '',
+    };
 
-    // const projectPath = path.join(
-    //     projectsPath,
-    //     id + '.json',
-    // );
-
-    // await fs.writeFile(
-    //     projectPath,
-    //     JSON.stringify(project, null, 4),
-    // );
+    await database.store(
+        'namespace',
+        id,
+        namespace,
+    );
 }
 
 
@@ -25,16 +42,10 @@ const deregisterNamespace = async (
     id: string,
 ) => {
     try {
-        // const projectPath = path.join(
-        //     projectsPath,
-        //     id + '.json',
-        // );
-
-        // if (!fs.existsSync(projectPath)) {
-        //     return;
-        // }
-
-        // fs.promises.unlink(projectPath);
+        await database.obliterate(
+            'namespace',
+            id,
+        );
     } catch (error) {
         return;
     }
