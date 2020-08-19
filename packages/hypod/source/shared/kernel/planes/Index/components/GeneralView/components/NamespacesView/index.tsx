@@ -239,9 +239,9 @@ const NamespacesView: React.FC<NamespacesViewProperties> = (
             rows={filteredRows}
             noRows="no namespaces"
 
-            actionButtonText="Generate Namespace"
+            actionButtonText="Register Namespace"
             actionButtonClick={() => {
-                setGeneralView('generate-namespace');
+                setGeneralView('register-namespace');
             }}
 
             filterUpdate={filterUpdate}
