@@ -2,6 +2,7 @@
     // #region external
     import {
         Imagene,
+        Project,
     } from '#server/data/interfaces';
     // #endregion external
 // #endregion imports
@@ -10,7 +11,8 @@
 
 // #region module
 export type RemovableEntityType =
-    | 'imagene';
+    | 'imagene'
+    | 'project';
 
 export const REMOVE_ENTITY = 'REMOVE_ENTITY';
 export interface RemoveEntityPayload {
@@ -63,6 +65,7 @@ export interface ObliterateImageneTagAction {
 export interface State {
     activeProviderID: string;
     imagenes: Imagene[];
+    projects: Project[];
 }
 
 

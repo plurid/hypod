@@ -16,6 +16,11 @@ export interface ImageneTag {
 }
 
 
+export interface Project {
+    id: string;
+    name: string;
+}
+
 
 export interface HypodOwner {
     id: string;

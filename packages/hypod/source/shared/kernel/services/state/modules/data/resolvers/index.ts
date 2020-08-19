@@ -28,10 +28,19 @@ export const removeEntity = (
         ...newState.imagenes,
     ];
 
+    let projects = [
+        ...newState.projects,
+    ];
+
     switch (type) {
         case 'imagene':
             imagenes = imagenes.filter(
                 imagene => imagene.id !== id
+            );
+            break;
+        case 'project':
+            projects = projects.filter(
+                project => project.id !== id
             );
             break;
     }
@@ -40,6 +49,9 @@ export const removeEntity = (
         ...newState,
         imagenes: [
             ...imagenes,
+        ],
+        projects: [
+            ...projects,
         ],
     };
 }

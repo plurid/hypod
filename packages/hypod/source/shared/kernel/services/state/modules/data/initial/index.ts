@@ -10,6 +10,7 @@
 export const initialState: Types.State = {
     activeProviderID: '',
     imagenes: [],
+    projects: [],
 };
 // #endregion module
 

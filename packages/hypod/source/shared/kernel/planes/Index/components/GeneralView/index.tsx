@@ -26,7 +26,9 @@
     // #region external
     import hypodLogo from '../../assets/hypod-logo.png';
 
-    import Imagene from '#kernel-components/Imagene';
+    import {
+        HYPOD_MANUAL_LINK,
+    } from '#kernel-data/constants';
 
     import client from '#kernel-services/graphql/client';
     import {
@@ -41,6 +43,7 @@
 
     // #region internal
     import ImagenesView from './components/ImagenesView';
+    import ProjectsView from './components/ProjectsView';
 
     import {
         StyledGeneralView,
@@ -125,7 +128,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
     // #region handlers
     const openManual = () => {
-        window.open('https://manual.plurid.com/hypod', '_blank');
+        window.open(HYPOD_MANUAL_LINK, '_blank');
     }
 
     const logout = async () => {
@@ -177,6 +180,12 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         case 'imagenes':
             renderSelectedView = (
                 <ImagenesView />
+            );
+        case 'projects':
+            renderSelectedView = (
+                <ProjectsView
+                    setGeneralView={setGeneralView}
+                />
             );
             break;
     }
@@ -294,28 +303,6 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                         {renderSelectedView}
                     </StyledGeneralSelected>
                 </StyledGeneralView>
-            );
-        case 'add-imagene':
-            return (
-                <Imagene
-                    theme={stateInteractionTheme}
-                    providerID={stateActiveProviderID}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        case 'projects':
-            return (
-                <Imagene
-                    theme={stateInteractionTheme}
-                    providerID={stateActiveProviderID}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
             );
         default:
             return (
