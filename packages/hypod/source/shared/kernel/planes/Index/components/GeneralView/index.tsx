@@ -19,7 +19,7 @@
         PluridIconArrowRight,
         PluridIconDocuments,
         PluridIconExternalLink,
-        PluridIconEnter,
+        PluridIconExit,
     } from '@plurid/plurid-icons-react';
     // #endregion libraries
 
@@ -293,7 +293,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                             onClick={() => logout()}
                                             compactSelectors={stateViewCompactSelectors}
                                         >
-                                            <PluridIconEnter />
+                                            <PluridIconExit />
 
                                             {!stateViewCompactSelectors && (
                                                 <>
