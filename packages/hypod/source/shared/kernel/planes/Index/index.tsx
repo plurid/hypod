@@ -1,9 +1,6 @@
 // #region imports
     // #region libraries
-    import React, {
-        useState,
-        useEffect,
-    } from 'react';
+    import React from 'react';
 
     import { AnyAction } from 'redux';
     import { connect } from 'react-redux';
@@ -14,13 +11,13 @@
     // #region external
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
-    import actions from '#kernel-services/state/actions';
+    // import actions from '#kernel-services/state/actions';
     // #endregion external
 
 
     // #region internal
     import {
-        StyledPage,
+        StyledIndex,
     } from './styled';
 
     import InitialView from './components/InitialView';
@@ -32,29 +29,29 @@
 
 
 // #region module
-export interface PageOwnProperties {
+export interface IndexOwnProperties {
 }
 
-export interface PageStateProperties {
+export interface IndexStateProperties {
     stateViewLoading: boolean;
-    stateIndexGeneralView: string;
+    stateIndexView: string;
 }
 
-export interface PageDispatchProperties {
+export interface IndexDispatchProperties {
 }
 
-export type PageProperties = PageOwnProperties
-    & PageStateProperties
-    & PageDispatchProperties;
+export type IndexProperties = IndexOwnProperties
+    & IndexStateProperties
+    & IndexDispatchProperties;
 
-const Page: React.FC<PageProperties> = (
+const Index: React.FC<IndexProperties> = (
     properties,
 ) => {
     // #region properties
     const {
         // #region state
         stateViewLoading,
-        stateIndexGeneralView,
+        stateIndexView,
         // #endregion state
     } = properties;
     // #endregion properties
@@ -67,7 +64,7 @@ const Page: React.FC<PageProperties> = (
 
     let renderView = (<></>);
 
-    switch (stateIndexGeneralView) {
+    switch (stateIndexView) {
         case 'initial':
             renderView = (
                 <InitialView />
@@ -86,9 +83,9 @@ const Page: React.FC<PageProperties> = (
     }
 
     return (
-        <StyledPage>
+        <StyledIndex>
             {renderView}
-        </StyledPage>
+        </StyledIndex>
     );
     // #endregion render
 }
@@ -96,15 +93,15 @@ const Page: React.FC<PageProperties> = (
 
 const mapStateToProperties = (
     state: AppState,
-): PageStateProperties => ({
+): IndexStateProperties => ({
     stateViewLoading: selectors.view.getLoading(state),
-    stateIndexGeneralView: selectors.view.getIndexGeneralView(state),
+    stateIndexView: selectors.view.getIndexView(state),
 });
 
 
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
-): PageDispatchProperties => ({
+): IndexDispatchProperties => ({
 });
 // #endregion module
 
@@ -114,5 +111,5 @@ const mapDispatchToProperties = (
 export default connect(
     mapStateToProperties,
     mapDispatchToProperties,
-)(Page);
+)(Index);
 // #endregion exports

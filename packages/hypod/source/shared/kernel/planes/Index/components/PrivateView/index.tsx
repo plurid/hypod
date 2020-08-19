@@ -160,7 +160,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
 
             dispatchViewOwnerID(owner.id);
             dispatchSetViewType({
-                type: 'indexGeneralView',
+                type: 'indexView',
                 value: 'general',
             });
         } catch (error) {

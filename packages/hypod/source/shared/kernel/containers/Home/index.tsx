@@ -84,12 +84,12 @@ const Home: React.FC<HomeProperties> = (
     useEffect(() => {
         const loadData = async () => {
             try {
-                let generalView = '';
+                let indexView = '';
 
                 /** Get usage type */
                 const usageType = await getUsageType(dispatchSetViewUsageType);
                 if (usageType) {
-                    generalView = usageType;
+                    indexView = usageType;
                 }
 
                 /** Get imagenes */
@@ -98,12 +98,12 @@ const Home: React.FC<HomeProperties> = (
                 /** Get current owner */
                 const ownerSet = await getCurrentOwner(dispatchSetViewOwnerID);
                 if (ownerSet) {
-                    generalView = 'general';
+                    indexView = 'general';
                 }
 
                 dispatchSetViewType({
-                    type: 'indexGeneralView',
-                    value: generalView,
+                    type: 'indexView',
+                    value: indexView,
                 });
                 dispatchSetViewLoading(false);
             } catch (error) {

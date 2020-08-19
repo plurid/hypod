@@ -131,7 +131,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     const logout = async () => {
         try {
             dispatchSetViewType({
-                type: 'indexGeneralView',
+                type: 'indexView',
                 value: 'private',
             });
 

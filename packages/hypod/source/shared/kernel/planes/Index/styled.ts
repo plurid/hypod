@@ -7,7 +7,7 @@
 
 
 // #region module
-export const StyledPage = styled.div`
+export const StyledIndex = styled.div`
     font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI',
         'Open Sans', 'Helvetica Neue', sans-serif;
 `;

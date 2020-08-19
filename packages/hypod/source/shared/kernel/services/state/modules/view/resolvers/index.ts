@@ -28,15 +28,20 @@ export const setViewType = (
     } = action.payload;
 
     switch (type) {
-        case 'indexGeneralSelector':
+        case 'indexView':
             return {
                 ...state,
-                indexGeneralSelector: value,
+                indexView: value,
             };
         case 'indexGeneralView':
             return {
                 ...state,
                 indexGeneralView: value,
+            };
+        case 'indexGeneralSelector':
+            return {
+                ...state,
+                indexGeneralSelector: value,
             };
         default:
             return {

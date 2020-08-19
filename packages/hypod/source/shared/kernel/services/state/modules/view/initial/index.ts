@@ -9,8 +9,9 @@
 // #region module
 const initialState: Types.State = {
     loading: true,
-    indexGeneralSelector: 'imagenes',
+    indexView: '',
     indexGeneralView: 'general',
+    indexGeneralSelector: 'imagenes',
     compactSelectors: false,
     ownerID: '',
     usageType: '',
