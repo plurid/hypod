@@ -7,6 +7,34 @@
 
 
 // #region module
+
+const GENERATE_NAMESPACE = gql`
+    mutation GenerateNamespace($input: InputValueString!) {
+        generateNamespace(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
+const OBLITERATE_NAMESPACE = gql`
+    mutation ObliterateNamespace($input: InputValueString!) {
+        obliterateNamespace(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
 const OBLITERATE_IMAGENE = gql`
     mutation ObliterateImagene($input: InputValueString!) {
         obliterateImagene(input: $input) {
@@ -112,6 +140,8 @@ const LOGOUT = gql`
 
 // #region exports
 export {
+    GENERATE_NAMESPACE,
+    OBLITERATE_NAMESPACE,
     OBLITERATE_IMAGENE,
     OBLITERATE_IMAGENE_TAG,
     GENERATE_PROJECT,

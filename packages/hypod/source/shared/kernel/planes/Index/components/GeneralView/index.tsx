@@ -13,6 +13,7 @@
     } from '@plurid/plurid-themes';
 
     import {
+        PluridIconSpace,
         PluridIconTools,
         PluridIconApps,
         PluridIconArrowRight,
@@ -42,6 +43,7 @@
 
 
     // #region internal
+    import NamespacesView from './components/NamespacesView';
     import ImagenesView from './components/ImagenesView';
     import ProjectsView from './components/ProjectsView';
 
@@ -61,13 +63,15 @@
 
 // #region module
 const generalSelectors = [
-    'imagenes',
+    'namespaces',
     'projects',
+    'imagenes',
 ];
 
 const generalSelectorsIcons = {
-    imagenes: PluridIconTools,
+    namespaces: PluridIconSpace,
     projects: PluridIconApps,
+    imagenes: PluridIconTools,
 };
 
 
@@ -177,15 +181,23 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     // #region render
     let renderSelectedView = (<></>);
     switch (stateIndexGeneralSelector) {
-        case 'imagenes':
+        case 'namespaces':
             renderSelectedView = (
-                <ImagenesView />
+                <NamespacesView
+                    setGeneralView={setGeneralView}
+                />
             );
+            break;
         case 'projects':
             renderSelectedView = (
                 <ProjectsView
                     setGeneralView={setGeneralView}
                 />
+            );
+            break;
+        case 'imagenes':
+            renderSelectedView = (
+                <ImagenesView />
             );
             break;
     }

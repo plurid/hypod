@@ -10,14 +10,16 @@
 
 // #region module
 const getActiveProviderID = (state: AppState) => state.data.activeProviderID;
-const getImagenes = (state: AppState) => state.data.imagenes;
+const getNamespaces = (state: AppState) => state.data.namespaces;
 const getProjects = (state: AppState) => state.data.projects;
+const getImagenes = (state: AppState) => state.data.imagenes;
 
 
 const selectors = {
     getActiveProviderID,
-    getImagenes,
+    getNamespaces,
     getProjects,
+    getImagenes,
 };
 // #endregion module
 

@@ -1,4 +1,10 @@
 // #region module
+export interface Namespace {
+    id: string;
+    name: string;
+}
+
+
 export interface Imagene {
     id: string;
     name: string;
