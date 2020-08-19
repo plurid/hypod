@@ -16,7 +16,7 @@ export const queries = gql`
 
 export const mutations = gql`
     extend type Mutation {
-        generateNamespace(input: InputValueString!): Response!
+        registerNamespace(input: InputValueString!): Response!
         obliterateNamespace(input: InputValueString!): Response!
     }
 `;

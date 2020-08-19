@@ -7,7 +7,7 @@
     } from '#server/data/interfaces';
 
     import {
-        Projects,
+        Namespaces,
     } from '#server/api/models';
     // #endregion external
 // #endregion imports
@@ -16,19 +16,19 @@
 
 // #region exports
 export default {
-    generateProject: (
+    registerNamespace: (
         _: any,
         { input }: InputOf<InputValueString>,
         context: Context,
-    ) => Projects.Mutation.generateProject(
+    ) => Namespaces.Mutation.registerNamespace(
         input,
         context,
     ),
-    obliterateProject: (
+    obliterateNamespace: (
         _: any,
         { input }: InputOf<InputValueString>,
         context: Context,
-    ) => Projects.Mutation.obliterateProject(
+    ) => Namespaces.Mutation.obliterateNamespace(
         input,
         context,
     ),

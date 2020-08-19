@@ -77,7 +77,7 @@ const getNamespaces = async (
 
 
         // #region logic usage
-        const logic = request.performerLogic;
+        const logic = request.hypodLogic;
 
         if (customLogicUsage && logic) {
             logger.log(
