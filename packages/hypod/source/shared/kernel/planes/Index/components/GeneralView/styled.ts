@@ -24,7 +24,7 @@ export const StyledGeneralView = styled.div<IStyledGeneralView>`
             ? '60px 4fr'
             : '1fr 4fr'
     };
-    min-height: 600px;
+    min-height: 700px;
 `;
 
 

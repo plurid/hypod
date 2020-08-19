@@ -31,6 +31,9 @@
         HYPOD_MANUAL_LINK,
     } from '#kernel-data/constants';
 
+    import Namespace from '#kernel-components/Namespace';
+    import Project from '#kernel-components/Project';
+
     import client from '#kernel-services/graphql/client';
     import {
         LOGOUT
@@ -315,6 +318,26 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                         {renderSelectedView}
                     </StyledGeneralSelected>
                 </StyledGeneralView>
+            );
+        case 'register-namespace':
+            return (
+                <Namespace
+                    theme={stateInteractionTheme}
+                    action={() => {
+                        setGeneralView('general');
+                    }}
+                    cancel={() => setGeneralView('general')}
+                />
+            );
+        case 'generate-project':
+            return (
+                <Project
+                    theme={stateInteractionTheme}
+                    action={() => {
+                        setGeneralView('general');
+                    }}
+                    cancel={() => setGeneralView('general')}
+                />
             );
         default:
             return (
