@@ -17,6 +17,9 @@
         BASE_PATH_BLOBS,
         BASE_PATH_IMAGENES,
         BASE_PATH_METADATA,
+        BASE_PATH_METADATA_NAMESPACES,
+        BASE_PATH_METADATA_PROJECTS,
+        BASE_PATH_METADATA_IMAGENES,
         BASE_PATH_IMAGENES_MANIFEST,
         BASE_PATH_IMAGENES_SHA256,
     } from '#server/data/constants';
@@ -63,6 +66,21 @@ const imagenesSha256Path = path.join(
 const metadataPath = path.join(
     BASE_PATH,
     BASE_PATH_METADATA,
+);
+
+const metadataNamespacesPath = path.join(
+    BASE_PATH,
+    BASE_PATH_METADATA_NAMESPACES,
+);
+
+const metadataProjectsPath = path.join(
+    BASE_PATH,
+    BASE_PATH_METADATA_PROJECTS,
+);
+
+const metadataImagenesPath = path.join(
+    BASE_PATH,
+    BASE_PATH_METADATA_IMAGENES,
 );
 
 
@@ -257,6 +275,9 @@ const storageGenerateLocations: StorageGenerateLocations = async () => {
         await makeDirectory(imagenesManifestPath);
         await makeDirectory(imagenesSha256Path);
         await makeDirectory(metadataPath);
+        await makeDirectory(metadataNamespacesPath);
+        await makeDirectory(metadataProjectsPath);
+        await makeDirectory(metadataImagenesPath);
 
         return true;
     } catch (error) {
