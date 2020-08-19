@@ -10,6 +10,12 @@
     import {
         HypodLogic,
     } from '#server/data/interfaces';
+
+    import {
+        logLevel,
+    } from '#server/data/constants';
+
+    import Logger from '#server/logic/logger';
     // #endregion external
 // #endregion imports
 
@@ -20,6 +26,9 @@ const hypodLogic: HypodLogic = {
     getCurrentOwner: async () => {
         return {
             id: uuid.generate(),
+            namespaces: [],
+            projects: [],
+            imagenes: [],
         };
     },
     getOwnerImagenes: async () => {
@@ -81,6 +90,8 @@ const hypodLogic: HypodLogic = {
             expires_in: 3600,
         };
     },
+
+    logger: new Logger(logLevel),
 };
 // #endregion module
 
