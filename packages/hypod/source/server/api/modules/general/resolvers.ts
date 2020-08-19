@@ -5,7 +5,9 @@
 
     // #region internal
     import imagenes from './imagenes/resolvers';
+    import namespaces from './namespaces/resolvers';
     import owner from './owner/resolvers';
+    import projects from './projects/resolvers';
     // #endregion internal
 // #endregion imports
 
@@ -28,7 +30,9 @@ const generateResolvers = (
 
 const resolvers = generateResolvers(
     imagenes,
+    namespaces,
     owner,
+    projects,
 );
 // #endregion module
 

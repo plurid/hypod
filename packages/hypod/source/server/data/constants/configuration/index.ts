@@ -50,6 +50,10 @@ export const STORAGE_TYPE = (process.env.HYPOD_STORAGE_TYPE as StorageType | und
 export const DOCKER_REALM_BASE = process.env.HYPOD_DOCKER_REALM_BASE || '';
 export const DOCKER_SERVICE = process.env.HYPOD_DOCKER_SERVICE || '';
 
+
+export const CUSTOM_LOGIC_USAGE = process.env.PERFORMER_CUSTOM_LOGIC_USAGE === 'true';
+
+
 export const PRIVATE_USAGE = process.env.HYPOD_PRIVATE_USAGE
     ? process.env.HYPOD_PRIVATE_USAGE === 'true'
     : false;

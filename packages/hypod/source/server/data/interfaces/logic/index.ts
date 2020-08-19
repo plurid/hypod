@@ -5,6 +5,10 @@
         HypodOwner,
         OwnerToken,
     } from '../general';
+
+    import {
+        Logger,
+    } from '../logger';
     // #endregion external
 // #endregion imports
 
@@ -31,5 +35,6 @@ export interface HypodLogic {
         identonym: string,
         key: string,
     ) => Promise<OwnerToken>;
+    logger: Logger;
 }
 // #endregion module

@@ -30,6 +30,10 @@ export interface Project {
 
 export interface HypodOwner {
     id: string;
+
+    namespaces: Namespace[];
+    projects: Project[];
+    imagenes: Imagene[];
 }
 
 

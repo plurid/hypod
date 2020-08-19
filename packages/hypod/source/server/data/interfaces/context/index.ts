@@ -10,12 +10,19 @@
 
     // #region external
     import {
+        Namespace,
+        Project,
         Imagene,
     } from '../general';
 
     import {
         HypodLogic,
     } from '../logic';
+
+    import {
+        Logger,
+        LogLevels,
+    } from '../logger';
     // #endregion external
 // #endregion imports
 
@@ -25,8 +32,21 @@
 export interface Context {
     request: HypodRequest;
     response: Response;
+
     instance: Application;
+
+    namespaces: Namespace[];
+    projects: Project[];
     imagenes: Imagene[];
+
+    customLogicUsage: boolean;
+
+    privateUsage: boolean;
+    privateOwnerIdentonym: string | undefined;
+
+    logger: Logger;
+    logLevel: number;
+    logLevels: LogLevels;
 }
 
 
