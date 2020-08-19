@@ -14,6 +14,7 @@
 
     import {
         PluridIconTools,
+        PluridIconApps,
         PluridIconArrowRight,
         PluridIconDocuments,
         PluridIconExternalLink,
@@ -58,29 +59,16 @@
 // #region module
 const generalSelectors = [
     'imagenes',
+    'projects',
 ];
 
 const generalSelectorsIcons = {
     imagenes: PluridIconTools,
+    projects: PluridIconApps,
 };
 
 
 export interface GeneralViewOwnProperties {
-    // #region required
-        // #region values
-        // #endregion values
-
-        // #region methods
-        // #endregion methods
-    // #endregion required
-
-    // #region optional
-        // #region values
-        // #endregion values
-
-        // #region methods
-        // #endregion methods
-    // #endregion optional
 }
 
 export interface GeneralViewStateProperties {
@@ -108,22 +96,6 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 ) => {
     // #region properties
     const {
-        // #region required
-            // #region values
-            // #endregion values
-
-            // #region methods
-            // #endregion methods
-        // #endregion required
-
-        // #region optional
-            // #region values
-            // #endregion values
-
-            // #region methods
-            // #endregion methods
-        // #endregion optional
-
         // #region state
         stateGeneralTheme,
         stateInteractionTheme,
@@ -324,6 +296,17 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                 </StyledGeneralView>
             );
         case 'add-imagene':
+            return (
+                <Imagene
+                    theme={stateInteractionTheme}
+                    providerID={stateActiveProviderID}
+                    action={() => {
+                        setGeneralView('general');
+                    }}
+                    cancel={() => setGeneralView('general')}
+                />
+            );
+        case 'projects':
             return (
                 <Imagene
                     theme={stateInteractionTheme}
