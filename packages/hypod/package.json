@@ -58,7 +58,7 @@
         "@plurid/plurid-engine": "^0.1.99",
         "@plurid/plurid-functions": "^0.1.15",
         "@plurid/plurid-functions-react": "^0.0.1",
-        "@plurid/plurid-icons-react": "^0.1.31",
+        "@plurid/plurid-icons-react": "^0.1.32",
         "@plurid/plurid-pubsub": "^0.1.10",
         "@plurid/plurid-react": "^0.1.201",
         "@plurid/plurid-react-server": "^0.1.84",

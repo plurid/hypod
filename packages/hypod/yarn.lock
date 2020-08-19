@@ -662,10 +662,10 @@
   resolved "https://registry.yarnpkg.com/@plurid/plurid-functions/-/plurid-functions-0.1.15.tgz#4900bf02bb36240e8d2cafd1d27c0e9712ac3ebf"
   integrity sha512-gTzhFlbK6G5jE+KBpcT4UlnO9poUOLLihXS3qwAYtu3ldSvGbu4g+bKJgaAwTBmS+t8B6vWntU5qXyi4pdX/7A==
 
-"@plurid/plurid-icons-react@^0.1.31":
-  version "0.1.31"
-  resolved "https://registry.yarnpkg.com/@plurid/plurid-icons-react/-/plurid-icons-react-0.1.31.tgz#4329354dbfee6f2cca9a99a789d76e1e5df8a40a"
-  integrity sha512-Hz4jZxGYYlLncBfs2x5WMitSjnD5F027Hlbe3SesXVBxJfFVvSi6sJmcakQCfgCXMTSqCUaBMXzUxojM8J3UQg==
+"@plurid/plurid-icons-react@^0.1.32":
+  version "0.1.32"
+  resolved "https://registry.yarnpkg.com/@plurid/plurid-icons-react/-/plurid-icons-react-0.1.32.tgz#dbb36368289cda88535daaeef0a8be83cc6c92c4"
+  integrity sha512-1dU5aIM1bDBbfGfv/EicpSkAxDPBJ983h9ShMhMfoo6F6xOaF9dqJuE1M8LQlvUaEFSpZg1XA9wCSjqdiXeMvA==
 
 "@plurid/plurid-pubsub@^0.1.10":
   version "0.1.10"
