@@ -40,6 +40,31 @@ const GET_CURRENT_OWNER = gql`
             }
             data {
                 id
+                namespaces {
+                    id
+                    name
+                    generatedAt
+                    generatedBy
+                }
+                projects {
+                    id
+                    name
+                    generatedAt
+                    generatedBy
+                }
+                imagenes {
+                    id
+                    name
+                    latest
+                    tags {
+                        id
+                        generatedAt
+                        name
+                        size
+                        digest
+                    }
+                    isPublic
+                }
             }
         }
     }

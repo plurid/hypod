@@ -53,6 +53,7 @@ const getCurrentOwner = async (
     });
 
     const response = query.data.getCurrentOwner;
+    console.log('response', response);
 
     if (response.status) {
         const owner = graphql.deleteTypenames(
