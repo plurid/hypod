@@ -51,6 +51,25 @@ class Database {
         }
     }
 
+    public getAll(
+        entity: string,
+    ) {
+        switch (this.type) {
+            case databaseType.filesystem:
+                return filesystemDatabase.getAll(
+                    entity,
+                );
+            case databaseType.amazon:
+                return amazonDatabase.getAll(
+                    entity,
+                );
+            case databaseType.google:
+                return googleDatabase.getAll(
+                    entity,
+                );
+        }
+    }
+
     public query(
         entity: string,
         field: string,

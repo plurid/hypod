@@ -3,6 +3,7 @@
     import {
         Database,
         DatabaseGet,
+        DatabaseGetAll,
         DatabaseQuery,
         DatabaseStore,
         DatabaseUpdate,
@@ -58,6 +59,18 @@ const get: DatabaseGet = async (
         }
         default:
             return;
+    }
+}
+
+
+const getAll: DatabaseGetAll = async (
+    entity,
+) => {
+    switch (entity) {
+        case 'imagenes':
+            return await filesystemStorage.downloadAll(BASE_PATH_METADATA_IMAGENES) || [];
+        default:
+            return [];
     }
 }
 
@@ -242,6 +255,7 @@ const obliterate: DatabaseObliterate = async (
 
 const filesystemDatabase: Database = {
     get,
+    getAll,
     query,
     store,
     update,

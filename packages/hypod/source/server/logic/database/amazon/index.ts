@@ -3,6 +3,7 @@
     import {
         Database,
         DatabaseGet,
+        DatabaseGetAll,
         DatabaseQuery,
         DatabaseStore,
         DatabaseUpdate,
@@ -20,6 +21,14 @@ const get: DatabaseGet = async (
 ) => {
     return;
 }
+
+
+const getAll: DatabaseGetAll = async (
+    entity,
+) => {
+    return [];
+}
+
 
 const query: DatabaseQuery = async (
     entity,
@@ -59,6 +68,7 @@ const obliterate: DatabaseObliterate = async (
 
 const amazonDatabase: Database = {
     get,
+    getAll,
     query,
     store,
     update,

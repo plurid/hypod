@@ -1,3 +1,4 @@
+// #region module
 export type DatabaseType =
     | DatabaseTypeFilesystem
     | DatabaseTypeAmazon
@@ -16,6 +17,7 @@ export interface DatabaseTypeData {
 
 export interface Database {
     get: DatabaseGet;
+    getAll: DatabaseGetAll;
     query: DatabaseQuery;
     store: DatabaseStore;
     update: DatabaseUpdate;
@@ -27,17 +29,25 @@ export type DatabaseGet = (
     id: string,
 ) => Promise<any>;
 
+
+export type DatabaseGetAll = (
+    entity: string,
+) => Promise<any[]>;
+
+
 export type DatabaseQuery = (
     entity: string,
     field: string,
     value: string,
 ) => Promise<any>;
 
+
 export type DatabaseStore = (
     entity: string,
     id: string,
     data: any,
 ) => Promise<any>;
+
 
 export type DatabaseUpdate = (
     entity: string,
@@ -46,7 +56,9 @@ export type DatabaseUpdate = (
     value: any,
 ) => Promise<any>;
 
+
 export type DatabaseObliterate = (
     entity: string,
     id: string,
 ) => Promise<any>;
+// #endregion module
