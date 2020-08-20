@@ -73,6 +73,8 @@ const graphqlHandler = async (
             const data = await dataLoader();
 
             const {
+                namespaces,
+                projects,
                 imagenes,
             } = data;
 
@@ -86,8 +88,8 @@ const graphqlHandler = async (
 
                 instance,
 
-                namespaces: [],
-                projects: [],
+                namespaces,
+                projects,
                 imagenes,
 
                 customLogicUsage,

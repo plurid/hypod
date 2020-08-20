@@ -1,25 +1,36 @@
 // #region imports
     // #region external
     import {
+        Namespace,
+        Project,
         Imagene,
     } from '#server/data/interfaces';
 
-    import {
-        BASE_PATH_METADATA_IMAGENES,
-    } from '#server/data/constants';
+    import database from '#server/services/database';
 
     import {
         compareValues,
     } from '#server/utilities/general';
-
-    import database from '#server/services/database';
-    import storage from '#server/services/storage';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export const loadNamespaces = async () => {
+    const namespaces: Namespace[] = await database.getAll('namespaces');
+
+    return namespaces;
+}
+
+
+export const loadProjects = async () => {
+    const projects: Project[] = await database.getAll('projects');
+
+    return projects;
+}
+
+
 export const loadImagenes = async () => {
     const imagenes: Imagene[] = await database.getAll('imagenes');
 
@@ -32,9 +43,13 @@ export const loadImagenes = async () => {
 
 
 const loadData = async () => {
+    const namespaces = await loadNamespaces();
+    const projects = await loadProjects();
     const imagenes = await loadImagenes();
 
     const data = {
+        namespaces,
+        projects,
         imagenes,
     };
 

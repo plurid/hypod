@@ -67,6 +67,10 @@ const getAll: DatabaseGetAll = async (
     entity,
 ) => {
     switch (entity) {
+        case 'namespaces':
+            return await filesystemStorage.downloadAll(BASE_PATH_METADATA_NAMESPACES) || [];
+        case 'projects':
+            return await filesystemStorage.downloadAll(BASE_PATH_METADATA_PROJECTS) || [];
         case 'imagenes':
             return await filesystemStorage.downloadAll(BASE_PATH_METADATA_IMAGENES) || [];
         default:
