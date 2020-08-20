@@ -24,34 +24,47 @@ export const removeEntity = (
         ...state,
     };
 
-    let imagenes = [
-        ...newState.imagenes,
+
+    let namespaces = [
+        ...newState.namespaces,
     ];
 
     let projects = [
         ...newState.projects,
     ];
 
+    let imagenes = [
+        ...newState.imagenes,
+    ];
+
     switch (type) {
+        case 'namespace':
+            namespaces = namespaces.filter(
+                namespace => namespace.id !== id
+            );
+        case 'project':
+            projects = projects.filter(
+                project => project.id !== id
+            );
         case 'imagene':
             imagenes = imagenes.filter(
                 imagene => imagene.id !== id
             );
             break;
-        case 'project':
-            projects = projects.filter(
-                project => project.id !== id
-            );
+        default:
             break;
     }
 
     return {
         ...newState,
-        imagenes: [
-            ...imagenes,
+        namespaces: [
+            ...namespaces,
         ],
         projects: [
             ...projects,
+        ],
+        imagenes: [
+            ...imagenes,
         ],
     };
 }
