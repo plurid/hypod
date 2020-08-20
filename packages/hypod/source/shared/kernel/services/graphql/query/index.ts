@@ -8,8 +8,8 @@
 
 // #region module
 const GET_NAMESPACES = gql`
-    query GetImagenes {
-        getImagenes {
+    query GetNamespaces {
+        getNamespaces {
             status
             data {
                 id
@@ -23,8 +23,8 @@ const GET_NAMESPACES = gql`
 
 
 const GET_PROJECTS = gql`
-    query GetImagenes {
-        getImagenes {
+    query GetProjects {
+        getProjects {
             status
             data {
                 id
