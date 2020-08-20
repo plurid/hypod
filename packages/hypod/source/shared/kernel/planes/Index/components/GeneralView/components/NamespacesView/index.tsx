@@ -225,6 +225,10 @@ const NamespacesView: React.FC<NamespacesViewProperties> = (
                 name
             </div>
 
+            <div>
+                registered on
+            </div>
+
             <div />
         </>
     );
@@ -234,7 +238,7 @@ const NamespacesView: React.FC<NamespacesViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 30px"
+            rowTemplate="auto 200px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no namespaces"

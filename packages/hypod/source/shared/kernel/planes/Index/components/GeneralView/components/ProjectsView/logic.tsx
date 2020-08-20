@@ -26,13 +26,20 @@ export const projectRowRenderer = (
 ) => {
     const {
         id,
-        name
+        name,
+        generatedAt,
     } = project;
+
+    const dateString = new Date(generatedAt * 1000).toLocaleString();
 
     return (
         <>
             <div>
                 {name}
+            </div>
+
+            <div>
+                {dateString}
             </div>
 
             <PluridIconDelete

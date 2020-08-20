@@ -26,13 +26,20 @@ export const namespaceRowRenderer = (
 ) => {
     const {
         id,
-        name
+        name,
+        generatedAt,
     } = namespace;
+
+    const dateString = new Date(generatedAt * 1000).toLocaleString();
 
     return (
         <>
             <div>
                 {name}
+            </div>
+
+            <div>
+                {dateString}
             </div>
 
             <PluridIconDelete

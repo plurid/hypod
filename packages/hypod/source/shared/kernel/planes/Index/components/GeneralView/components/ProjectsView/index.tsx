@@ -225,6 +225,10 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
                 name
             </div>
 
+            <div>
+                generated at
+            </div>
+
             <div />
         </>
     );
@@ -234,7 +238,7 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 30px"
+            rowTemplate="auto 200px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no projects"
