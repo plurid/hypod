@@ -92,10 +92,6 @@ const Namespace: React.FC<NamespaceProperties> = (
 
     // #region handlers
     const setNamespace = async () => {
-        if (!namespaceName) {
-            return;
-        }
-
         const input = {
             value: namespaceName,
         };
@@ -106,6 +102,15 @@ const Namespace: React.FC<NamespaceProperties> = (
                 input,
             },
         });
+    }
+
+    const registerNamespace = async () => {
+        if (!namespaceName) {
+            return;
+        }
+
+        await setNamespace();
+        action();
     }
     // #endregion handlers
 
@@ -125,6 +130,11 @@ const Namespace: React.FC<NamespaceProperties> = (
                         text={namespaceName}
                         placeholder="name"
                         atChange={(event) => setNamespaceName(event.target.value)}
+                        atKeyDown={(event) => {
+                            if (event.key === 'Enter') {
+                                registerNamespace();
+                            }
+                        }}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -137,10 +147,7 @@ const Namespace: React.FC<NamespaceProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text="Register Namespace"
-                        atClick={async () => {
-                            await setNamespace();
-                            action();
-                        }}
+                        atClick={() => registerNamespace()}
                         level={2}
                         disabled={!namespaceName}
                     />

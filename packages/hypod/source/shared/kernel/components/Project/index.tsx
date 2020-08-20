@@ -92,10 +92,6 @@ const Project: React.FC<ProjectProperties> = (
 
     // #region handlers
     const setProject = async () => {
-        if (!projectName) {
-            return;
-        }
-
         const input = {
             value: projectName,
         };
@@ -106,6 +102,15 @@ const Project: React.FC<ProjectProperties> = (
                 input,
             },
         });
+    }
+
+    const generateProject = async () => {
+        if (!projectName) {
+            return;
+        }
+
+        await setProject();
+        action();
     }
     // #endregion handlers
 
@@ -125,6 +130,11 @@ const Project: React.FC<ProjectProperties> = (
                         text={projectName}
                         placeholder="name"
                         atChange={(event) => setProjectName(event.target.value)}
+                        atKeyDown={(event) => {
+                            if (event.key === 'Enter') {
+                                generateProject();
+                            }
+                        }}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -137,10 +147,7 @@ const Project: React.FC<ProjectProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text="Generate Project"
-                        atClick={async () => {
-                            await setProject();
-                            action();
-                        }}
+                        atClick={() => generateProject()}
                         level={2}
                         disabled={!projectName}
                     />
