@@ -137,9 +137,9 @@ const Project: React.FC<ProjectProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text="Generate Project"
-                        atClick={() => {
+                        atClick={async () => {
+                            await setProject();
                             action();
-                            setProject();
                         }}
                         level={2}
                         disabled={!projectName}

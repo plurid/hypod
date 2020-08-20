@@ -137,9 +137,9 @@ const Namespace: React.FC<NamespaceProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text="Register Namespace"
-                        atClick={() => {
+                        atClick={async () => {
+                            await setNamespace();
                             action();
-                            setNamespace();
                         }}
                         level={2}
                         disabled={!namespaceName}
