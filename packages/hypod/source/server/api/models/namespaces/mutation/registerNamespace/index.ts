@@ -74,7 +74,10 @@ const registerNamespace = async (
                 };
             }
 
-            await registerNamespaceLogic(name);
+            await registerNamespaceLogic(
+                name,
+                privateOwnerIdentonym,
+            );
 
             logger.log(
                 registerNamespaceLogs.infoSuccessPrivateUsage,
@@ -97,7 +100,12 @@ const registerNamespace = async (
                 logLevels.trace,
             );
 
-            await registerNamespaceLogic(name);
+            const owner = await logic.getCurrentOwner();
+
+            await registerNamespaceLogic(
+                name,
+                owner.id,
+            );
 
             logger.log(
                 registerNamespaceLogs.infoEndCustomLogicUsage,
@@ -112,7 +120,10 @@ const registerNamespace = async (
 
 
         // #region public usage
-        await registerNamespaceLogic(name);
+        await registerNamespaceLogic(
+            name,
+            'PUBLIC',
+        );
 
         logger.log(
             registerNamespaceLogs.infoSuccess,

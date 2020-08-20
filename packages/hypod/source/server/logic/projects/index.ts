@@ -20,6 +20,7 @@
 // #region module
 const registerProject = async (
     name: string,
+    identonym: string,
 ) => {
     const id = uuid.generate();
 
@@ -27,7 +28,7 @@ const registerProject = async (
         id,
         name,
         generatedAt: Math.floor(Date.now() / 1000),
-        generatedBy: '',
+        generatedBy: identonym,
     };
 
     await database.store(

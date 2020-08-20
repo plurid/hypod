@@ -74,7 +74,10 @@ const generateProject = async (
                 };
             }
 
-            await registerProject(name);
+            await registerProject(
+                name,
+                privateOwnerIdentonym,
+            );
 
             logger.log(
                 generateProjectLogs.infoSuccessPrivateUsage,
@@ -97,7 +100,12 @@ const generateProject = async (
                 logLevels.trace,
             );
 
-            await registerProject(name);
+            const owner = await logic.getCurrentOwner();
+
+            await registerProject(
+                name,
+                owner.id,
+            );
 
             logger.log(
                 generateProjectLogs.infoEndCustomLogicUsage,
@@ -112,7 +120,10 @@ const generateProject = async (
 
 
         // #region public usage
-        await registerProject(name);
+        await registerProject(
+            name,
+            'PUBLIC'
+        );
 
         logger.log(
             generateProjectLogs.infoSuccess,

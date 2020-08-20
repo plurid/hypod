@@ -20,6 +20,7 @@
 // #region module
 const registerNamespace = async (
     name: string,
+    identonym: string,
 ) => {
     const id = uuid.generate();
 
@@ -27,7 +28,7 @@ const registerNamespace = async (
         id,
         name,
         generatedAt: Math.floor(Date.now() / 1000),
-        generatedBy: '',
+        generatedBy: identonym,
     };
 
     await database.store(
