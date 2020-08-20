@@ -381,7 +381,11 @@ const Imagene: React.FC<ImageneProperties> = (
                                 ]}
                                 atSelect={(projectName) => {
                                     if (typeof projectName === 'string') {
-                                        setSelectedProject(projectName);
+                                        if (projectName === 'none') {
+                                            setSelectedProject('project');
+                                        } else {
+                                            setSelectedProject(projectName);
+                                        }
                                     }
                                 }}
                                 selectAtHover={false}
