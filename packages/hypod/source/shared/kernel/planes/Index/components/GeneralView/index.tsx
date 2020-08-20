@@ -39,6 +39,11 @@
         LOGOUT
     } from '#kernel-services/graphql/mutate';
 
+    import {
+        getNamespaces,
+        getProjects,
+    } from '#kernel-services/logic/queries';
+
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
     import actions from '#kernel-services/state/actions';
@@ -95,6 +100,7 @@ export interface GeneralViewStateProperties {
 export interface GeneralViewDispatchProperties {
     dispatchSetViewType: typeof actions.view.setViewType;
     dispatchSetViewCompactSelectors: typeof actions.view.setViewCompactSelectors;
+    dispatchSetData: typeof actions.data.setData;
 }
 
 export type GeneralViewProperties = GeneralViewOwnProperties
@@ -120,6 +126,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         // #region dispatch
         dispatchSetViewType,
         dispatchSetViewCompactSelectors,
+        dispatchSetData,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -325,6 +332,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     theme={stateInteractionTheme}
                     action={() => {
                         setGeneralView('general');
+                        getNamespaces(dispatchSetData);
                     }}
                     cancel={() => setGeneralView('general')}
                 />
@@ -335,6 +343,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     theme={stateInteractionTheme}
                     action={() => {
                         setGeneralView('general');
+                        getProjects(dispatchSetData);
                     }}
                     cancel={() => setGeneralView('general')}
                 />
@@ -374,6 +383,11 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch(
         actions.view.setViewCompactSelectors(payload),
+    ),
+    dispatchSetData: (
+        payload,
+    ) => dispatch(
+        actions.data.setData(payload),
     ),
 });
 // #endregion module

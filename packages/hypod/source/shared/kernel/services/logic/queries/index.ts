@@ -11,6 +11,8 @@
     // #region external
     import client from '#kernel-services/graphql/client';
     import {
+        GET_NAMESPACES,
+        GET_PROJECTS,
         GET_IMAGENES,
         GET_CURRENT_OWNER,
         GET_USAGE_TYPE,
@@ -23,8 +25,54 @@
 
 
 // #region module
+const getNamespaces = async (
+    setData: typeof actions.data.setData,
+) => {
+    const query = await client.query({
+        query: GET_NAMESPACES,
+        fetchPolicy: 'no-cache',
+    });
+
+    const response = query.data.getNamespaces;
+
+    if (response.status) {
+        const namespaces = graphql.deleteTypenames(
+            response.data,
+        );
+
+        setData({
+            type: 'namespaces',
+            data: namespaces,
+        });
+    }
+}
+
+
+const getProjects = async (
+    setData: typeof actions.data.setData,
+) => {
+    const query = await client.query({
+        query: GET_PROJECTS,
+        fetchPolicy: 'no-cache',
+    });
+
+    const response = query.data.getProjects;
+
+    if (response.status) {
+        const projects = graphql.deleteTypenames(
+            response.data,
+        );
+
+        setData({
+            type: 'projects',
+            data: projects,
+        });
+    }
+}
+
+
 const getImagenes = async (
-    setImagenes: typeof actions.data.setImagenes,
+    setData: typeof actions.data.setData,
 ) => {
     const query = await client.query({
         query: GET_IMAGENES,
@@ -38,7 +86,10 @@ const getImagenes = async (
             response.data,
         );
 
-        setImagenes(imagenes);
+        setData({
+            type: 'imagenes',
+            data: imagenes,
+        });
     }
 }
 
@@ -137,6 +188,8 @@ const getUsageType = async (
 
 // #region exports
 export {
+    getNamespaces,
+    getProjects,
     getImagenes,
     getCurrentOwner,
     getUsageType,

@@ -27,6 +27,8 @@
     } from '#kernel-services/styled';
 
     import {
+        getNamespaces,
+        getProjects,
         getImagenes,
     } from '#kernel-services/logic/queries';
 
@@ -72,7 +74,7 @@ export interface PrivateViewStateProperties {
 export interface PrivateViewDispatchProperties {
     dispatchSetViewType: typeof actions.view.setViewType;
     dispatchViewOwnerID: typeof actions.view.setViewOwnerID;
-    dispatchSetImagenes: typeof actions.data.setImagenes;
+    dispatchSetData: typeof actions.data.setData;
 }
 
 export type PrivateViewProperties = PrivateViewOwnProperties
@@ -103,7 +105,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
         // #region dispatch
         dispatchSetViewType,
         dispatchViewOwnerID,
-        dispatchSetImagenes,
+        dispatchSetData,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -156,7 +158,9 @@ const PrivateView: React.FC<PrivateViewProperties> = (
 
             const owner = response.data;
 
-            await getImagenes(dispatchSetImagenes);
+            getNamespaces(dispatchSetData);
+            getProjects(dispatchSetData);
+            getImagenes(dispatchSetData);
 
             dispatchViewOwnerID(owner.id);
             dispatchSetViewType({
@@ -252,10 +256,10 @@ const mapDispatchToProperties = (
     ) => dispatch(
         actions.view.setViewOwnerID(payload),
     ),
-    dispatchSetImagenes: (
-        imagenes,
+    dispatchSetData: (
+        payload,
     ) => dispatch(
-        actions.data.setImagenes(imagenes),
+        actions.data.setData(payload),
     ),
 });
 // #endregion module

@@ -7,6 +7,36 @@
 
 
 // #region module
+const GET_NAMESPACES = gql`
+    query GetImagenes {
+        getImagenes {
+            status
+            data {
+                id
+                name
+                generatedAt
+                generatedBy
+            }
+        }
+    }
+`;
+
+
+const GET_PROJECTS = gql`
+    query GetImagenes {
+        getImagenes {
+            status
+            data {
+                id
+                name
+                generatedAt
+                generatedBy
+            }
+        }
+    }
+`;
+
+
 const GET_IMAGENES = gql`
     query GetImagenes {
         getImagenes {
@@ -90,6 +120,8 @@ const GET_USAGE_TYPE = gql`
 
 // #region exports
 export {
+    GET_NAMESPACES,
+    GET_PROJECTS,
     GET_IMAGENES,
     GET_CURRENT_OWNER,
     GET_USAGE_TYPE,
