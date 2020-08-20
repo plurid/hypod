@@ -46,4 +46,10 @@ export interface OwnerToken {
     expires_in: number;
     issued_at: Date;
 }
+
+
+export interface HypodFeatures {
+    namespaces: boolean;
+    projects: boolean;
+}
 // #endregion module

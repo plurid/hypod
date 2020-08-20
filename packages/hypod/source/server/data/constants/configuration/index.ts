@@ -3,6 +3,8 @@
     import {
         DatabaseType,
         StorageType,
+
+        HypodFeatures,
     } from '#server/data/interfaces';
     // #endregion external
 // #endregion imports
@@ -60,6 +62,15 @@ export const PRIVATE_USAGE = process.env.HYPOD_PRIVATE_USAGE
 export const PRIVATE_OWNER_IDENTONYM = process.env.HYPOD_PRIVATE_OWNER_IDENTONYM || '';
 export const PRIVATE_OWNER_KEY = process.env.HYPOD_PRIVATE_OWNER_KEY || '';
 export const PRIVATE_TOKEN = process.env.HYPOD_PRIVATE_TOKEN || '';
+
+
+export const USE_NAMESPACES = process.env.HYPOD_USE_NAMESPACES === 'true';
+export const USE_PROJECTS = process.env.HYPOD_USE_PROJECTS === 'true';
+
+export const hypodFeatures: HypodFeatures = {
+    namespaces: USE_NAMESPACES,
+    projects: USE_PROJECTS,
+};
 
 
 /**
