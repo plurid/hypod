@@ -6,8 +6,8 @@ export const generateLog = (
     usage?: string,
 ) => {
     const usageString = usage
-        ? ''
-        : ` · ${usage}`;
+        ? ` · ${usage}`
+        : '';
 
     const log = `[Hypod ${type} : ${state}] :: ${method}` + usageString;
 
