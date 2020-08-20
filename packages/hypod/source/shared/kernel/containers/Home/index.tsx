@@ -100,7 +100,6 @@ const Home: React.FC<HomeProperties> = (
                 if (ownerSet) {
                     indexView = 'general';
                 }
-                console.log('indexView', indexView);
 
                 dispatchSetViewType({
                     type: 'indexView',
@@ -108,7 +107,6 @@ const Home: React.FC<HomeProperties> = (
                 });
                 dispatchSetViewLoading(false);
             } catch (error) {
-                console.log(error);
                 dispatchSetViewLoading(false);
                 return;
             }
