@@ -1,5 +1,8 @@
 // #region imports
     // #region libraries
+    import { AnyAction } from 'redux';
+    import { ThunkDispatch } from 'redux-thunk';
+
     import {
         graphql,
     } from '@plurid/plurid-functions';
@@ -46,21 +49,55 @@ const getImagenes = async (
  * @param setViewOwnerID
  */
 const getCurrentOwner = async (
-    setViewOwnerID: typeof actions.view.setViewOwnerID,
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ) => {
+    const dispatchSetData: typeof actions.data.setData = (
+        payload,
+    ) => dispatch(
+        actions.data.setData(payload),
+    );
+    const dispatchSetViewOwnerID: typeof actions.view.setViewOwnerID = (
+        id,
+    ) => dispatch(
+        actions.view.setViewOwnerID(id),
+    );
+
+
     const query = await client.query({
         query: GET_CURRENT_OWNER,
     });
 
     const response = query.data.getCurrentOwner;
-    console.log('response', response);
 
     if (response.status) {
         const owner = graphql.deleteTypenames(
             response.data,
         );
 
-        setViewOwnerID(owner.id);
+        const {
+            id,
+            namespaces,
+            projects,
+            imagenes,
+        } = owner;
+
+        dispatchSetData({
+            type: 'namespaces',
+            data: namespaces,
+        });
+
+        dispatchSetData({
+            type: 'projects',
+            data: projects,
+        });
+
+        dispatchSetData({
+            type: 'imagenes',
+            data: imagenes,
+        });
+
+        dispatchSetViewOwnerID(id);
+
         return true;
     }
 

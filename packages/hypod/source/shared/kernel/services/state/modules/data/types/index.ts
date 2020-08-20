@@ -34,6 +34,19 @@ export interface SetActiveProviderIDAction {
 }
 
 
+export const SET_DATA = 'SET_DATA';
+
+export interface SetDataPayload {
+    type: 'namespaces' | 'projects' | 'imagenes';
+    data: (Namespace | Project | Imagene)[];
+}
+
+export interface SetDataAction {
+    type: typeof SET_DATA;
+    payload: SetDataPayload;
+}
+
+
 export const SET_IMAGENES = 'SET_IMAGENES';
 export interface SetImagenesAction {
     type: typeof SET_IMAGENES;
@@ -75,6 +88,7 @@ export interface State {
 export type Actions =
     | RemoveEntityAction
     | SetActiveProviderIDAction
+    | SetDataAction
     | SetImagenesAction
     | ToggleImagenePublicAction
     | ObliterateImageneTagAction;

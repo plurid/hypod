@@ -18,6 +18,8 @@ const reducer = (
             return resolvers.removeEntity(state, action);
         case Types.SET_ACTIVE_PROVIDER_ID:
             return resolvers.setActiveProviderID(state, action);
+        case Types.SET_DATA:
+            return resolvers.setData(state, action);
         case Types.SET_IMAGENES:
             return resolvers.setImagenes(state, action);
         case Types.TOGGLE_IMAGENE_PUBLIC:

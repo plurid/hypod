@@ -68,6 +68,45 @@ export const setActiveProviderID = (
 }
 
 
+export const setData = (
+    state: Types.State,
+    action: Types.SetDataAction,
+): Types.State => {
+    const {
+        type,
+        data,
+    } = action.payload;
+
+    switch (type) {
+        case 'namespaces':
+            return {
+                ...state,
+                namespaces: [
+                    ...data as any,
+                ],
+            };
+        case 'projects':
+            return {
+                ...state,
+                projects: [
+                    ...data as any,
+                ],
+            };
+        case 'imagenes':
+            return {
+                ...state,
+                imagenes: [
+                    ...data as any,
+                ],
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
+
 export const setImagenes = (
     state: Types.State,
     action: Types.SetImagenesAction,
@@ -149,6 +188,7 @@ export const obliterateImageneTag = (
 const resolvers = {
     removeEntity,
     setActiveProviderID,
+    setData,
     setImagenes,
     togglePublicImagene,
     obliterateImageneTag,

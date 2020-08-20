@@ -31,6 +31,16 @@ export const setActiveProviderID = (
 }
 
 
+export const setData = (
+    payload: Types.SetDataPayload
+): Types.SetDataAction => {
+    return {
+        type: Types.SET_DATA,
+        payload,
+    };
+}
+
+
 export const setImagenes = (
     imagenes: Imagene[],
 ): Types.SetImagenesAction => {
@@ -65,6 +75,7 @@ export const obliterateImageneTag = (
 const actions = {
     removeEntity,
     setActiveProviderID,
+    setData,
     setImagenes,
     togglePublicImagene,
     obliterateImageneTag,

@@ -18,7 +18,6 @@
 
     // #region external
     import {
-        getImagenes,
         getCurrentOwner,
         getUsageType,
     } from '#kernel-services/logic/queries';
@@ -48,11 +47,10 @@ export interface HomeStateProperties {
 }
 
 export interface HomeDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
     dispatchSetViewLoading: typeof actions.view.setViewLoading;
     dispatchSetViewType: typeof actions.view.setViewType;
     dispatchSetViewUsageType: typeof actions.view.setViewUsageType;
-    dispatchSetImagenes: typeof actions.data.setImagenes;
-    dispatchSetViewOwnerID: typeof actions.view.setViewOwnerID;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -70,11 +68,10 @@ const Home: React.FC<HomeProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatch,
         dispatchSetViewLoading,
         dispatchSetViewType,
         dispatchSetViewUsageType,
-        dispatchSetImagenes,
-        dispatchSetViewOwnerID,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -92,11 +89,8 @@ const Home: React.FC<HomeProperties> = (
                     indexView = usageType;
                 }
 
-                /** Get imagenes */
-                await getImagenes(dispatchSetImagenes);
-
                 /** Get current owner */
-                const ownerSet = await getCurrentOwner(dispatchSetViewOwnerID);
+                const ownerSet = await getCurrentOwner(dispatch);
                 if (ownerSet) {
                     indexView = 'general';
                 }
@@ -138,6 +132,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): HomeDispatchProperties => ({
+    dispatch,
     dispatchSetViewLoading: (
         loading,
     ) => dispatch(
@@ -152,16 +147,6 @@ const mapDispatchToProperties = (
         usageType,
     ) => dispatch(
         actions.view.setViewUsageType(usageType),
-    ),
-    dispatchSetImagenes: (
-        imagenes,
-    ) => dispatch(
-        actions.data.setImagenes(imagenes),
-    ),
-    dispatchSetViewOwnerID: (
-        id,
-    ) => dispatch(
-        actions.view.setViewOwnerID(id),
     ),
 });
 // #endregion module
