@@ -32,6 +32,8 @@ export const types = gql`
     type Project {
         id: String!
         name: String!
+        generatedAt: Int!
+        generatedBy: String!
     }
 `;
 // #endregion module

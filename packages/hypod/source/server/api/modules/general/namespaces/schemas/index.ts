@@ -32,6 +32,8 @@ export const types = gql`
     type Namespace {
         id: String!
         name: String!
+        generatedAt: Int!
+        generatedBy: String!
     }
 `;
 // #endregion module

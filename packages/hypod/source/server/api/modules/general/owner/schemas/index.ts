@@ -32,6 +32,9 @@ export const types = gql`
 
     type Owner {
         id: ID!
+        namespaces: [Namespace!]
+        projects: [Project!]
+        imagenes: [Imagene!]
     }
 
     type ResponseUsageType {

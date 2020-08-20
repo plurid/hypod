@@ -23,6 +23,10 @@ const getCurrentOwner = async (
     try {
         const {
             request,
+
+            namespaces,
+            projects,
+            imagenes,
         } = context;
 
         const logic = request.hypodLogic;
@@ -32,7 +36,9 @@ const getCurrentOwner = async (
 
             return {
                 status: true,
-                data: owner,
+                data: {
+                    ...owner,
+                },
             };
         }
 
@@ -49,6 +55,9 @@ const getCurrentOwner = async (
                 status: true,
                 data: {
                     id: privateOwnerIdentonym,
+                    namespaces,
+                    projects,
+                    imagenes,
                 },
             };
         }
