@@ -34,6 +34,7 @@
 
     // #region external
     import {
+        Project,
         Imagene,
         ImageneTag,
     } from '#server/data/interfaces';
@@ -168,25 +169,26 @@ const createSearchTerms = (
 }
 
 
-export interface PageOwnProperties {
+export interface ImageneOwnProperties {
     plurid: PluridComponentProperty;
 }
 
-export interface PageStateProperties {
+export interface ImageneStateProperties {
     stateGeneralTheme: Theme;
     stateInteractionTheme: Theme;
+    stateProjects: Project[];
     stateImagenes: Imagene[];
 }
 
-export interface PageDispatchProperties {
+export interface ImageneDispatchProperties {
     dispatchObliterateImageneTag: typeof actions.data.obliterateImageneTag;
 }
 
-export type PageProperties = PageOwnProperties
-    & PageStateProperties
-    & PageDispatchProperties;
+export type ImageneProperties = ImageneOwnProperties
+    & ImageneStateProperties
+    & ImageneDispatchProperties;
 
-const Page: React.FC<PageProperties> = (
+const Imagene: React.FC<ImageneProperties> = (
     properties,
 ) => {
     // #region properties
@@ -198,6 +200,7 @@ const Page: React.FC<PageProperties> = (
         // #region state
         stateGeneralTheme,
         stateInteractionTheme,
+        stateProjects,
         stateImagenes,
         // #endregion state
 
@@ -245,6 +248,11 @@ const Page: React.FC<PageProperties> = (
 
 
     // #region state
+    const [
+        selectedProject,
+        setSelectedProject,
+    ] = useState('project');
+
     const [
         searchTerms,
         setSearchTerms,
@@ -366,11 +374,17 @@ const Page: React.FC<PageProperties> = (
 
                         <StyledHeaderProject>
                             <PluridDropdown
-                                selected="project"
+                                selected={selectedProject}
                                 selectables={[
                                     'none',
+                                    ...stateProjects.map(project => project.name)
                                 ]}
-                                atSelect={() => {}}
+                                atSelect={(projectName) => {
+                                    if (typeof projectName === 'string') {
+                                        setSelectedProject(projectName);
+                                    }
+                                }}
+                                selectAtHover={false}
                                 style={{
                                     fontSize: '1rem',
                                 }}
@@ -400,16 +414,17 @@ const Page: React.FC<PageProperties> = (
 
 const mapStateToProperties = (
     state: AppState,
-): PageStateProperties => ({
-    stateImagenes: selectors.data.getImagenes(state),
+): ImageneStateProperties => ({
     stateGeneralTheme: selectors.themes.getGeneralTheme(state),
     stateInteractionTheme: selectors.themes.getInteractionTheme(state),
+    stateProjects: selectors.data.getProjects(state),
+    stateImagenes: selectors.data.getImagenes(state),
 });
 
 
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
-): PageDispatchProperties => ({
+): ImageneDispatchProperties => ({
     dispatchObliterateImageneTag: (
         payload,
     ) => dispatch(
@@ -424,5 +439,5 @@ const mapDispatchToProperties = (
 export default connect(
     mapStateToProperties,
     mapDispatchToProperties,
-)(Page);
+)(Imagene);
 // #endregion exports
