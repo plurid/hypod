@@ -25,6 +25,10 @@
     import {
         PluridComponentProperty,
     } from '@plurid/plurid-react';
+
+    import {
+        PluridDropdown,
+    } from '@plurid/plurid-ui-react';
     // #endregion libraries
 
 
@@ -65,6 +69,8 @@
     // #region internal
     import {
         StyledImagene,
+        StyledHeader,
+        StyledHeaderProject,
     } from './styled';
     // #endregion internal
 // #endregion imports
@@ -351,9 +357,27 @@ const Page: React.FC<PageProperties> = (
         <StyledImagene>
             {imagene && (
                 <div>
-                    <h1>
-                        {imagene.name}
-                    </h1>
+                    <StyledHeader>
+                        <div>
+                            <h1>
+                                {imagene.name}
+                            </h1>
+                        </div>
+
+                        <StyledHeaderProject>
+                            <PluridDropdown
+                                selected="project"
+                                selectables={[
+                                    'none',
+                                ]}
+                                atSelect={() => {}}
+                                style={{
+                                    fontSize: '1rem',
+                                }}
+                                width={170}
+                            />
+                        </StyledHeaderProject>
+                    </StyledHeader>
 
                     <EntityView
                         generalTheme={stateGeneralTheme}
