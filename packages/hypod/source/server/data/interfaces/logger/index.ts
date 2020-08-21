@@ -16,7 +16,7 @@ export interface LogLevels {
     debug: number;
     trace: number;
     all: number;
-};
+}
 
 
 export interface MethodLogs {

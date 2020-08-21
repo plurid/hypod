@@ -42,10 +42,12 @@ export const removeEntity = (
             namespaces = namespaces.filter(
                 namespace => namespace.id !== id
             );
+            break;
         case 'project':
             projects = projects.filter(
                 project => project.id !== id
             );
+            break;
         case 'imagene':
             imagenes = imagenes.filter(
                 imagene => imagene.id !== id

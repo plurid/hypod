@@ -236,6 +236,8 @@ const obliterate: DatabaseObliterate = async (
             await filesystemStorage.obliterate(
                 filepath,
             );
+
+            return true;
         }
         case 'project': {
             const filepath = BASE_PATH_METADATA_PROJECTS + id;
@@ -243,6 +245,8 @@ const obliterate: DatabaseObliterate = async (
             await filesystemStorage.obliterate(
                 filepath,
             );
+
+            return true;
         }
         case 'imagene': {
             const filepath = BASE_PATH_METADATA_IMAGENES + id;
@@ -250,6 +254,8 @@ const obliterate: DatabaseObliterate = async (
             await filesystemStorage.obliterate(
                 filepath,
             );
+
+            return true;
         }
     }
 
