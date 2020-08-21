@@ -168,6 +168,9 @@ export const getNameBlobsDigest = async (
     // console.log('getNameBlobsDigest');
     // console.log('name', name);
     // console.log('digest', digest);
+    // console.log('request.originalUrl', request.originalUrl);
+    // console.log('request.method', request.method);
+    // console.log('------------------');
 
     const digestValue = digest.replace(':', '/');
     const digestPath = BASE_PATH_IMAGENES + digestValue;
@@ -177,7 +180,7 @@ export const getNameBlobsDigest = async (
     );
 
     if (typeof file !== 'string') {
-        response.status(400).end();
+        response.status(404).end();
         return;
     }
 
@@ -186,12 +189,18 @@ export const getNameBlobsDigest = async (
         file.length,
     );
     response.setHeader(
-        'Content-Type',
-        'application/octet-stream',
-    );
-    response.setHeader(
         'Docker-Content-Digest',
         digest,
+    );
+
+    if (request.method === 'HEAD') {
+        response.status(200).end();
+        return;
+    }
+
+    response.setHeader(
+        'Content-Type',
+        'application/octet-stream',
     );
     response.status(200).send(Buffer.from(file, 'binary'));
 }
@@ -336,6 +345,10 @@ export const patchNameBlobsUploadsUuid = async (
         return;
     }
 
+    // console.log('patchNameBlobsUploadsUuid', name);
+    // console.log('request.originalUrl', request.originalUrl);
+    // console.log('------------------');
+
     const location = request.originalUrl;
     const bufferData = getBufferData(request);
     const blobPath = BASE_PATH_BLOBS + uuid;
@@ -405,6 +418,10 @@ export const putNameManifestsReference = async (
         return;
     }
 
+    // console.log('putNameManifestsReference', name);
+    // console.log('request.originalUrl', request.originalUrl);
+    // console.log('------------------');
+
     const data = (request as any).rawBody;
     const location = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
 
@@ -461,6 +478,10 @@ export const putNameBlobsUploadsUuid = async (
         response.status(400).end();
         return;
     }
+
+    // console.log('putNameBlobsUploadsUuid', name);
+    // console.log('request.originalUrl', request.originalUrl);
+    // console.log('------------------');
 
     const location = request.originalUrl;
     const digest = request.query.digest as string || '';
