@@ -100,6 +100,12 @@ export const getNameManifestsReference = async (
         return;
     }
 
+    // console.log('getNameManifestsReference');
+    // console.log('name', name);
+    // console.log('reference', reference);
+    // console.log('----------------');
+
+
     // const imagene: Imagene | undefined = await database.query(
     //     'imagene',
     //     'name',
@@ -159,6 +165,9 @@ export const getNameBlobsDigest = async (
         return;
     }
 
+    // console.log('getNameBlobsDigest');
+    // console.log('name', name);
+    // console.log('digest', digest);
 
     const digestValue = digest.replace(':', '/');
     const digestPath = BASE_PATH_IMAGENES + digestValue;
@@ -168,7 +177,7 @@ export const getNameBlobsDigest = async (
     );
 
     if (typeof file !== 'string') {
-        response.status(404).end();
+        response.status(400).end();
         return;
     }
 
@@ -177,10 +186,14 @@ export const getNameBlobsDigest = async (
         file.length,
     );
     response.setHeader(
+        'Content-Type',
+        'application/octet-stream',
+    );
+    response.setHeader(
         'Docker-Content-Digest',
         digest,
     );
-    response.status(200).end();
+    response.status(200).send(Buffer.from(file, 'binary'));
 }
 
 
