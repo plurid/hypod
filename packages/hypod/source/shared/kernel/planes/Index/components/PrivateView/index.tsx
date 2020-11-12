@@ -10,6 +10,7 @@
 
     import {
         PluridPureButton,
+        PluridInputLine,
     } from '@plurid/plurid-ui-react';
     // #endregion libraries
 
@@ -21,10 +22,6 @@
     import {
         LOGIN,
     } from '#kernel-services/graphql/mutate';
-
-    import {
-        StyledPluridTextline,
-    } from '#kernel-services/styled';
 
     import {
         getNamespaces,
@@ -198,21 +195,18 @@ const PrivateView: React.FC<PrivateViewProperties> = (
             </h1>
 
             <StyledLoginButtons>
-                <StyledPluridTextline
+                <PluridInputLine
+                    name="identonym"
                     text={identonym}
-                    placeholder="identonym"
                     atChange={(event) => setIdentonym(event.target.value)}
-                    atKeyDown={(event) => handleEnter(event)}
-                    level={2}
+                    atKeyDown={handleEnter}
                 />
 
-                <StyledPluridTextline
+                <PluridInputLine
+                    name="key"
                     text={key}
-                    placeholder="key"
-                    type="password"
                     atChange={(event) => setKey(event.target.value)}
-                    atKeyDown={(event) => handleEnter(event)}
-                    level={2}
+                    atKeyDown={handleEnter}
                 />
 
                 <div
