@@ -2,7 +2,7 @@
     <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/identity/hypod-logo.png" height="250px">
     <br />
     <a target="_blank" href="https://github.com/plurid/hypod/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/license-MIT-blue.svg?colorB=1380C3&style=for-the-badge" alt="License: MIT">
+        <img src="https://img.shields.io/badge/license-DEL-blue.svg?colorB=1380C3&style=for-the-badge" alt="License: DEL">
     </a>
 </p>
 
@@ -41,6 +41,7 @@ The name `hypod` comes from the appropriation of the greek `hupodochê`, recepta
 + [Building](#building)
 + [Configuration](#configuration)
 + [Packages](#packages)
++ [Codeophon](#codeophon)
 
 
 
@@ -166,3 +167,10 @@ as storage:
 [@plurid/hypod][hypod] • the server application
 
 [hypod]: https://github.com/plurid/hypod/tree/master/packages/hypod
+
+
+
+## [Codeophon](https://github.com/ly3xqhl8g9/codeophon)
+
++ licensing: [delicense](https://github.com/ly3xqhl8g9/delicense)
++ versioning: [αver](https://github.com/ly3xqhl8g9/alpha-versioning)
