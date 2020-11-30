@@ -1,6 +1,7 @@
 <p align="center">
     <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/identity/hypod-logo.png" height="250px">
     <br />
+    <br />
     <a target="_blank" href="https://github.com/plurid/hypod/blob/master/LICENSE">
         <img src="https://img.shields.io/badge/license-DEL-blue.svg?colorB=1380C3&style=for-the-badge" alt="License: DEL">
     </a>
@@ -15,7 +16,11 @@
 
 <h3 align="center">
     Cloud-Native Imagene Registry
-</h1>
+</h3>
+
+
+
+<br />
 
 
 
@@ -33,13 +38,13 @@ The name `hypod` comes from the appropriation of the greek `hupodochê`, recepta
 </p>
 
 
-
 ### Contents
 
 + [Install](#install)
 + [Usage](#usage)
 + [Building](#building)
 + [Configuration](#configuration)
++ [Packages](#packages)
 + [Codeophon](#codeophon)
 
 
@@ -153,6 +158,19 @@ as storage:
 + the `filesystem`
 + `amazon` storage
 + `google` storage
+
+
+
+## Packages
+
+
+<a target="_blank" href="https://www.npmjs.com/package/@plurid/hypod">
+    <img src="https://img.shields.io/npm/v/@plurid/hypod.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
+</a>
+
+[@plurid/hypod][hypod] • the server application
+
+[hypod]: https://github.com/plurid/hypod/tree/master/packages/hypod
 
 
 

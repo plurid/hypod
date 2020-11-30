@@ -1,6 +1,7 @@
 <p align="center">
     <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/identity/hypod-logo.png" height="250px">
     <br />
+    <br />
     <a target="_blank" href="https://github.com/plurid/hypod/blob/master/LICENSE">
         <img src="https://img.shields.io/badge/license-DEL-blue.svg?colorB=1380C3&style=for-the-badge" alt="License: DEL">
     </a>
@@ -15,7 +16,11 @@
 
 <h3 align="center">
     Cloud-Native Imagene Registry
-</h1>
+</h3>
+
+
+
+<br />
 
 
 
@@ -31,7 +36,6 @@ The name `hypod` comes from the appropriation of the greek `hupodochê`, recepta
 <p align="center">
     <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/screenshots/ss-1.png" height="500px">
 </p>
-
 
 
 ### Contents
