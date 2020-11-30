@@ -1,0 +1,14 @@
+import develop from https://raw.githubusercontent.com/plurid/joiner/master/packages/joiner-data/values/develop.deon
+
+
+
+{
+    ...#develop
+    #packages
+}
+
+
+packages [
+    ...#develop.packages
+    ./fixtures/*
+]
