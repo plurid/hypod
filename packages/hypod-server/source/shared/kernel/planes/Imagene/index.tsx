@@ -27,8 +27,8 @@
     } from '@plurid/plurid-react';
 
     import {
-        PluridDropdown,
-    } from '@plurid/plurid-ui-react';
+        universal,
+    } from '@plurid/plurid-ui-components-react';
     // #endregion libraries
 
 
@@ -79,6 +79,12 @@
 
 
 // #region module
+const {
+    inputs: {
+        Dropdown: PluridDropdown,
+    },
+} = universal;
+
 const imageneTagRowRenderer = (
     imageneName: string,
     imageneTag: ImageneTag,

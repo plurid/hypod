@@ -9,9 +9,8 @@
     import { ThunkDispatch } from 'redux-thunk';
 
     import {
-        PluridPureButton,
-        PluridInputLine,
-    } from '@plurid/plurid-ui-react';
+        universal,
+    } from '@plurid/plurid-ui-components-react';
     // #endregion libraries
 
 
@@ -47,6 +46,16 @@
 
 
 // #region module
+const {
+    buttons: {
+        PureButton: PluridPureButton,
+    },
+    inputs: {
+        InputLine: PluridInputLine,
+    },
+} = universal;
+
+
 export interface PrivateViewOwnProperties {
     // #region required
         // #region values

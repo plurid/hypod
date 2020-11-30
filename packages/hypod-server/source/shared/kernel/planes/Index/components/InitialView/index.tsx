@@ -3,8 +3,8 @@
     import React from 'react';
 
     import {
-        PluridPureButton,
-    } from '@plurid/plurid-ui-react';
+        universal,
+    } from '@plurid/plurid-ui-components-react';
     // #endregion libraries
 
 
@@ -23,6 +23,13 @@
 
 
 // #region module
+const {
+    buttons: {
+        PureButton: PluridPureButton,
+    },
+} = universal;
+
+
 export interface InitialViewProperties {
     // #region required
         // #region values
