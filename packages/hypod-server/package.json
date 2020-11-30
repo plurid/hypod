@@ -22,11 +22,11 @@
         "access": "public"
     },
     "engines": {
-        "node": ">=12.0.0"
+        "node": ">=12",
+        "npm": ">=6"
     },
     "main": "distribution/index.js",
-    "module": "distribution/index.es.js",
-    "typings": "distribution/types/index.d.ts",
+    "typings": "distribution/index.d.ts",
     "files": [
         "distribution"
     ],
