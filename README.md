@@ -15,7 +15,7 @@
 
 
 <h3 align="center">
-    Cloud-Native Imagene Registry
+    Cloud Service for Imagene Registry
 </h3>
 
 
