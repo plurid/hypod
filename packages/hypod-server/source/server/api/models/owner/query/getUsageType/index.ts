@@ -2,11 +2,11 @@
     // #region external
     import {
         Context,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         PRIVATE_USAGE,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
     // #endregion external
 // #endregion imports
 

@@ -13,7 +13,7 @@
     // #region external
     import {
         GRAPHQL_API,
-    } from '#kernel-data/constants';
+    } from '~kernel-data/constants';
     // #endregion external
 // #endregion imports
 

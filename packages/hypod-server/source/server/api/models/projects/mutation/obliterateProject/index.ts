@@ -3,15 +3,15 @@
     import {
         Context,
         InputValueString,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         deregisterProject,
-    } from '#server/logic/projects';
+    } from '~server/logic/projects';
 
     import {
         generateMethodLogs,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

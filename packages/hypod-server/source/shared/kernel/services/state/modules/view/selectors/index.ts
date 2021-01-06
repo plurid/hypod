@@ -2,7 +2,7 @@
     // #region external
     import {
         AppState,
-    } from '#kernel-services/state/store';
+    } from '~kernel-services/state/store';
     // #endregion external
 // #endregion imports
 

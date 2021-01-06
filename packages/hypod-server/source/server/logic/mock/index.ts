@@ -9,13 +9,13 @@
     // #region external
     import {
         HypodLogic,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         logLevel,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
-    import Logger from '#server/logic/logger';
+    import Logger from '~server/logic/logger';
     // #endregion external
 // #endregion imports
 

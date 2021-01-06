@@ -4,13 +4,13 @@
         Namespace,
         Project,
         Imagene,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
-    import database from '#server/services/database';
+    import database from '~server/services/database';
 
     import {
         compareValues,
-    } from '#server/utilities/general';
+    } from '~server/utilities/general';
     // #endregion external
 // #endregion imports
 

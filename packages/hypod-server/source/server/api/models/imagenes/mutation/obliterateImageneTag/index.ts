@@ -2,19 +2,19 @@
     // #region external
     import {
         PRIVATE_USAGE,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         Context,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         deregisterImageneTag,
-    } from '#server/logic/imagene';
+    } from '~server/logic/imagene';
 
     import {
         getPrivateOwner,
-    } from '#server/logic/privateUsage';
+    } from '~server/logic/privateUsage';
     // #endregion external
 // #endregion imports
 

@@ -2,13 +2,13 @@
     // #region external
     import {
         Context,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         PRIVATE_USAGE,
 
         COOKIE_PRIVATE_TOKEN,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
     // #endregion external
 // #endregion imports
 

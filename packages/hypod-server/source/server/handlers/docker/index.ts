@@ -27,21 +27,21 @@
         DOCKER_RE_NAME_BLOBS_DIGEST,
         DOCKER_RE_NAME_BLOBS_UPLOADS,
         DOCKER_RE_NAME_BLOBS_UPLOADS_UUID,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         HypodRequest,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
-    import * as docker from '#server/logic/docker';
+    import * as docker from '~server/logic/docker';
 
     import {
         getAuthorizationHeader,
-    } from '#server/utilities/authorization';
+    } from '~server/utilities/authorization';
 
     import {
         sendUnauthorizedResponse,
-    } from '#server/utilities/response';
+    } from '~server/utilities/response';
     // #endregion external
 // #endregion imports
 

@@ -2,11 +2,11 @@
     // #region external
     import {
         dockerEntityMatchType,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         DockerEntityMatchType,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
     // #endregion external
 // #endregion imports
 

@@ -7,7 +7,7 @@
     // #region external
     import {
         DOCKER_ENDPOINT_API_VERSION_CHECK,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
     // #endregion external
 // #endregion imports
 

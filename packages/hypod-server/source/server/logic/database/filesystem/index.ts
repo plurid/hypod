@@ -10,15 +10,15 @@
         DatabaseObliterate,
 
         Imagene,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         BASE_PATH_METADATA_NAMESPACES,
         BASE_PATH_METADATA_PROJECTS,
         BASE_PATH_METADATA_IMAGENES,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
-    import filesystemStorage from '#server/logic/storage/filesystem';
+    import filesystemStorage from '~server/logic/storage/filesystem';
     // #endregion external
 // #endregion imports
 

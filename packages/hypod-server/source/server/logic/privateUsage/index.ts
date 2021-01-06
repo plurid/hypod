@@ -12,7 +12,7 @@
 
         PRIVATE_TOKEN,
         PRIVATE_OWNER_IDENTONYM,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
     // #endregion external
 // #endregion imports
 

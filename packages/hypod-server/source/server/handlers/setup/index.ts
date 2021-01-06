@@ -1,6 +1,6 @@
 // #region imports
     // #region external
-    import storage from '#server/services/storage';
+    import storage from '~server/services/storage';
     // #endregion external
 // #endregion imports
 

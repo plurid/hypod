@@ -21,7 +21,7 @@
         BASE_PATH_METADATA,
         BASE_PATH_IMAGENES_MANIFEST,
         BASE_PATH_IMAGENES_SHA256,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         Storage,
@@ -30,7 +30,7 @@
         StorageUpload,
         StorageObliterate,
         StorageGenerateLocations,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
     // #endregion external
 // #endregion imports
 

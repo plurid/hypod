@@ -4,11 +4,11 @@
         Context,
         InputOf,
         InputValueString,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         Projects,
-    } from '#server/api/models';
+    } from '~server/api/models';
     // #endregion external
 // #endregion imports
 

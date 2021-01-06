@@ -3,15 +3,15 @@
     import {
         Context,
         InputValueString,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         registerNamespace as registerNamespaceLogic,
-    } from '#server/logic/namespaces';
+    } from '~server/logic/namespaces';
 
     import {
         generateMethodLogs,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

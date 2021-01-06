@@ -14,7 +14,7 @@
     import {
         resolvers,
         schemas,
-    } from '#server/api';
+    } from '~server/api';
 
     import {
         GRAPHQL_FAVICON,
@@ -26,20 +26,20 @@
 
         logLevel,
         logLevels,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         Context,
         HypodLogic,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
-    import dataLoader from '#server/logic/loader';
+    import dataLoader from '~server/logic/loader';
 
-    import defaultLogger from '#server/services/logger';
+    import defaultLogger from '~server/services/logger';
 
     import {
         getPrivateOwner,
-    } from '#server/logic/privateUsage';
+    } from '~server/logic/privateUsage';
     // #endregion external
 // #endregion imports
 

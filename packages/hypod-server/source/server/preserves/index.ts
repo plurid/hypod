@@ -9,7 +9,7 @@
     // #region external
     import {
         PRIVATE_USAGE,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
     // #endregion external
 // #endregion imports
 

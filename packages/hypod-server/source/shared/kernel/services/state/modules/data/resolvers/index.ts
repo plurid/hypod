@@ -2,7 +2,7 @@
     // #region external
     import {
         Imagene,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import * as Types from '../types';
     // #endregion external
