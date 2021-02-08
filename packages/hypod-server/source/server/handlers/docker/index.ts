@@ -61,6 +61,9 @@ const endpointApiVersionCheck = async (
     request: HypodRequest,
     response: Response,
 ) => {
+    // console.log('endpointApiVersionCheck');
+    // console.log(JSON.stringify(request.headers));
+
     const logic = request.hypodLogic;
 
     response.setHeader(
@@ -82,7 +85,10 @@ const endpointApiVersionCheck = async (
         );
 
         if (!validAuthorizationToken) {
-            sendUnauthorizedResponse(response);
+            sendUnauthorizedResponse(
+                response,
+                realm,
+            );
             return;
         }
 
@@ -95,14 +101,18 @@ const endpointApiVersionCheck = async (
         const authorizationToken = authorizationHeader.replace('Bearer ', '');
 
         const validAuthorizationToken = authorizationToken === PRIVATE_TOKEN;
-
-        response.setHeader(
-            'WWW-Authenticate',
-            `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
-        );
+        // console.log('validAuthorizationToken', validAuthorizationToken);
 
         if (!validAuthorizationToken) {
-            sendUnauthorizedResponse(response);
+            response.setHeader(
+                'WWW-Authenticate',
+                `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
+            );
+
+            sendUnauthorizedResponse(
+                response,
+                realm,
+            );
             return;
         }
 
@@ -146,13 +156,19 @@ const endpointApiGetToken = async (
     request: HypodRequest,
     response: Response,
 ) => {
+    // console.log('endpointApiGetToken');
+    // console.log(JSON.stringify(request.headers));
+
     const logic = request.hypodLogic;
 
     if (logic) {
         const authorization = getAuthorizationHeader(request);
 
         if (!authorization) {
-            sendUnauthorizedResponse(response);
+            sendUnauthorizedResponse(
+                response,
+                realm,
+            );
             return;
         }
 
@@ -174,7 +190,10 @@ const endpointApiGetToken = async (
         const authorization = getAuthorizationHeader(request);
 
         if (!authorization) {
-            sendUnauthorizedResponse(response);
+            sendUnauthorizedResponse(
+                response,
+                realm,
+            );
             return;
         }
 
@@ -187,7 +206,10 @@ const endpointApiGetToken = async (
             identonym !== PRIVATE_OWNER_IDENTONYM
             || key !== PRIVATE_OWNER_KEY
         ) {
-            sendUnauthorizedResponse(response);
+            sendUnauthorizedResponse(
+                response,
+                realm,
+            );
             return;
         }
 
@@ -201,7 +223,10 @@ const endpointApiGetToken = async (
         return;
     }
 
-    sendUnauthorizedResponse(response);
+    sendUnauthorizedResponse(
+        response,
+        realm,
+    );
     return;
 }
 
