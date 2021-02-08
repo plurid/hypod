@@ -33,35 +33,35 @@
     // #region external
     import {
         compareValues,
-    } from '#server/utilities/general';
+    } from '~server/utilities/general';
 
     import {
         Imagene,
         ImageneTag,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
-    import EntityView from '#kernel-components/EntityView';
+    import EntityView from '~kernel-components/EntityView';
 
-    import client from '#kernel-services/graphql/client';
+    import client from '~kernel-services/graphql/client';
     import {
         OBLITERATE_IMAGENE,
         TOGGLE_PUBLIC_IMAGENE,
-    } from '#kernel-services/graphql/mutate';
+    } from '~kernel-services/graphql/mutate';
 
-    import { AppState } from '#kernel-services/state/store';
-    import selectors from '#kernel-services/state/selectors';
-    import actions from '#kernel-services/state/actions';
+    import { AppState } from '~kernel-services/state/store';
+    import selectors from '~kernel-services/state/selectors';
+    import actions from '~kernel-services/state/actions';
 
     import {
         StyledElementsInLine,
-    } from '#kernel-services/styled';
+    } from '~kernel-services/styled';
 
     import {
         getFilterIDs,
         formatBytes,
-    } from '#kernel-services/utilities';
+    } from '~kernel-services/utilities';
 
-    import environment from '#kernel-services/utilities/environment';
+    import environment from '~kernel-services/utilities/environment';
     // #endregion external
 
 

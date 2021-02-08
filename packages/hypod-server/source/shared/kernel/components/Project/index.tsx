@@ -11,16 +11,16 @@
 
 
     // #region external
-    import client from '#kernel-services/graphql/client';
+    import client from '~kernel-services/graphql/client';
     import {
         GENERATE_PROJECT,
-    } from '#kernel-services/graphql/mutate';
+    } from '~kernel-services/graphql/mutate';
 
     import {
         StyledPluridTextline,
         StyledPluridPureButton,
         StyledPluridLinkButton,
-    } from '#kernel-services/styled';
+    } from '~kernel-services/styled';
     // #endregion external
 
 

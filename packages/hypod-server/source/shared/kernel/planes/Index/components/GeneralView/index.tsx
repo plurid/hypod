@@ -29,24 +29,24 @@
 
     import {
         HYPOD_MANUAL_LINK,
-    } from '#kernel-data/constants';
+    } from '~kernel-data/constants';
 
-    import Namespace from '#kernel-components/Namespace';
-    import Project from '#kernel-components/Project';
+    import Namespace from '~kernel-components/Namespace';
+    import Project from '~kernel-components/Project';
 
-    import client from '#kernel-services/graphql/client';
+    import client from '~kernel-services/graphql/client';
     import {
         LOGOUT
-    } from '#kernel-services/graphql/mutate';
+    } from '~kernel-services/graphql/mutate';
 
     import {
         getNamespaces,
         getProjects,
-    } from '#kernel-services/logic/queries';
+    } from '~kernel-services/logic/queries';
 
-    import { AppState } from '#kernel-services/state/store';
-    import selectors from '#kernel-services/state/selectors';
-    import actions from '#kernel-services/state/actions';
+    import { AppState } from '~kernel-services/state/store';
+    import selectors from '~kernel-services/state/selectors';
+    import actions from '~kernel-services/state/actions';
     // #endregion external
 
 

@@ -24,10 +24,10 @@
 
 
     // #region external
-    import helmetContext from '#kernel-services/helmet';
+    import helmetContext from '~kernel-services/helmet';
 
-    import reduxStore from '#kernel-services/state/store';
-    import graphqlClient from '#kernel-services/graphql/client';
+    import reduxStore from '~kernel-services/state/store';
+    import graphqlClient from '~kernel-services/graphql/client';
     // #endregion external
 
 
