@@ -26,6 +26,7 @@
     // #region internal
     import {
         DOCKER_ENDPOINT_IGNORE,
+        DOCKER_ENDPOINT_API_TOKEN,
     } from './data/constants';
 
     import {
@@ -99,6 +100,7 @@ const options: PluridServerPartialOptions = {
     ignore: [
         '/graphql',
         DOCKER_ENDPOINT_IGNORE,
+        DOCKER_ENDPOINT_API_TOKEN,
     ],
 };
 

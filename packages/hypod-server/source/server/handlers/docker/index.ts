@@ -61,8 +61,8 @@ const endpointApiVersionCheck = async (
     request: HypodRequest,
     response: Response,
 ) => {
-    // console.log('endpointApiVersionCheck');
-    // console.log(JSON.stringify(request.headers));
+    console.log('endpointApiVersionCheck');
+    console.log(JSON.stringify(request.headers));
 
     const logic = request.hypodLogic;
 
@@ -79,15 +79,14 @@ const endpointApiVersionCheck = async (
             authorizationToken,
         );
 
-        response.setHeader(
-            'WWW-Authenticate',
-            `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
-        );
-
         if (!validAuthorizationToken) {
+            response.setHeader(
+                'WWW-Authenticate',
+                `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
+            );
+
             sendUnauthorizedResponse(
                 response,
-                realm,
             );
             return;
         }
@@ -111,7 +110,6 @@ const endpointApiVersionCheck = async (
 
             sendUnauthorizedResponse(
                 response,
-                realm,
             );
             return;
         }
@@ -156,8 +154,8 @@ const endpointApiGetToken = async (
     request: HypodRequest,
     response: Response,
 ) => {
-    // console.log('endpointApiGetToken');
-    // console.log(JSON.stringify(request.headers));
+    console.log('endpointApiGetToken');
+    console.log(JSON.stringify(request.headers));
 
     const logic = request.hypodLogic;
 
@@ -167,7 +165,6 @@ const endpointApiGetToken = async (
         if (!authorization) {
             sendUnauthorizedResponse(
                 response,
-                realm,
             );
             return;
         }
@@ -188,11 +185,11 @@ const endpointApiGetToken = async (
 
     if (PRIVATE_USAGE) {
         const authorization = getAuthorizationHeader(request);
+        // console.log('authorization', authorization);
 
         if (!authorization) {
             sendUnauthorizedResponse(
                 response,
-                realm,
             );
             return;
         }
@@ -208,7 +205,6 @@ const endpointApiGetToken = async (
         ) {
             sendUnauthorizedResponse(
                 response,
-                realm,
             );
             return;
         }
@@ -225,7 +221,6 @@ const endpointApiGetToken = async (
 
     sendUnauthorizedResponse(
         response,
-        realm,
     );
     return;
 }
@@ -236,8 +231,8 @@ const endpointApiGetAll = async (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    // console.log('endpointApiGetAll', url);
-    // console.log(JSON.stringify(request.headers));
+    console.log('endpointApiGetAll', url);
+    console.log(JSON.stringify(request.headers));
 
     const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
