@@ -1,6 +1,6 @@
 # Building stage
 
-FROM mhart/alpine-node:12 AS builder
+FROM node:14.15.3-alpine AS builder
 
 
 ARG HYPOD_DOCKER_SERVICE
@@ -27,7 +27,7 @@ RUN yarn build.production
 
 # Launch stage
 
-FROM mhart/alpine-node:12
+FROM node:14.15.3-alpine
 
 
 ARG HYPOD_PORT=56565
