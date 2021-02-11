@@ -61,8 +61,8 @@ const endpointApiVersionCheck = async (
     request: HypodRequest,
     response: Response,
 ) => {
-    console.log('endpointApiVersionCheck');
-    console.log(JSON.stringify(request.headers));
+    // console.log('endpointApiVersionCheck');
+    // console.log(JSON.stringify(request.headers));
 
     const logic = request.hypodLogic;
 
@@ -154,8 +154,8 @@ const endpointApiGetToken = async (
     request: HypodRequest,
     response: Response,
 ) => {
-    console.log('endpointApiGetToken');
-    console.log(JSON.stringify(request.headers));
+    // console.log('endpointApiGetToken');
+    // console.log(JSON.stringify(request.headers));
 
     const logic = request.hypodLogic;
 
@@ -231,8 +231,8 @@ const endpointApiGetAll = async (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiGetAll', url);
-    console.log(JSON.stringify(request.headers));
+    // console.log('endpointApiGetAll', url);
+    // console.log(JSON.stringify(request.headers));
 
     const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
