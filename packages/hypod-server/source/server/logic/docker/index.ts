@@ -33,6 +33,10 @@
     import {
         registerImageneManifest,
     } from '../imagene';
+
+    import {
+        sha256,
+    } from '../../utilities';
     // #endregion external
 
 
@@ -122,7 +126,53 @@ export const getNameManifestsReference = async (
     //     return;
     // }
 
+
+    if (reference.startsWith('sha256:')) {
+        const imageLocation = BASE_PATH_IMAGENES_MANIFEST + name + '/';
+        // console.log('imageLocation', imageLocation);
+
+        const referenceFilesData = await storage.downloadAll(imageLocation);
+        // console.log('referenceFilesData', referenceFilesData);
+
+        if (!referenceFilesData) {
+            response.status(400).end();
+            return;
+        }
+
+        let matchData;
+        for (const fileData of referenceFilesData) {
+            const stringedValue = JSON.stringify(fileData, null, 3);
+            // console.log('stringedValue', stringedValue);
+            const shaValue = await sha256(stringedValue);
+            // console.log('shaValue', shaValue);
+
+            if (shaValue === reference.replace('sha256:', '')) {
+                matchData = fileData;
+                break;
+            }
+        }
+
+        // console.log('matchData', matchData);
+        if (!matchData) {
+            response.status(400).end();
+            return;
+        }
+
+        const mediaType = matchData.mediaType || '';
+
+        response.setHeader(
+            'Content-Type',
+            mediaType,
+        );
+        response.status(200).send(
+            JSON.stringify(matchData, null, 3),
+        );
+        return;
+    }
+
+
     const location = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
+    // console.log('location ref', location);
 
     const file = await storage.download(
         location,
