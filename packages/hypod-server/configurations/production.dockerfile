@@ -21,7 +21,7 @@ ENV NODE_ENV production
 
 RUN yarn install --production false
 
-RUN yarn build.production
+RUN yarn build.production verbose
 
 
 
