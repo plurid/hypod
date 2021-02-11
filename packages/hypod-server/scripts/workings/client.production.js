@@ -26,7 +26,7 @@ const config = {
         children: true,
     },
 
-    devtool: '',
+    // devtool: '',
 
     optimization: {
         splitChunks: {
