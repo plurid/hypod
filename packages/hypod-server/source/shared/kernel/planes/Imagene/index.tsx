@@ -274,7 +274,6 @@ const Imagene: React.FC<ImageneProperties> = (
     ] = useState(
         imagene
             ? imagene.tags
-            .sort((a, b) => (a.generatedAt > b.generatedAt) ? 1 : -1)
             .map(
                 imageneTag => imageneTagRowRenderer(
                     imagene.name,
@@ -333,7 +332,6 @@ const Imagene: React.FC<ImageneProperties> = (
                 imagene.tags,
             );
             const filteredRows = imagene.tags
-                .sort((a, b) => (a.generatedAt > b.generatedAt) ? 1 : -1)
                 .map(
                     imageneTag => imageneTagRowRenderer(
                         imagene.name,
