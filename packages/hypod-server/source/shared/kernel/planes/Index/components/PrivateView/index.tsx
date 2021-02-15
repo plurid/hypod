@@ -216,6 +216,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
                     text={key}
                     atChange={(event) => setKey(event.target.value)}
                     atKeyDown={handleEnter}
+                    type="password"
                 />
 
                 <div
