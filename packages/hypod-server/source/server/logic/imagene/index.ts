@@ -143,6 +143,13 @@ export const registerImageneManifest = async (
         'tags',
         updatedTags,
     );
+
+    await database.update(
+        'imagene',
+        existingImagene.id,
+        'latest',
+        reference,
+    );
 }
 
 
@@ -283,6 +290,7 @@ export const deregisterImageneTag = async (
     imagene.tags = [
         ...tags,
     ];
+    imagene.latest = imagene.tags[imagene.tags.length - 1]?.name || '';
 
     await database.store(
         'imagene',

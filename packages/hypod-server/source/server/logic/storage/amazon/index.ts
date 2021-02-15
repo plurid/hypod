@@ -135,7 +135,7 @@ const storageDownload: StorageDownload = async (
         return filedata;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Error 500] :: Amazon could not download ${filename}.`);
+            console.log(`[Hypod Warn 500] :: Amazon could not download ${filename}.`);
         }
 
         return;
@@ -157,7 +157,7 @@ const storageDownloadAll: StorageDownloadAll = async (
         return items;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Error 500] :: Filesystem could not download ${directory}.`);
+            console.log(`[Hypod Warn 500] :: Filesystem could not download ${directory}.`);
         }
 
         return;
