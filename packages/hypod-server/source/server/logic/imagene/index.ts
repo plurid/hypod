@@ -132,8 +132,21 @@ export const registerImageneManifest = async (
         return;
     }
 
+    const existingTags = existingImagene.tags.map((tag: ImageneTag) => {
+        if (tag.name === imageneTag.name) {
+            return {
+                ...tag,
+                name: '',
+            };
+        }
+
+        return {
+            ...tag,
+        };
+    });
+
     const updatedTags = [
-        ...existingImagene.tags,
+        ...existingTags,
         imageneTag,
     ];
 

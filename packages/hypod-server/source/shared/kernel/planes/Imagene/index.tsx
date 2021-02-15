@@ -113,7 +113,7 @@ const imageneTagRowRenderer = (
                     atClick={() => clipboard.copy(imageneAddress)}
                 />
 
-                {name}
+                {name || '<untagged>'}
             </StyledElementsInLine>
 
             <div>
@@ -327,13 +327,15 @@ const Imagene: React.FC<ImageneProperties> = (
             const searchTerms = createSearchTerms(
                 imagene.tags,
             );
-            const filteredRows = imagene.tags.map(
-                imageneTag => imageneTagRowRenderer(
-                    imagene.name,
-                    imageneTag,
-                    handleImageneTagObliterate,
-                ),
-            );
+            const filteredRows = imagene.tags
+                .sort((a, b) => (a.generatedAt > b.generatedAt) ? 1 : -1)
+                .map(
+                    imageneTag => imageneTagRowRenderer(
+                        imagene.name,
+                        imageneTag,
+                        handleImageneTagObliterate,
+                    ),
+                );
 
             setSearchTerms(searchTerms);
             setFilteredRows(filteredRows);
