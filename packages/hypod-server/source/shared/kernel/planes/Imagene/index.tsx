@@ -263,20 +263,25 @@ const Imagene: React.FC<ImageneProperties> = (
         searchTerms,
         setSearchTerms,
     ] = useState(
-        imagene ? createSearchTerms(imagene.tags) : [],
+        imagene
+            ? createSearchTerms(imagene.tags)
+            : [],
     );
 
     const [
         filteredRows,
         setFilteredRows,
     ] = useState(
-        imagene ? imagene.tags.map(
-            imageneTag => imageneTagRowRenderer(
-                imagene.name,
-                imageneTag,
-                handleImageneTagObliterate,
-            ),
-        ) : [],
+        imagene
+            ? imagene.tags
+            .sort((a, b) => (a.generatedAt > b.generatedAt) ? 1 : -1)
+            .map(
+                imageneTag => imageneTagRowRenderer(
+                    imagene.name,
+                    imageneTag,
+                    handleImageneTagObliterate,
+                ),
+            ) : [],
     );
     // #endregion state
 
