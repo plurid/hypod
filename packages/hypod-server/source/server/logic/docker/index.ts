@@ -412,8 +412,9 @@ export const patchNameBlobsUploadsUuid = async (
 
     let length = 0;
 
-    request.on('data', (chunk) => {
-        length += chunk.length;
+    response.sendStatus(202);
+
+    request.on('data', () => {
         console.log('request.originalUrl', request.originalUrl);
         console.log('length', length);
         console.log('------------------');
