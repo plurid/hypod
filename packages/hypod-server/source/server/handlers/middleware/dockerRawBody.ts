@@ -29,7 +29,7 @@ const dockerRawBody = (
     let data = '';
     request.setEncoding('binary');
     request.on('data', (chunk) => {
-        if (chunk) {
+        if (data.length < 250_000_000) {
             data += chunk;
         }
     });

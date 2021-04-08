@@ -1,5 +1,7 @@
 // #region imports
     // #region libraries
+    import express from 'express';
+
     import {
         storageType,
     } from '~server/data/constants';
@@ -90,6 +92,29 @@ class Storage {
                     filename,
                     data,
                     kind,
+                );
+        }
+    }
+
+    public async stream(
+        filename: string,
+        request: express.Request,
+    ) {
+        switch (this.type) {
+            case storageType.filesystem:
+                return filesystemStorage.stream(
+                    filename,
+                    request,
+                );
+            case storageType.amazon:
+                return amazonStorage.stream(
+                    filename,
+                    request,
+                );
+            case storageType.google:
+                return googleStorage.stream(
+                    filename,
+                    request,
                 );
         }
     }

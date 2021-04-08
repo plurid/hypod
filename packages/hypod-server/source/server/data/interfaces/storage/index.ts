@@ -1,3 +1,6 @@
+import express from 'express';
+
+
 export type StorageType =
     | StorageTypeFilesystem
     | StorageTypeAmazon
@@ -18,6 +21,7 @@ export interface Storage {
     download: StorageDownload;
     downloadAll: StorageDownloadAll;
     upload: StorageUpload;
+    stream: StorageStream;
     obliterate: StorageObliterate;
     generateLocations: StorageGenerateLocations;
 }
@@ -34,6 +38,11 @@ export type StorageUpload = (
     filename: string,
     data: Buffer,
     kind?: StorageUploadKind,
+) => Promise<true | void>;
+
+export type StorageStream = (
+    filename: string,
+    request: express.Request,
 ) => Promise<true | void>;
 
 export type StorageObliterate = (
