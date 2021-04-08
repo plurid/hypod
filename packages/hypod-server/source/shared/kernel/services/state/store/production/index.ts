@@ -1,6 +1,7 @@
 // #region imports
     // #region libraries
     import {
+        Store,
         createStore,
         applyMiddleware,
     } from 'redux';
@@ -28,7 +29,7 @@ const store = (
     //     themes: localState?.themes,
     // };
 
-    const _store = createStore(
+    const _store: Store<AppState> = createStore(
         reducers,
         preloadedState,
         // persistedState || preloadedState,
