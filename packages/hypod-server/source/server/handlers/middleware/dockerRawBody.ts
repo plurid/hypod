@@ -21,7 +21,7 @@ const dockerRawBody = (
 ) => {
     if (
         request.method === 'PATCH'
-        || request.method === 'PUT'
+        // || request.method === 'PUT'
     ) {
         next();
         return;

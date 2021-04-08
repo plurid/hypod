@@ -440,15 +440,15 @@ export const patchNameBlobsUploadsUuid = async (
         );
         response.setHeader(
             'Range',
-            // `0-1000000`,
-            '0-' + length,
+            `0-1000000`,
+            // '0-' + length,
         );
         response.setHeader(
             'Content-Length',
             // `${bufferData.length}`,
             // '0',
-            // length + '',
-            '0',
+            length + '',
+            // '0',
         );
         response.setHeader(
             'Docker-Upload-UUID',
@@ -684,8 +684,8 @@ export const putNameBlobsUploadsUuid = async (
             response.setHeader(
                 'Content-Length',
                 // `${tempFile.length}`,
-                // length,
-                '0',
+                length,
+                // '0',
             );
             response.setHeader(
                 'Docker-Content-Digest',
