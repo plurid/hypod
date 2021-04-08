@@ -1,6 +1,10 @@
+import fs from 'fs';
+
 import express from 'express';
 
 
+
+// #region module
 export type StorageType =
     | StorageTypeFilesystem
     | StorageTypeAmazon
@@ -42,7 +46,7 @@ export type StorageUpload = (
 
 export type StorageStream = (
     filename: string,
-    request: express.Request,
+    request: express.Request | fs.ReadStream,
 ) => Promise<true | void>;
 
 export type StorageObliterate = (
@@ -55,3 +59,4 @@ export type StorageGenerateLocations = () => Promise<true | undefined>;
 export type StorageUploadKind =
     | 'write'
     | 'append';
+// #endregion module

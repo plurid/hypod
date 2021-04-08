@@ -247,7 +247,7 @@ const storageUpload: StorageUpload = async (
 
 const storageStream: StorageStream = async (
     filename,
-    request,
+    readStream,
 ) => {
     try {
         const filepath = path.join(
@@ -260,7 +260,7 @@ const storageStream: StorageStream = async (
         await makeDirectory(directoryPath);
 
         const writeStream = fsSync.createWriteStream(filepath);
-        request.pipe(writeStream);
+        readStream.pipe(writeStream);
 
         return true;
     } catch (error) {

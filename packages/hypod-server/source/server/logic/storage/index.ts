@@ -1,5 +1,7 @@
 // #region imports
     // #region libraries
+    import fs from 'fs';
+
     import express from 'express';
 
     import {
@@ -98,7 +100,7 @@ class Storage {
 
     public async stream(
         filename: string,
-        request: express.Request,
+        request: express.Request | fs.ReadStream,
     ) {
         switch (this.type) {
             case storageType.filesystem:
