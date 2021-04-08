@@ -29,7 +29,9 @@ const dockerRawBody = (
     let data = '';
     request.setEncoding('binary');
     request.on('data', (chunk) => {
-        data += chunk;
+        if (chunk) {
+            data += chunk;
+        }
     });
 
     request.on('end', () => {
