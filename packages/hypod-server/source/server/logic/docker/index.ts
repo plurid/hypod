@@ -397,9 +397,9 @@ export const patchNameBlobsUploadsUuid = async (
         return;
     }
 
-    // console.log('patchNameBlobsUploadsUuid', name);
-    // console.log('request.originalUrl', request.originalUrl);
-    // console.log('------------------');
+    console.log('patchNameBlobsUploadsUuid', name);
+    console.log('request.originalUrl', request.originalUrl);
+    console.log('------------------');
 
     const location = request.originalUrl;
     // const bufferData = getBufferData(request);
@@ -414,6 +414,9 @@ export const patchNameBlobsUploadsUuid = async (
 
     request.on('data', (chunk) => {
         length += chunk.length;
+        console.log('request.originalUrl', request.originalUrl);
+        console.log('length', length);
+        console.log('------------------');
     });
 
     request.on('end', async () => {
@@ -423,13 +426,15 @@ export const patchNameBlobsUploadsUuid = async (
         );
         response.setHeader(
             'Range',
-            `0-1000000`,
+            // `0-1000000`,
+            '0-' + length,
         );
         response.setHeader(
             'Content-Length',
             // `${bufferData.length}`,
             // '0',
-            length + '',
+            // length + '',
+            '0',
         );
         response.setHeader(
             'Docker-Upload-UUID',
@@ -565,9 +570,9 @@ export const putNameBlobsUploadsUuid = async (
         return;
     }
 
-    // console.log('putNameBlobsUploadsUuid', name);
-    // console.log('request.originalUrl', request.originalUrl);
-    // console.log('------------------');
+    console.log('putNameBlobsUploadsUuid', name);
+    console.log('request.originalUrl', request.originalUrl);
+    console.log('------------------');
 
     const location = request.originalUrl;
     const digest = request.query.digest as string || '';
@@ -591,6 +596,9 @@ export const putNameBlobsUploadsUuid = async (
 
     request.on('data', (chunk) => {
         length += chunk.length;
+        console.log('request.originalUrl', request.originalUrl);
+        console.log('length', length);
+        console.log('------------------');
     });
 
     request.on('end', async () => {
@@ -623,14 +631,16 @@ export const putNameBlobsUploadsUuid = async (
             'Location',
             location,
         );
-        response.setHeader(
-            'Range',
-            '0-1000000',
-        );
+        // response.setHeader(
+        //     'Range',
+        //     '0-1000000',
+        //     // '0-' + length,
+        // );
         response.setHeader(
             'Content-Length',
             // `${tempFile.length}`,
-            length,
+            // length,
+            '0',
         );
         response.setHeader(
             'Docker-Content-Digest',
