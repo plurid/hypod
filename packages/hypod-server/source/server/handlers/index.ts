@@ -1,6 +1,8 @@
 // #region imports
     // #region libraries
-    import bodyParser from 'body-parser';
+    import {
+        json as jsonParser,
+    } from 'body-parser';
     import cookieParser from 'cookie-parser';
 
     import PluridServer from '@plurid/plurid-react-server';
@@ -50,7 +52,7 @@ const setupHandlers = (
             next();
         },
         dockerRawBody,
-        bodyParser.json(),
+        jsonParser(),
     );
 
     graphqlHandler(

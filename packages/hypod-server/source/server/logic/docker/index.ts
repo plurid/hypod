@@ -1,6 +1,7 @@
 // #region imports
     // #region libraries
     import fs from 'fs';
+    import path from 'path';
 
     import {
         Response,
@@ -14,6 +15,9 @@
 
     // #region external
     import {
+        STORAGE_ROOT_PATH,
+        BASE_PATH_DATA,
+
         BASE_PATH_BLOBS,
         BASE_PATH_IMAGENES_MANIFEST,
         BASE_PATH_IMAGENES,
@@ -52,6 +56,12 @@
 
 
 // #region module
+const BASE_PATH = path.join(
+    STORAGE_ROOT_PATH,
+    BASE_PATH_DATA,
+);
+
+
 /** GET */
 export const getNameTagsList = async (
     request: HypodRequest,
@@ -405,17 +415,20 @@ export const patchNameBlobsUploadsUuid = async (
     // const bufferData = getBufferData(request);
     const blobPath = BASE_PATH_BLOBS + uuid;
 
+    // const someStream = fs.createWriteStream('./some-random' + Math.random());
+
     storage.stream(
         blobPath,
         request,
     );
 
+    // request.pipe(someStream);
+
     let length = 0;
 
-    response.sendStatus(202);
-
-    request.on('data', () => {
-        console.log('request.originalUrl', request.originalUrl);
+    request.on('data', (chunk) => {
+        length += chunk.length;
+        console.log('patchNameBlobsUploadsUuid request.originalUrl', request.originalUrl);
         console.log('length', length);
         console.log('------------------');
     });
@@ -443,6 +456,32 @@ export const patchNameBlobsUploadsUuid = async (
         );
         response.status(202).end();
     });
+
+
+
+    // response.setHeader(
+    //     'Location',
+    //     location,
+    // );
+    // response.setHeader(
+    //     'Range',
+    //     `0-1000000`,
+    //     // '0-' + length,
+    // );
+    // response.setHeader(
+    //     'Content-Length',
+    //     // `${bufferData.length}`,
+    //     // '0',
+    //     // length + '',
+    //     '0',
+    // );
+    // response.setHeader(
+    //     'Docker-Upload-UUID',
+    //     uuid,
+    // );
+    // response.status(202).end();
+
+
 
     // await storage.upload(
     //     blobPath,
@@ -597,7 +636,7 @@ export const putNameBlobsUploadsUuid = async (
 
     request.on('data', (chunk) => {
         length += chunk.length;
-        console.log('request.originalUrl', request.originalUrl);
+        console.log('putNameBlobsUploadsUuid request.originalUrl', request.originalUrl);
         console.log('length', length);
         console.log('------------------');
     });
@@ -616,38 +655,44 @@ export const putNameBlobsUploadsUuid = async (
         //     Buffer.from(tempFile, 'binary'),
         // );
 
-        const readStream = fs.createReadStream(blobPath);
+        const blobRelativePath = path.join(
+            BASE_PATH,
+            blobPath,
+        );
+
+        const readStream = fs.createReadStream(blobRelativePath);
         storage.stream(
             digestPath,
             readStream,
         );
 
         readStream.on('end', () => {
-            storage.obliterate(
-                blobPath,
-            );
-        });
+            console.log('read stream end putNameBlobsUploadsUuid', request.originalUrl)
+            // storage.obliterate(
+            //     blobPath,
+            // );
 
-        response.setHeader(
-            'Location',
-            location,
-        );
-        // response.setHeader(
-        //     'Range',
-        //     '0-1000000',
-        //     // '0-' + length,
-        // );
-        response.setHeader(
-            'Content-Length',
-            // `${tempFile.length}`,
-            // length,
-            '0',
-        );
-        response.setHeader(
-            'Docker-Content-Digest',
-            digest,
-        );
-        response.status(201).end();
+            response.setHeader(
+                'Location',
+                location,
+            );
+            // response.setHeader(
+            //     'Range',
+            //     '0-1000000',
+            //     // '0-' + length,
+            // );
+            response.setHeader(
+                'Content-Length',
+                // `${tempFile.length}`,
+                // length,
+                '0',
+            );
+            response.setHeader(
+                'Docker-Content-Digest',
+                digest,
+            );
+            response.status(201).end();
+        });
     });
 
 

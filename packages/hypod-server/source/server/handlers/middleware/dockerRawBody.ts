@@ -19,6 +19,14 @@ const dockerRawBody = (
     _: express.Response,
     next: express.NextFunction,
 ) => {
+    if (
+        request.method === 'PATCH'
+        || request.method === 'PUT'
+    ) {
+        next();
+        return;
+    }
+
     const url = request.originalUrl;
 
     if (!url.startsWith(DOCKER_ENDPOINT_API_VERSION_CHECK)) {

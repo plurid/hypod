@@ -250,6 +250,8 @@ const storageStream: StorageStream = async (
     readStream,
 ) => {
     try {
+        console.log('storage stream', filename);
+
         const filepath = path.join(
             BASE_PATH,
             filename,
@@ -260,7 +262,12 @@ const storageStream: StorageStream = async (
         await makeDirectory(directoryPath);
 
         const writeStream = fsSync.createWriteStream(filepath);
-        readStream.pipe(writeStream);
+        // readStream.pipe(writeStream);
+
+        readStream.on('data', (chunk) => {
+            console.log('read stream', filepath, chunk.length);
+            writeStream.write(chunk);
+        });
 
         return true;
     } catch (error) {
