@@ -247,7 +247,11 @@ const storageUpload: StorageUpload = async (
 
 const storageStream: StorageStream = async (
     filename,
+<<<<<<< HEAD
     request,
+=======
+    fileStream,
+>>>>>>> 06ade837648524c7ce96bf47f9e15f1b679ea7fe
 ) => {
     try {
         const filepath = path.join(
