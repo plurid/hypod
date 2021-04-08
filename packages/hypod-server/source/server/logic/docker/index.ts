@@ -1,5 +1,7 @@
 // #region imports
     // #region libraries
+    import fs from 'fs';
+
     import {
         Response,
     } from 'express';
@@ -400,14 +402,19 @@ export const patchNameBlobsUploadsUuid = async (
     // console.log('------------------');
 
     const location = request.originalUrl;
-    const bufferData = getBufferData(request);
+    // const bufferData = getBufferData(request);
     const blobPath = BASE_PATH_BLOBS + uuid;
 
-    await storage.upload(
+    storage.stream(
         blobPath,
-        bufferData,
-        'append',
+        request as any,
     );
+
+    // await storage.upload(
+    //     blobPath,
+    //     bufferData,
+    //     'append',
+    // );
 
     // if (true) {
     //     const errorResponse = {
@@ -434,7 +441,8 @@ export const patchNameBlobsUploadsUuid = async (
     );
     response.setHeader(
         'Content-Length',
-        `${bufferData.length}`,
+        // `${bufferData.length}`,
+        '0',
     );
     response.setHeader(
         'Docker-Upload-UUID',

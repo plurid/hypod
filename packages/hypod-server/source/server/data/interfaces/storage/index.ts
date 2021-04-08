@@ -18,6 +18,7 @@ export interface Storage {
     download: StorageDownload;
     downloadAll: StorageDownloadAll;
     upload: StorageUpload;
+    stream: StorageStream;
     obliterate: StorageObliterate;
     generateLocations: StorageGenerateLocations;
 }
@@ -34,6 +35,11 @@ export type StorageUpload = (
     filename: string,
     data: Buffer,
     kind?: StorageUploadKind,
+) => Promise<true | void>;
+
+export type StorageStream = (
+    filename: string,
+    stream: NodeJS.ReadWriteStream,
 ) => Promise<true | void>;
 
 export type StorageObliterate = (

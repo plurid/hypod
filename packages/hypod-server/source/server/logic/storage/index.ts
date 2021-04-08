@@ -94,6 +94,29 @@ class Storage {
         }
     }
 
+    public async stream(
+        filename: string,
+        fileStream: NodeJS.ReadWriteStream,
+    ) {
+        switch (this.type) {
+            case storageType.filesystem:
+                return filesystemStorage.stream(
+                    filename,
+                    fileStream,
+                );
+            case storageType.amazon:
+                return amazonStorage.stream(
+                    filename,
+                    fileStream,
+                );
+            case storageType.google:
+                return googleStorage.stream(
+                    filename,
+                    fileStream,
+                );
+        }
+    }
+
     public async obliterate(
         filename: string,
     ) {

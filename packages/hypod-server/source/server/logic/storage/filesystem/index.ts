@@ -1,6 +1,6 @@
 // #region imports
     // #region libraries
-    import {
+    import fsSync, {
         promises as fs,
     } from 'fs';
 
@@ -29,6 +29,7 @@
         StorageDownload,
         StorageDownloadAll,
         StorageUpload,
+        StorageStream,
         StorageObliterate,
         StorageGenerateLocations,
     } from '~server/data/interfaces';
@@ -244,6 +245,34 @@ const storageUpload: StorageUpload = async (
 }
 
 
+const storageStream: StorageStream = async (
+    filename,
+    fileStream,
+) => {
+    try {
+        const filepath = path.join(
+            BASE_PATH,
+            filename,
+        );
+
+        const directoryPath = path.dirname(filepath);
+
+        await makeDirectory(directoryPath);
+
+        const writeStream = fsSync.createWriteStream(filepath);
+        writeStream.pipe(fileStream);
+
+        return true;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);
+        }
+
+        return;
+    }
+}
+
+
 const storageObliterate: StorageObliterate = async (
     filename,
 ) => {
@@ -295,6 +324,7 @@ const filesystemStorage: Storage = {
     download: storageDownload,
     downloadAll: storageDownloadAll,
     upload: storageUpload,
+    stream: storageStream,
     obliterate: storageObliterate,
     generateLocations: storageGenerateLocations,
 };

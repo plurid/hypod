@@ -28,6 +28,7 @@
         StorageDownload,
         StorageDownloadAll,
         StorageUpload,
+        StorageStream,
         StorageObliterate,
         StorageGenerateLocations,
     } from '~server/data/interfaces';
@@ -208,6 +209,23 @@ const storageUpload: StorageUpload = async (
 }
 
 
+const storageStream: StorageStream = async (
+    filename,
+    fileStream,
+) => {
+    try {
+
+        return true;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);
+        }
+
+        return;
+    }
+}
+
+
 const storageObliterate: StorageObliterate = async (
     filename,
 ) => {
@@ -261,6 +279,7 @@ const amazonStorage: Storage = {
     download: storageDownload,
     downloadAll: storageDownloadAll,
     upload: storageUpload,
+    stream: storageStream,
     obliterate: storageObliterate,
     generateLocations: storageGenerateLocations,
 };
