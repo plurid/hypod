@@ -237,18 +237,27 @@ export const getNameBlobsDigest = async (
     const digestValue = digest.replace(':', '/');
     const digestPath = BASE_PATH_IMAGENES + digestValue;
 
-    const file = await storage.download(
+    // const file = await storage.download(
+    //     digestPath,
+    // );
+
+    const statistics = await storage.statistics(
         digestPath,
     );
 
-    if (typeof file !== 'string') {
+    const stream = await storage.streamRead(
+        digestPath,
+    );
+
+    if (!statistics || !stream) {
         response.status(404).end();
         return;
     }
 
     response.setHeader(
         'Content-Length',
-        file.length,
+        // file.length,
+        statistics.size,
     );
     response.setHeader(
         'Docker-Content-Digest',
@@ -264,7 +273,8 @@ export const getNameBlobsDigest = async (
         'Content-Type',
         'application/octet-stream',
     );
-    response.status(200).send(Buffer.from(file, 'binary'));
+    // response.status(200).send(Buffer.from(file, 'binary'));
+    stream.pipe(response);
 }
 
 
@@ -417,7 +427,7 @@ export const patchNameBlobsUploadsUuid = async (
 
     // const someStream = fs.createWriteStream('./some-random' + Math.random());
 
-    const stream = await storage.stream(
+    const stream = await storage.streamWrite(
         blobPath,
         request,
     );
@@ -663,7 +673,7 @@ export const putNameBlobsUploadsUuid = async (
 
 
 
-    const stream = await storage.stream(
+    const stream = await storage.streamWrite(
         blobPath,
         request,
     );
@@ -693,40 +703,39 @@ export const putNameBlobsUploadsUuid = async (
         const readStream = fs.createReadStream(blobRelativePath, {
             flags: 'a+',
         });
-        storage.stream(
+        storage.streamWrite(
             digestPath,
             readStream,
         );
 
         readStream.on('finish', () => {
             console.log('read stream end putNameBlobsUploadsUuid', request.originalUrl)
-            // storage.obliterate(
-            //     blobPath,
-            // );
+            storage.obliterate(
+                blobPath,
+            );
 
+            response.setHeader(
+                'Location',
+                location,
+            );
+            response.setHeader(
+                'Range',
+                '0-1000000',
+                // '0-' + length,
+            );
+            response.setHeader(
+                'Content-Length',
+                stream.bytesWritten,
+                // `${tempFile.length}`,
+                // length,
+                // '0',
+            );
+            response.setHeader(
+                'Docker-Content-Digest',
+                digest,
+            );
+            response.status(201).end();
         });
-
-        response.setHeader(
-            'Location',
-            location,
-        );
-        response.setHeader(
-            'Range',
-            '0-1000000',
-            // '0-' + length,
-        );
-        response.setHeader(
-            'Content-Length',
-            stream.bytesWritten,
-            // `${tempFile.length}`,
-            // length,
-            // '0',
-        );
-        response.setHeader(
-            'Docker-Content-Digest',
-            digest,
-        );
-        response.status(201).end();
     });
 
 

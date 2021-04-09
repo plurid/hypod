@@ -71,6 +71,25 @@ class Storage {
         }
     }
 
+    public async statistics(
+        filename: string,
+    ) {
+        switch (this.type) {
+            case storageType.filesystem:
+                return filesystemStorage.statistics(
+                    filename,
+                );
+            case storageType.amazon:
+                return amazonStorage.statistics(
+                    filename,
+                );
+            case storageType.google:
+                return googleStorage.statistics(
+                    filename,
+                );
+        }
+    }
+
     public async upload(
         filename: string,
         data: Buffer,
@@ -98,25 +117,44 @@ class Storage {
         }
     }
 
-    public async stream(
+    public async streamWrite(
         filename: string,
         request: express.Request | fs.ReadStream,
     ) {
         switch (this.type) {
             case storageType.filesystem:
-                return filesystemStorage.stream(
+                return filesystemStorage.streamWrite(
                     filename,
                     request,
                 );
             case storageType.amazon:
-                return amazonStorage.stream(
+                return amazonStorage.streamWrite(
                     filename,
                     request,
                 );
             case storageType.google:
-                return googleStorage.stream(
+                return googleStorage.streamWrite(
                     filename,
                     request,
+                );
+        }
+    }
+
+    public async streamRead(
+        filename: string,
+    ) {
+        switch (this.type) {
+            case storageType.filesystem:
+                return filesystemStorage.streamRead(
+                    filename,
+                );
+            case storageType.amazon:
+                return amazonStorage.streamRead(
+                    filename,
+                );
+            case storageType.google:
+                return googleStorage.streamRead(
+                    filename,
                 );
         }
     }

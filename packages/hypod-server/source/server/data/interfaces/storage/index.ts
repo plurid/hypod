@@ -24,8 +24,10 @@ export interface StorageTypeData {
 export interface Storage {
     download: StorageDownload;
     downloadAll: StorageDownloadAll;
+    statistics: StorageStatistics;
     upload: StorageUpload;
-    stream: StorageStream;
+    streamWrite: StorageStreamWrite;
+    streamRead: StorageStreamRead;
     obliterate: StorageObliterate;
     generateLocations: StorageGenerateLocations;
 }
@@ -38,16 +40,24 @@ export type StorageDownloadAll = (
     directory: string,
 ) => Promise<any[] | undefined>;
 
+export type StorageStatistics = (
+    filename: string,
+) => Promise<fs.Stats | undefined>;
+
 export type StorageUpload = (
     filename: string,
     data: Buffer,
     kind?: StorageUploadKind,
 ) => Promise<true | void>;
 
-export type StorageStream = (
+export type StorageStreamWrite = (
     filename: string,
     request: express.Request | fs.ReadStream,
 ) => Promise<fs.WriteStream | void>;
+
+export type StorageStreamRead = (
+    filename: string,
+) => Promise<fs.ReadStream | void>;
 
 export type StorageObliterate = (
     filename: string,

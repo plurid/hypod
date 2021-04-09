@@ -27,8 +27,10 @@
         Storage,
         StorageDownload,
         StorageDownloadAll,
+        StorageStatistics,
         StorageUpload,
-        StorageStream,
+        StorageStreamWrite,
+        StorageStreamRead,
         StorageObliterate,
         StorageGenerateLocations,
     } from '~server/data/interfaces';
@@ -150,6 +152,21 @@ const storageDownloadAll: StorageDownloadAll = async (
 }
 
 
+const storageStatistics: StorageStatistics = async (
+    filename,
+) => {
+    try {
+        return {} as any;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Hypod Warn 500] :: Could not read ${filename}.`, error);
+        }
+
+        return;
+    }
+}
+
+
 const storageUpload: StorageUpload = async (
     filename,
     data,
@@ -188,7 +205,7 @@ const storageUpload: StorageUpload = async (
 }
 
 
-const storageStream: StorageStream = async (
+const storageStreamWrite: StorageStreamWrite = async (
     filename,
     fileStream,
 ) => {
@@ -197,7 +214,23 @@ const storageStream: StorageStream = async (
         return;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);
+            console.log(`[Hypod Error 500] :: Could not upload ${filename}.`);
+        }
+
+        return;
+    }
+}
+
+
+const storageStreamRead: StorageStreamRead = async (
+    filename,
+) => {
+    try {
+
+        return;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Hypod Error 500] :: Could not read ${filename}.`);
         }
 
         return;
@@ -252,8 +285,10 @@ const storageGenerateLocations: StorageGenerateLocations = async () => {
 const googleStorage: Storage = {
     download: storageDownload,
     downloadAll: storageDownloadAll,
+    statistics: storageStatistics,
     upload: storageUpload,
-    stream: storageStream,
+    streamWrite: storageStreamWrite,
+    streamRead: storageStreamRead,
     obliterate: storageObliterate,
     generateLocations: storageGenerateLocations,
 };

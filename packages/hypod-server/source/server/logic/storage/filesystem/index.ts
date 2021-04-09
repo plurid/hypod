@@ -28,8 +28,10 @@
         Storage,
         StorageDownload,
         StorageDownloadAll,
+        StorageStatistics,
         StorageUpload,
-        StorageStream,
+        StorageStreamWrite,
+        StorageStreamRead,
         StorageObliterate,
         StorageGenerateLocations,
     } from '~server/data/interfaces';
@@ -207,6 +209,30 @@ const storageDownloadAll: StorageDownloadAll = async (
 }
 
 
+const storageStatistics: StorageStatistics = async (
+    filename,
+) => {
+    try {
+        const filepath = path.join(
+            BASE_PATH,
+            filename,
+        );
+
+        const statistics = await fs.stat(
+            filepath,
+        );
+
+        return statistics;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Hypod Warn 500] :: Filesystem could not download ${filename}.`, error);
+        }
+
+        return;
+    }
+}
+
+
 const storageUpload: StorageUpload = async (
     filename,
     data,
@@ -245,7 +271,7 @@ const storageUpload: StorageUpload = async (
 }
 
 
-const storageStream: StorageStream = async (
+const storageStreamWrite: StorageStreamWrite = async (
     filename,
     readStream,
 ) => {
@@ -278,6 +304,28 @@ const storageStream: StorageStream = async (
     } catch (error) {
         if (!QUIET) {
             console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);
+        }
+
+        return;
+    }
+}
+
+
+const storageStreamRead: StorageStreamRead = async (
+    filename,
+) => {
+    try {
+        const filepath = path.join(
+            BASE_PATH,
+            filename,
+        );
+
+        const readStream = fsSync.createReadStream(filepath);
+
+        return readStream;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Hypod Error 500] :: Filesystem could not read ${filename}.`);
         }
 
         return;
@@ -335,8 +383,10 @@ const storageGenerateLocations: StorageGenerateLocations = async () => {
 const filesystemStorage: Storage = {
     download: storageDownload,
     downloadAll: storageDownloadAll,
+    statistics: storageStatistics,
     upload: storageUpload,
-    stream: storageStream,
+    streamWrite: storageStreamWrite,
+    streamRead: storageStreamRead,
     obliterate: storageObliterate,
     generateLocations: storageGenerateLocations,
 };
