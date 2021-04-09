@@ -431,22 +431,25 @@ export const patchNameBlobsUploadsUuid = async (
     }
 
     stream.on('finish', () => {
+        console.log('stream.bytesWritten', stream.bytesWritten);
+
         response.setHeader(
             'Location',
             location,
         );
         response.setHeader(
             'Range',
-            `0-1000000`,
+            // `0-1000000`,
             // '0-' + length,
+            '0-' + stream.bytesWritten,
         );
         response.setHeader(
             'Content-Length',
-            stream.bytesWritten,
+            // stream.bytesWritten,
             // `${bufferData.length}`,
             // '0',
             // length + '',
-            // '0',
+            '0',
         );
         response.setHeader(
             'Docker-Upload-UUID',
@@ -709,10 +712,10 @@ export const putNameBlobsUploadsUuid = async (
             // );
             response.setHeader(
                 'Content-Length',
-                stream.bytesWritten,
+                // stream.bytesWritten,
                 // `${tempFile.length}`,
                 // length,
-                // '0',
+                '0',
             );
             response.setHeader(
                 'Docker-Content-Digest',
