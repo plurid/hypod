@@ -713,29 +713,29 @@ export const putNameBlobsUploadsUuid = async (
             storage.obliterate(
                 blobPath,
             );
-
-            response.setHeader(
-                'Location',
-                location,
-            );
-            response.setHeader(
-                'Range',
-                '0-1000000',
-                // '0-' + length,
-            );
-            response.setHeader(
-                'Content-Length',
-                stream.bytesWritten,
-                // `${tempFile.length}`,
-                // length,
-                // '0',
-            );
-            response.setHeader(
-                'Docker-Content-Digest',
-                digest,
-            );
-            response.status(201).end();
         });
+
+        response.setHeader(
+            'Location',
+            location,
+        );
+        response.setHeader(
+            'Range',
+            '0-1000000',
+            // '0-' + length,
+        );
+        response.setHeader(
+            'Content-Length',
+            stream.bytesWritten,
+            // `${tempFile.length}`,
+            // length,
+            // '0',
+        );
+        response.setHeader(
+            'Docker-Content-Digest',
+            digest,
+        );
+        response.status(201).end();
     });
 
 
