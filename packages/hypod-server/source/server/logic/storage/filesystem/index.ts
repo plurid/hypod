@@ -225,7 +225,7 @@ const storageStatistics: StorageStatistics = async (
         return statistics;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Warn 500] :: Filesystem could not download ${filename}.`, error);
+            console.log(`[Hypod Warn 500] :: Filesystem could not get statistics ${filename}.`, error);
         }
 
         return;
@@ -320,12 +320,20 @@ const storageStreamRead: StorageStreamRead = async (
             filename,
         );
 
+        if (!fsSync.existsSync(filepath)) {
+            if (!QUIET) {
+                console.log(`[Hypod Error 500] :: Filesystem could not read ${filename}.`);
+            }
+
+            return;
+        }
+
         const readStream = fsSync.createReadStream(filepath);
 
         return readStream;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Error 500] :: Filesystem could not read ${filename}.`);
+            console.log(`[Hypod Error 500] :: Filesystem could not read ${filename}.`, error);
         }
 
         return;
