@@ -194,7 +194,7 @@ const storageStream: StorageStream = async (
 ) => {
     try {
 
-        return true;
+        return;
     } catch (error) {
         if (!QUIET) {
             console.log(`[Hypod Error 500] :: Filesystem could not upload ${filename}.`);

@@ -417,23 +417,20 @@ export const patchNameBlobsUploadsUuid = async (
 
     // const someStream = fs.createWriteStream('./some-random' + Math.random());
 
-    storage.stream(
+    const stream = await storage.stream(
         blobPath,
         request,
     );
 
-    // request.pipe(someStream);
+    if (!stream) {
+        response
+            .status(500)
+            .end();
 
-    let length = 0;
+        return;
+    }
 
-    request.on('data', (chunk) => {
-        length += chunk.length;
-        console.log('patchNameBlobsUploadsUuid request.originalUrl', request.originalUrl);
-        console.log('length', length);
-        console.log('------------------');
-    });
-
-    request.on('end', async () => {
+    stream.on('finish', () => {
         response.setHeader(
             'Location',
             location,
@@ -446,8 +443,8 @@ export const patchNameBlobsUploadsUuid = async (
         response.setHeader(
             'Content-Length',
             // `${bufferData.length}`,
-            // '0',
-            length + '',
+            '0',
+            // length + '',
             // '0',
         );
         response.setHeader(
@@ -456,6 +453,41 @@ export const patchNameBlobsUploadsUuid = async (
         );
         response.status(202).end();
     });
+
+    // request.pipe(someStream);
+
+    // let length = 0;
+
+    // request.on('data', (chunk) => {
+    //     length += chunk.length;
+    //     console.log('patchNameBlobsUploadsUuid request.originalUrl', request.originalUrl);
+    //     console.log('length', length);
+    //     console.log('------------------');
+    // });
+
+    // request.on('end', async () => {
+        // response.setHeader(
+        //     'Location',
+        //     location,
+        // );
+        // response.setHeader(
+        //     'Range',
+        //     `0-1000000`,
+        //     // '0-' + length,
+        // );
+        // response.setHeader(
+        //     'Content-Length',
+        //     // `${bufferData.length}`,
+        //     '0',
+        //     // length + '',
+        //     // '0',
+        // );
+        // response.setHeader(
+        //     'Docker-Upload-UUID',
+        //     uuid,
+        // );
+        // response.status(202).end();
+    // });
 
 
 
@@ -627,29 +659,20 @@ export const putNameBlobsUploadsUuid = async (
 
 
 
-    storage.stream(
+    const stream = await storage.stream(
         blobPath,
         request,
     );
 
-    let length = 0;
+    if (!stream) {
+        response
+            .status(500)
+            .end();
 
-    console.log('Content-Length', request.get('Content-Length'));
+        return;
+    }
 
-    request.on('data', (chunk) => {
-        length += chunk.length;
-        console.log('putNameBlobsUploadsUuid request.originalUrl', request.originalUrl);
-        console.log('length', length);
-        console.log('------------------');
-    });
-
-    request.on('end', async () => {
-        // const tempFile = await storage.download(blobPath);
-        // if (!tempFile || typeof tempFile !== 'string') {
-        //     response.status(400).end();
-        //     return;
-        // }
-
+    stream.on('finish', () => {
         const digestValue = digest.replace(':', '/');
         const digestPath = BASE_PATH_IMAGENES + digestValue;
         // await storage.upload(
@@ -668,7 +691,7 @@ export const putNameBlobsUploadsUuid = async (
             readStream,
         );
 
-        readStream.on('end', () => {
+        readStream.on('finish', () => {
             console.log('read stream end putNameBlobsUploadsUuid', request.originalUrl)
             // storage.obliterate(
             //     blobPath,
@@ -686,8 +709,8 @@ export const putNameBlobsUploadsUuid = async (
             response.setHeader(
                 'Content-Length',
                 // `${tempFile.length}`,
-                length,
-                // '0',
+                // length,
+                '0',
             );
             response.setHeader(
                 'Docker-Content-Digest',
@@ -696,6 +719,73 @@ export const putNameBlobsUploadsUuid = async (
             response.status(201).end();
         });
     });
+
+
+
+    // let length = 0;
+
+    // console.log('Content-Length', request.get('Content-Length'));
+
+    // request.on('data', (chunk) => {
+    //     length += chunk.length;
+    //     console.log('putNameBlobsUploadsUuid request.originalUrl', request.originalUrl);
+    //     console.log('length', length);
+    //     console.log('------------------');
+    // });
+
+    // request.on('end', async () => {
+    //     // const tempFile = await storage.download(blobPath);
+    //     // if (!tempFile || typeof tempFile !== 'string') {
+    //     //     response.status(400).end();
+    //     //     return;
+    //     // }
+
+    //     const digestValue = digest.replace(':', '/');
+    //     const digestPath = BASE_PATH_IMAGENES + digestValue;
+    //     // await storage.upload(
+    //     //     digestPath,
+    //     //     Buffer.from(tempFile, 'binary'),
+    //     // );
+
+    //     const blobRelativePath = path.join(
+    //         BASE_PATH,
+    //         blobPath,
+    //     );
+
+    //     const readStream = fs.createReadStream(blobRelativePath);
+    //     storage.stream(
+    //         digestPath,
+    //         readStream,
+    //     );
+
+    //     readStream.on('end', () => {
+    //         console.log('read stream end putNameBlobsUploadsUuid', request.originalUrl)
+    //         // storage.obliterate(
+    //         //     blobPath,
+    //         // );
+
+    //         response.setHeader(
+    //             'Location',
+    //             location,
+    //         );
+    //         // response.setHeader(
+    //         //     'Range',
+    //         //     '0-1000000',
+    //         //     // '0-' + length,
+    //         // );
+    //         response.setHeader(
+    //             'Content-Length',
+    //             // `${tempFile.length}`,
+    //             length,
+    //             // '0',
+    //         );
+    //         response.setHeader(
+    //             'Docker-Content-Digest',
+    //             digest,
+    //         );
+    //         response.status(201).end();
+    //     });
+    // });
 
 
 

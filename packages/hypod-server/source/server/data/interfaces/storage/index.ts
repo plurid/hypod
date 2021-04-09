@@ -47,7 +47,7 @@ export type StorageUpload = (
 export type StorageStream = (
     filename: string,
     request: express.Request | fs.ReadStream,
-) => Promise<true | void>;
+) => Promise<fs.WriteStream | void>;
 
 export type StorageObliterate = (
     filename: string,
