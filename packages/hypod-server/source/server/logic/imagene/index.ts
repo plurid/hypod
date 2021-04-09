@@ -1,5 +1,7 @@
 // #region imports
     // #region libraries
+    import fs from 'fs';
+
     import {
         ungzip,
     } from 'node-gzip';
@@ -84,15 +86,33 @@ export const registerImageneManifest = async (
             const layerPath = layer.digest.replace(':', '/');
             const imageneLayerPath = BASE_PATH_IMAGENES + layerPath;
 
-            const layerData = await storage.download(
+            const layerStream = await storage.streamRead(
                 imageneLayerPath,
             );
 
-            if (layerData) {
-                const decompressed = await ungzip(Buffer.from(layerData, 'binary'));
-                const byteLength = Buffer.byteLength(decompressed);
-                size += byteLength;
+            if (layerStream) {
+                const temporaryFilePath = './temp-' + Math.random();
+                const temporaryWriteStream = fs.createWriteStream(temporaryFilePath);
+                layerStream.pipe(temporaryWriteStream);
+
+                layerStream.on('end', async () => {
+                    const decompressed = await ungzip(temporaryFilePath);
+                    const byteLength = Buffer.byteLength(decompressed);
+                    size += byteLength;
+
+                    fs.unlink(temporaryFilePath, () => {});
+                });
             }
+
+            // const layerData = await storage.download(
+            //     imageneLayerPath,
+            // );
+
+            // if (layerData) {
+            //     const decompressed = await ungzip(Buffer.from(layerData, 'binary'));
+            //     const byteLength = Buffer.byteLength(decompressed);
+            //     size += byteLength;
+            // }
         } catch (error) {
             continue;
         }
