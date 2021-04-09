@@ -442,8 +442,9 @@ export const patchNameBlobsUploadsUuid = async (
         );
         response.setHeader(
             'Content-Length',
+            stream.bytesWritten,
             // `${bufferData.length}`,
-            '0',
+            // '0',
             // length + '',
             // '0',
         );
@@ -708,9 +709,10 @@ export const putNameBlobsUploadsUuid = async (
             // );
             response.setHeader(
                 'Content-Length',
+                stream.bytesWritten,
                 // `${tempFile.length}`,
                 // length,
-                '0',
+                // '0',
             );
             response.setHeader(
                 'Docker-Content-Digest',
