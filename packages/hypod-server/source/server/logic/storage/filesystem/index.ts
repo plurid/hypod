@@ -261,9 +261,12 @@ const storageStream: StorageStream = async (
 
         await makeDirectory(directoryPath);
 
-        const writeStream = fsSync.createWriteStream(filepath);
+        const writeStream = fsSync.createWriteStream(filepath, {
+            flags: 'a+',
+        });
         readStream.pipe(writeStream, {
             // end: false,
+
         });
 
         // readStream.on('data', (chunk) => {

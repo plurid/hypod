@@ -19,9 +19,9 @@ const dockerRawBody = (
     _: express.Response,
     next: express.NextFunction,
 ) => {
-    const isJson = request.is('application/vnd.docker.distribution.manifest.v2+json');
+    const isDockerJson = request.is('application/vnd.docker.distribution.manifest.v2+json');
 
-    if (isJson) {
+    if (isDockerJson) {
         let data = '';
         request.setEncoding('binary');
         request.on('data', (chunk) => {

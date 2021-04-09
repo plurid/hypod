@@ -690,7 +690,9 @@ export const putNameBlobsUploadsUuid = async (
         );
         console.log('blobRelativePath', blobRelativePath);
 
-        const readStream = fs.createReadStream(blobRelativePath);
+        const readStream = fs.createReadStream(blobRelativePath, {
+            flags: 'a+',
+        });
         storage.stream(
             digestPath,
             readStream,
