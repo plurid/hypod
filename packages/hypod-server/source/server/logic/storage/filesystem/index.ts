@@ -263,7 +263,7 @@ const storageStream: StorageStream = async (
 
         const writeStream = fsSync.createWriteStream(filepath);
         readStream.pipe(writeStream, {
-            end: false,
+            // end: false,
         });
 
         // readStream.on('data', (chunk) => {

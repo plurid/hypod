@@ -430,7 +430,7 @@ export const patchNameBlobsUploadsUuid = async (
         return;
     }
 
-    stream.on('end', () => {
+    stream.on('finish', () => {
         console.log('stream.bytesWritten', stream.bytesWritten);
 
         response.setHeader(
@@ -676,7 +676,7 @@ export const putNameBlobsUploadsUuid = async (
         return;
     }
 
-    stream.on('end', () => {
+    stream.on('finish', () => {
         const digestValue = digest.replace(':', '/');
         const digestPath = BASE_PATH_IMAGENES + digestValue;
         // await storage.upload(
