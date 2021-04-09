@@ -177,7 +177,7 @@ const storageDownload: StorageDownload = async (
         return filedata;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Warn 500] :: Filesystem could not download ${filename}.`);
+            console.log(`[Hypod Warn 500] :: Filesystem could not download ${filename}.`, error);
         }
 
         return;
