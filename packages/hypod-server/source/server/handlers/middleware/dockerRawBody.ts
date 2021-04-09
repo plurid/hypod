@@ -19,33 +19,41 @@ const dockerRawBody = (
     _: express.Response,
     next: express.NextFunction,
 ) => {
-    if (
-        request.method === 'PATCH'
-        || request.method === 'PUT'
-    ) {
-        next();
+    const isJson = request.is('application/vnd.docker.distribution.manifest.v2+json');
+
+    if (isJson) {
+        let data = '';
+        request.setEncoding('binary');
+        request.on('data', (chunk) => {
+            if (data.length < 250_000_000) {
+                data += chunk;
+            }
+        });
+
+        request.on('end', () => {
+            (request as any).rawBody = data;
+            next();
+        });
+
         return;
     }
 
-    const url = request.originalUrl;
+    next();
 
-    if (!url.startsWith(DOCKER_ENDPOINT_API_VERSION_CHECK)) {
-        next();
-        return;
-    }
+    // if (
+    //     request.method === 'PATCH'
+    //     || request.method === 'PUT'
+    // ) {
+    //     next();
+    //     return;
+    // }
 
-    let data = '';
-    request.setEncoding('binary');
-    request.on('data', (chunk) => {
-        if (data.length < 250_000_000) {
-            data += chunk;
-        }
-    });
+    // const url = request.originalUrl;
 
-    request.on('end', () => {
-        (request as any).rawBody = data;
-        next();
-    });
+    // if (!url.startsWith(DOCKER_ENDPOINT_API_VERSION_CHECK)) {
+    //     next();
+    //     return;
+    // }
 }
 // #endregion module
 
