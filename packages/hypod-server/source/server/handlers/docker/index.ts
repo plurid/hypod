@@ -61,8 +61,8 @@ const endpointApiVersionCheck = async (
     request: HypodRequest,
     response: Response,
 ) => {
-    // console.log('endpointApiVersionCheck');
-    // console.log(JSON.stringify(request.headers));
+    console.log('endpointApiVersionCheck');
+    console.log(JSON.stringify(request.headers));
 
     const logic = request.hypodLogic;
 
@@ -71,54 +71,28 @@ const endpointApiVersionCheck = async (
         'registry/2.0',
     );
 
-    if (logic) {
-        const authorizationHeader = request.header('Authorization') || '';
-        const authorizationToken = authorizationHeader.replace('Bearer ', '');
+    const authorizationHeader = request.header('Authorization') || '';
+    const authorizationToken = authorizationHeader.replace('Bearer ', '');
 
-        const validAuthorizationToken = await logic?.checkOwnerToken(
+    const validAuthorizationToken = logic
+        ? await logic.checkOwnerToken(
             authorizationToken,
+        ) : authorizationToken === PRIVATE_TOKEN;
+
+    if (!validAuthorizationToken) {
+        response.setHeader(
+            'WWW-Authenticate',
+            `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
         );
 
-        if (!validAuthorizationToken) {
-            response.setHeader(
-                'WWW-Authenticate',
-                `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
-            );
-
-            sendUnauthorizedResponse(
-                response,
-            );
-            return;
-        }
-
-        response.status(200).end();
-        return;
-    }
-
-    if (PRIVATE_USAGE) {
-        const authorizationHeader = request.header('Authorization') || '';
-        const authorizationToken = authorizationHeader.replace('Bearer ', '');
-
-        const validAuthorizationToken = authorizationToken === PRIVATE_TOKEN;
-        // console.log('validAuthorizationToken', validAuthorizationToken);
-
-        if (!validAuthorizationToken) {
-            response.setHeader(
-                'WWW-Authenticate',
-                `Bearer realm="${realm}",service="${DOCKER_SERVICE}"`,
-            );
-
-            sendUnauthorizedResponse(
-                response,
-            );
-            return;
-        }
-
-        response.status(200).end();
+        sendUnauthorizedResponse(
+            response,
+        );
         return;
     }
 
     response.status(200).end();
+    return;
 }
 
 
@@ -154,26 +128,25 @@ const endpointApiGetToken = async (
     request: HypodRequest,
     response: Response,
 ) => {
-    // console.log('endpointApiGetToken');
-    // console.log(JSON.stringify(request.headers));
+    console.log('endpointApiGetToken');
+    console.log(JSON.stringify(request.headers));
 
     const logic = request.hypodLogic;
+    const authorization = getAuthorizationHeader(request);
+
+    if (!authorization) {
+        sendUnauthorizedResponse(
+            response,
+        );
+        return;
+    }
+
+    const {
+        identonym,
+        key,
+    } = authorization;
 
     if (logic) {
-        const authorization = getAuthorizationHeader(request);
-
-        if (!authorization) {
-            sendUnauthorizedResponse(
-                response,
-            );
-            return;
-        }
-
-        const {
-            identonym,
-            key,
-        } = authorization;
-
         const tokenResponse = await logic?.getOwnerToken(
             identonym,
             key,
@@ -184,21 +157,6 @@ const endpointApiGetToken = async (
     }
 
     if (PRIVATE_USAGE) {
-        const authorization = getAuthorizationHeader(request);
-        // console.log('authorization', authorization);
-
-        if (!authorization) {
-            sendUnauthorizedResponse(
-                response,
-            );
-            return;
-        }
-
-        const {
-            identonym,
-            key,
-        } = authorization;
-
         if (
             identonym !== PRIVATE_OWNER_IDENTONYM
             || key !== PRIVATE_OWNER_KEY
@@ -231,8 +189,8 @@ const endpointApiGetAll = async (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    // console.log('endpointApiGetAll', url);
-    // console.log(JSON.stringify(request.headers));
+    console.log('endpointApiGetAll', url);
+    console.log('endpointApiGetAll', JSON.stringify(request.headers));
 
     const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
@@ -284,9 +242,9 @@ const endpointApiPostAll = async (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    // console.log('endpointApiPostAll');
+    console.log('endpointApiPostAll', url);
+    console.log('endpointApiPostAll', JSON.stringify(request.headers));
     // console.log('endpointApiPostAll', request);
-    // console.log('endpointApiPostAll', url);
 
     const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
 
@@ -308,8 +266,8 @@ const endpointApiPutAll = async (
     response: Response,
 ) => {
     const url = request.path;
-    // console.log('endpointApiPutAll', url);
-    // console.log('endpointApiPutAll', JSON.stringify(request.headers));
+    console.log('endpointApiPutAll', url);
+    console.log('endpointApiPutAll', JSON.stringify(request.headers));
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
@@ -341,8 +299,8 @@ const endpointApiPatchAll = async (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    // console.log('endpointApiPatchAll', url);
-    // console.log(JSON.stringify(request.headers));
+    console.log('endpointApiPatchAll', url);
+    console.log('endpointApiPatchAll', JSON.stringify(request.headers));
 
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
@@ -364,8 +322,8 @@ const endpointApiDeleteAll = (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    // console.log('endpointApiDeleteAll', url);
-    // console.log(JSON.stringify(request.headers));
+    console.log('endpointApiDeleteAll', url);
+    console.log('endpointApiDeleteAll', JSON.stringify(request.headers));
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);

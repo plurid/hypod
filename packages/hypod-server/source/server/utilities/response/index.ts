@@ -9,19 +9,22 @@
 
 
 // #region module
+const unauthorizedError = {
+    errors: [
+        {
+            code: 'UNAUTHORIZED',
+            message: 'Access is not authorized.',
+        },
+    ],
+};
+
 const sendUnauthorizedResponse = (
     response: Response,
 ) => {
-    const unauthorizedError = {
-        errors: [
-            {
-                code: 'UNAUTHORIZED',
-                message: 'Access is not authorized.',
-            },
-        ],
-    };
+    response
+        .status(401)
+        .send(JSON.stringify(unauthorizedError));
 
-    response.status(401).send(JSON.stringify(unauthorizedError));
     return;
 }
 // #endregion module

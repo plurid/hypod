@@ -634,6 +634,8 @@ export const putNameBlobsUploadsUuid = async (
 
     let length = 0;
 
+    console.log('Content-Length', request.get('Content-Length'));
+
     request.on('data', (chunk) => {
         length += chunk.length;
         console.log('putNameBlobsUploadsUuid request.originalUrl', request.originalUrl);
