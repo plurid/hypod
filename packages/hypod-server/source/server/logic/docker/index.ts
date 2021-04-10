@@ -566,7 +566,6 @@ export const putNameBlobsUploadsUuid = async (
             BASE_PATH,
             blobPath,
         );
-        console.log('blobRelativePath', blobRelativePath);
 
         const readStream = fs.createReadStream(blobRelativePath, {
             flags: 'a+',
@@ -576,8 +575,7 @@ export const putNameBlobsUploadsUuid = async (
             readStream,
         );
 
-        readStream.on('finish', () => {
-            console.log('read stream end putNameBlobsUploadsUuid', request.originalUrl)
+        readStream.on('end', () => {
             storage.obliterate(
                 blobPath,
             );
