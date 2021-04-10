@@ -2,12 +2,6 @@
     // #region libraries
     import zlib from 'zlib';
 
-    // import unzipStream from 'unzip-stream';
-
-    import {
-        ungzip,
-    } from 'node-gzip';
-
     import {
         uuid,
     } from '@plurid/plurid-functions';
@@ -140,6 +134,41 @@ export const updateImageneManifest = async (
 }
 
 
+export const updateImageneSize = async (
+    size: number,
+    id: string,
+    name: string,
+) => {
+    const existingImagene = await database.query(
+        'imagene',
+        'name',
+        name,
+    );
+
+    if (!existingImagene) {
+        return;
+    }
+
+    const updatedTags: ImageneTag[] = existingImagene.tags.map((tag: ImageneTag) => {
+        if (tag.id === id) {
+            return {
+                ...tag,
+                size,
+            };
+        }
+
+        return tag;
+    });
+
+    await database.update(
+        'imagene',
+        existingImagene.id,
+        'tags',
+        updatedTags,
+    );
+}
+
+
 export const registerImageneManifest = async (
     manifest: any,
     name: string,
@@ -149,6 +178,20 @@ export const registerImageneManifest = async (
     const id = uuid.generate();
     let size = 0;
     let computedSizes = 0;
+
+    const imageneTag: ImageneTag = {
+        id,
+        generatedAt: Math.floor(Date.now() / 1000),
+        name: reference,
+        size,
+        digest,
+    };
+
+    await updateImageneManifest(
+        imageneTag,
+        name,
+        reference,
+    );
 
     for (const layer of manifest.layers) {
         try {
@@ -172,15 +215,11 @@ export const registerImageneManifest = async (
                     computedSizes += 1;
 
                     if (computedSizes === manifest.layers.length) {
-                        const imageneTag: ImageneTag = {
-                            id,
-                            generatedAt: Math.floor(Date.now() / 1000),
-                            name: reference,
+                        updateImageneSize(
                             size,
-                            digest,
-                        };
-
-                        updateImageneManifest(imageneTag, name, reference);
+                            id,
+                            name,
+                        );
                     }
                 }).on('error', (error) => {
                     console.log('[Hypod Error] :: registerImageneManifest', error);
