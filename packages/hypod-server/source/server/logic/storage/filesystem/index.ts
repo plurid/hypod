@@ -276,8 +276,6 @@ const storageStreamWrite: StorageStreamWrite = async (
     readStream,
 ) => {
     try {
-        console.log('storage stream', filename);
-
         const filepath = path.join(
             BASE_PATH,
             filename,
@@ -290,15 +288,7 @@ const storageStreamWrite: StorageStreamWrite = async (
         const writeStream = fsSync.createWriteStream(filepath, {
             flags: 'a+',
         });
-        readStream.pipe(writeStream, {
-            // end: false,
-
-        });
-
-        // readStream.on('data', (chunk) => {
-        //     console.log('read stream', filepath, chunk.length);
-        //     writeStream.write(chunk);
-        // });
+        readStream.pipe(writeStream);
 
         return writeStream;
     } catch (error) {

@@ -237,10 +237,6 @@ export const getNameBlobsDigest = async (
     const digestValue = digest.replace(':', '/');
     const digestPath = BASE_PATH_IMAGENES + digestValue;
 
-    // const file = await storage.download(
-    //     digestPath,
-    // );
-
     const statistics = await storage.statistics(
         digestPath,
     );
@@ -256,7 +252,6 @@ export const getNameBlobsDigest = async (
 
     response.setHeader(
         'Content-Length',
-        // file.length,
         statistics.size,
     );
     response.setHeader(
@@ -273,7 +268,7 @@ export const getNameBlobsDigest = async (
         'Content-Type',
         'application/octet-stream',
     );
-    // response.status(200).send(Buffer.from(file, 'binary'));
+
     stream.pipe(response);
 }
 
@@ -362,15 +357,7 @@ export const postNameBlobsUploads = async (
     const blobUuid = uuid.generate() + uuid.generate();
     const location = `/v2/${name}/blobs/uploads/${blobUuid}`;
 
-    // const bufferData = getBufferData(request);
-
     // console.log('postNameBlobsUploads', name);
-    // // console.log(request.originalUrl);
-    // console.log('request.body', request.body);
-    // console.log('request.query', request.query);
-    // console.log(JSON.stringify(request.headers));
-    // console.log('bufferData', bufferData);
-    // console.log('bufferData.length', bufferData.length);
     // console.log('------------------');
 
     response.setHeader(
@@ -417,15 +404,12 @@ export const patchNameBlobsUploadsUuid = async (
         return;
     }
 
-    console.log('patchNameBlobsUploadsUuid', name);
-    console.log('request.originalUrl', request.originalUrl);
-    console.log('------------------');
+    // console.log('patchNameBlobsUploadsUuid', name);
+    // console.log('request.originalUrl', request.originalUrl);
+    // console.log('------------------');
 
     const location = request.originalUrl;
-    // const bufferData = getBufferData(request);
     const blobPath = BASE_PATH_BLOBS + uuid;
-
-    // const someStream = fs.createWriteStream('./some-random' + Math.random());
 
     const stream = await storage.streamWrite(
         blobPath,
@@ -449,16 +433,10 @@ export const patchNameBlobsUploadsUuid = async (
         );
         response.setHeader(
             'Range',
-            // `0-1000000`,
-            // '0-' + length,
             '0-' + stream.bytesWritten,
         );
         response.setHeader(
             'Content-Length',
-            // stream.bytesWritten,
-            // `${bufferData.length}`,
-            // '0',
-            // length + '',
             '0',
         );
         response.setHeader(
@@ -467,107 +445,6 @@ export const patchNameBlobsUploadsUuid = async (
         );
         response.status(202).end();
     });
-
-    // request.pipe(someStream);
-
-    // let length = 0;
-
-    // request.on('data', (chunk) => {
-    //     length += chunk.length;
-    //     console.log('patchNameBlobsUploadsUuid request.originalUrl', request.originalUrl);
-    //     console.log('length', length);
-    //     console.log('------------------');
-    // });
-
-    // request.on('end', async () => {
-        // response.setHeader(
-        //     'Location',
-        //     location,
-        // );
-        // response.setHeader(
-        //     'Range',
-        //     `0-1000000`,
-        //     // '0-' + length,
-        // );
-        // response.setHeader(
-        //     'Content-Length',
-        //     // `${bufferData.length}`,
-        //     '0',
-        //     // length + '',
-        //     // '0',
-        // );
-        // response.setHeader(
-        //     'Docker-Upload-UUID',
-        //     uuid,
-        // );
-        // response.status(202).end();
-    // });
-
-
-
-    // response.setHeader(
-    //     'Location',
-    //     location,
-    // );
-    // response.setHeader(
-    //     'Range',
-    //     `0-1000000`,
-    //     // '0-' + length,
-    // );
-    // response.setHeader(
-    //     'Content-Length',
-    //     // `${bufferData.length}`,
-    //     // '0',
-    //     // length + '',
-    //     '0',
-    // );
-    // response.setHeader(
-    //     'Docker-Upload-UUID',
-    //     uuid,
-    // );
-    // response.status(202).end();
-
-
-
-    // await storage.upload(
-    //     blobPath,
-    //     bufferData,
-    //     'append',
-    // );
-
-    // if (true) {
-    //     const errorResponse = {
-    //         errors: [
-    //             {
-    //                 code: "UNAUTHORIZED",
-    //                 message: "Unauthorized",
-    //                 detail: "Log in."
-    //             },
-    //         ],
-    //     };
-
-    //     response.status(400).send(JSON.stringify(errorResponse));
-    //     return;
-    // }
-
-    // response.setHeader(
-    //     'Location',
-    //     location,
-    // );
-    // response.setHeader(
-    //     'Range',
-    //     `0-1000000`,
-    // );
-    // response.setHeader(
-    //     'Content-Length',
-    //     // `${bufferData.length}`,
-    //     '0',
-    // );
-    // response.setHeader(
-    //     'Docker-Upload-UUID',
-    //     uuid,
-    // );
-    // response.status(202).end();
 }
 
 
@@ -656,9 +533,9 @@ export const putNameBlobsUploadsUuid = async (
         return;
     }
 
-    console.log('putNameBlobsUploadsUuid', name);
-    console.log('request.originalUrl', request.originalUrl);
-    console.log('------------------');
+    // console.log('putNameBlobsUploadsUuid', name);
+    // console.log('request.originalUrl', request.originalUrl);
+    // console.log('------------------');
 
     const location = request.originalUrl;
     const digest = request.query.digest as string || '';
@@ -668,10 +545,7 @@ export const putNameBlobsUploadsUuid = async (
         return;
     }
 
-    // const bufferData = getBufferData(request);
     const blobPath = BASE_PATH_BLOBS + uuid;
-
-
 
     const stream = await storage.streamWrite(
         blobPath,
@@ -689,10 +563,6 @@ export const putNameBlobsUploadsUuid = async (
     stream.on('finish', () => {
         const digestValue = digest.replace(':', '/');
         const digestPath = BASE_PATH_IMAGENES + digestValue;
-        // await storage.upload(
-        //     digestPath,
-        //     Buffer.from(tempFile, 'binary'),
-        // );
 
         const blobRelativePath = path.join(
             BASE_PATH,
@@ -722,14 +592,10 @@ export const putNameBlobsUploadsUuid = async (
         response.setHeader(
             'Range',
             '0-1000000',
-            // '0-' + length,
         );
         response.setHeader(
             'Content-Length',
             stream.bytesWritten,
-            // `${tempFile.length}`,
-            // length,
-            // '0',
         );
         response.setHeader(
             'Docker-Content-Digest',
@@ -737,116 +603,6 @@ export const putNameBlobsUploadsUuid = async (
         );
         response.status(201).end();
     });
-
-
-
-    // let length = 0;
-
-    // console.log('Content-Length', request.get('Content-Length'));
-
-    // request.on('data', (chunk) => {
-    //     length += chunk.length;
-    //     console.log('putNameBlobsUploadsUuid request.originalUrl', request.originalUrl);
-    //     console.log('length', length);
-    //     console.log('------------------');
-    // });
-
-    // request.on('end', async () => {
-    //     // const tempFile = await storage.download(blobPath);
-    //     // if (!tempFile || typeof tempFile !== 'string') {
-    //     //     response.status(400).end();
-    //     //     return;
-    //     // }
-
-    //     const digestValue = digest.replace(':', '/');
-    //     const digestPath = BASE_PATH_IMAGENES + digestValue;
-    //     // await storage.upload(
-    //     //     digestPath,
-    //     //     Buffer.from(tempFile, 'binary'),
-    //     // );
-
-    //     const blobRelativePath = path.join(
-    //         BASE_PATH,
-    //         blobPath,
-    //     );
-
-    //     const readStream = fs.createReadStream(blobRelativePath);
-    //     storage.stream(
-    //         digestPath,
-    //         readStream,
-    //     );
-
-    //     readStream.on('end', () => {
-    //         console.log('read stream end putNameBlobsUploadsUuid', request.originalUrl)
-    //         // storage.obliterate(
-    //         //     blobPath,
-    //         // );
-
-    //         response.setHeader(
-    //             'Location',
-    //             location,
-    //         );
-    //         // response.setHeader(
-    //         //     'Range',
-    //         //     '0-1000000',
-    //         //     // '0-' + length,
-    //         // );
-    //         response.setHeader(
-    //             'Content-Length',
-    //             // `${tempFile.length}`,
-    //             length,
-    //             // '0',
-    //         );
-    //         response.setHeader(
-    //             'Docker-Content-Digest',
-    //             digest,
-    //         );
-    //         response.status(201).end();
-    //     });
-    // });
-
-
-
-    // await storage.upload(
-    //     blobPath,
-    //     bufferData,
-    //     'append',
-    // );
-
-    // const tempFile = await storage.download(blobPath);
-    // if (!tempFile || typeof tempFile !== 'string') {
-    //     response.status(400).end();
-    //     return;
-    // }
-
-    // const digestValue = digest.replace(':', '/');
-    // const digestPath = BASE_PATH_IMAGENES + digestValue;
-    // await storage.upload(
-    //     digestPath,
-    //     Buffer.from(tempFile, 'binary'),
-    // );
-
-    // await storage.obliterate(
-    //     blobPath,
-    // );
-
-    // response.setHeader(
-    //     'Location',
-    //     location,
-    // );
-    // response.setHeader(
-    //     'Range',
-    //     '0-1000000',
-    // );
-    // response.setHeader(
-    //     'Content-Length',
-    //     `${tempFile.length}`,
-    // );
-    // response.setHeader(
-    //     'Docker-Content-Digest',
-    //     digest,
-    // );
-    // response.status(201).end();
 }
 
 
