@@ -111,6 +111,7 @@
         "@types/react-stripe-elements": "^6.0.4",
         "@types/rollup-plugin-peer-deps-external": "^2.2.0",
         "@types/styled-components": "^5.1.9",
+        "@types/unzip-stream": "^0.3.0",
         "@typescript-eslint/eslint-plugin": "^4.21.0",
         "@typescript-eslint/parser": "^4.21.0",
         "compression-webpack-plugin": "^7.1.2",
