@@ -167,9 +167,10 @@ const storageDownload: StorageDownload = async (
             filename,
         );
 
-        await fs.stat(
-            filepath,
-        );
+        const exists = fsSync.existsSync(filepath);
+        if (!exists) {
+            return;
+        }
 
         const filedata = await fs.readFile(
             filepath,

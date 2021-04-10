@@ -425,8 +425,6 @@ export const patchNameBlobsUploadsUuid = async (
     }
 
     stream.on('finish', () => {
-        console.log('stream.bytesWritten', stream.bytesWritten);
-
         response.setHeader(
             'Location',
             location,

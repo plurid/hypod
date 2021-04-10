@@ -61,8 +61,8 @@ const endpointApiVersionCheck = async (
     request: HypodRequest,
     response: Response,
 ) => {
-    console.log('endpointApiVersionCheck');
-    console.log(JSON.stringify(request.headers));
+    // console.log('endpointApiVersionCheck');
+    // console.log(JSON.stringify(request.headers));
 
     const logic = request.hypodLogic;
 
@@ -128,8 +128,8 @@ const endpointApiGetToken = async (
     request: HypodRequest,
     response: Response,
 ) => {
-    console.log('endpointApiGetToken');
-    console.log(JSON.stringify(request.headers));
+    // console.log('endpointApiGetToken');
+    // console.log(JSON.stringify(request.headers));
 
     const logic = request.hypodLogic;
     const authorization = getAuthorizationHeader(request);
@@ -189,8 +189,8 @@ const endpointApiGetAll = async (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiGetAll', url);
-    console.log('endpointApiGetAll', JSON.stringify(request.headers));
+    // console.log('endpointApiGetAll', url);
+    // console.log('endpointApiGetAll', JSON.stringify(request.headers));
 
     const matchNameTagsList = url.match(DOCKER_RE_NAME_TAGS_LIST);
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
@@ -242,9 +242,8 @@ const endpointApiPostAll = async (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiPostAll', url);
-    console.log('endpointApiPostAll', JSON.stringify(request.headers));
-    // console.log('endpointApiPostAll', request);
+    // console.log('endpointApiPostAll', url);
+    // console.log('endpointApiPostAll', JSON.stringify(request.headers));
 
     const matchNameBlobsUploads = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS);
 
@@ -266,8 +265,8 @@ const endpointApiPutAll = async (
     response: Response,
 ) => {
     const url = request.path;
-    console.log('endpointApiPutAll', url);
-    console.log('endpointApiPutAll', JSON.stringify(request.headers));
+    // console.log('endpointApiPutAll', url);
+    // console.log('endpointApiPutAll', JSON.stringify(request.headers));
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
@@ -299,8 +298,8 @@ const endpointApiPatchAll = async (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiPatchAll', url);
-    console.log('endpointApiPatchAll', JSON.stringify(request.headers));
+    // console.log('endpointApiPatchAll', url);
+    // console.log('endpointApiPatchAll', JSON.stringify(request.headers));
 
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
 
@@ -322,8 +321,8 @@ const endpointApiDeleteAll = (
     response: Response,
 ) => {
     const url = request.originalUrl;
-    console.log('endpointApiDeleteAll', url);
-    console.log('endpointApiDeleteAll', JSON.stringify(request.headers));
+    // console.log('endpointApiDeleteAll', url);
+    // console.log('endpointApiDeleteAll', JSON.stringify(request.headers));
 
     const matchNameManifestsReference = url.match(DOCKER_RE_NAME_MANIFESTS_REFERENCE);
     const matchNameBlobsUploadsUuid = url.match(DOCKER_RE_NAME_BLOBS_UPLOADS_UUID);
