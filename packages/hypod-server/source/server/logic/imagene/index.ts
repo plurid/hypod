@@ -1,6 +1,7 @@
 // #region imports
     // #region libraries
     import fs from 'fs';
+    import zlib from 'zlib';
 
     // import unzipStream from 'unzip-stream';
 
@@ -169,6 +170,22 @@ export const registerImageneManifest = async (
             );
 
             if (layerStream) {
+                let layerSize = 0;
+
+                const gunzip = zlib.createGunzip();
+                layerStream.pipe(gunzip);
+
+                gunzip.on('data', (data) => {
+                    layerSize += data.length;
+                }).on('end', () => {
+                    size += layerSize;
+                    console.log('layerSize', layerSize);
+                    console.log('size', size);
+                }).on('error', (error) => {
+                    console.log('[Hypod Error] :: registerImageneManifest', error);
+                });
+
+
                 // layerStream
                 //     .pipe(unzipStream.Parse())
                 //     .on('entry', (entry) => {
@@ -180,31 +197,32 @@ export const registerImageneManifest = async (
 
                 // unzip the stream and compute the file size
 
-                const temporaryFilePath = './temp-' + Math.random();
-                const temporaryWriteStream = fs.createWriteStream(temporaryFilePath);
-                layerStream.pipe(temporaryWriteStream);
 
-                layerStream.on('end', async () => {
-                    ungzip(temporaryFilePath).then(
-                        () => {
-                            const layerSize = fs.statSync(temporaryFilePath).size;
-                            size += layerSize;
+                // const temporaryFilePath = './temp-' + Math.random();
+                // const temporaryWriteStream = fs.createWriteStream(temporaryFilePath);
+                // layerStream.pipe(temporaryWriteStream);
 
-                            fs.unlink(temporaryFilePath, () => {});
-                        }
-                    ).then(
-                        () => {
-                            console.log('size', size);
-                        }
-                    ).catch((error) => {
-                        console.log('[Hypod Error] :: registerImageneManifest', error);
-                    });
-                    // const decompressed = await ungzip(temporaryFilePath);
-                    // const byteLength = Buffer.byteLength(decompressed);
-                    // size += byteLength;
+                // layerStream.on('end', async () => {
+                //     ungzip(temporaryFilePath).then(
+                //         () => {
+                //             const layerSize = fs.statSync(temporaryFilePath).size;
+                //             size += layerSize;
 
-                    // fs.unlink(temporaryFilePath, () => {});
-                });
+                //             fs.unlink(temporaryFilePath, () => {});
+                //         }
+                //     ).then(
+                //         () => {
+                //             console.log('size', size);
+                //         }
+                //     ).catch((error) => {
+                //         console.log('[Hypod Error] :: registerImageneManifest', error);
+                //     });
+                //     // const decompressed = await ungzip(temporaryFilePath);
+                //     // const byteLength = Buffer.byteLength(decompressed);
+                //     // size += byteLength;
+
+                //     // fs.unlink(temporaryFilePath, () => {});
+                // });
             }
 
             // const layerData = await storage.download(
