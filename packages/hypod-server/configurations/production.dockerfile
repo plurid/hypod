@@ -1,9 +1,11 @@
 # Building stage
-
 FROM node:14.16.1-alpine AS builder
 
 
 ARG HYPOD_DOCKER_SERVICE
+
+ARG NPM_TOKEN
+ARG NPM_REGISTRY=registry.npmjs.org
 
 
 WORKDIR /app
@@ -18,15 +20,20 @@ COPY . .
 ENV ENV_MODE production
 ENV NODE_ENV production
 
+ENV NPM_TOKEN $NPM_TOKEN
+ENV NPM_REGISTRY $NPM_REGISTRY
 
-RUN yarn install --production false
+
+RUN ( echo "cat <<EOF" ; cat ./configurations/.npmrcx ; echo EOF ) | sh > ./.npmrc
+
+RUN yarn install --production false --network-timeout 1000000
 
 RUN yarn build.production verbose
 
 
 
-# Launch stage
 
+# Launch stage
 FROM node:14.16.1-alpine
 
 
@@ -95,7 +102,9 @@ COPY --from=builder /app/build ./build
 COPY --from=builder /app/scripts ./scripts
 
 
-RUN yarn install --production
+RUN yarn install --production --network-timeout 1000000
+
+RUN rm -f .npmrc
 
 
 CMD ["yarn", "start"]
