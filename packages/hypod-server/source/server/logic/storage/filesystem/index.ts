@@ -167,7 +167,14 @@ const storageDownload: StorageDownload = async (
             filename,
         );
 
-        const exists = fsSync.existsSync(filepath);
+        let exists: boolean | undefined;
+
+        try {
+            exists = fsSync.existsSync(filepath);
+        } catch (error) {
+            // Catch and skip fs error.
+        }
+
         if (!exists) {
             return;
         }
@@ -180,7 +187,7 @@ const storageDownload: StorageDownload = async (
         return filedata;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Warn 500] :: Filesystem could not download ${filename}.`, error);
+            console.log(`[Hypod Error 500] :: Filesystem could not download ${filename}.`, error);
         }
 
         return;
@@ -219,14 +226,20 @@ const storageStatistics: StorageStatistics = async (
             filename,
         );
 
-        const statistics = await fs.stat(
-            filepath,
-        );
+        let statistics: fsSync.Stats | undefined;
+
+        try {
+            statistics = await fs.stat(
+                filepath,
+            );
+        } catch (error) {
+            // Catch and skip fs error.
+        }
 
         return statistics;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Hypod Warn 500] :: Filesystem could not get statistics ${filename}.`, error);
+            console.log(`[Hypod Error 500] :: Filesystem could not get statistics ${filename}.`, error);
         }
 
         return;
