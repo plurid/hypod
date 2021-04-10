@@ -324,11 +324,15 @@ const storageStreamRead: StorageStreamRead = async (
             filename,
         );
 
-        if (!fsSync.existsSync(filepath)) {
-            if (!QUIET) {
-                console.log(`[Hypod Error 500] :: Filesystem could not read ${filename}.`);
-            }
+        let exists: boolean | undefined;
 
+        try {
+            exists = fsSync.existsSync(filepath);
+        } catch (error) {
+            // Catch and skip fs error.
+        }
+
+        if (!exists) {
             return;
         }
 
