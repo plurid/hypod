@@ -3,6 +3,8 @@ lockfileVersion: 5.3
 specifiers:
   '@apollo/client': ^3.5.10
   '@google-cloud/storage': ^5.18.2
+  '@plurid/elementql': ^0.0.0-1
+  '@plurid/elementql-client-react': ^0.0.0-1
   '@plurid/plurid-data': ^0.0.0-11
   '@plurid/plurid-engine': ^0.0.0-9
   '@plurid/plurid-functions': ^0.0.0-21
@@ -36,6 +38,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.15.0
   '@typescript-eslint/parser': ^5.15.0
   adm-zip: ^0.5.9
+  apollo-server-core: ^3.6.4
   apollo-server-express: ^3.6.4
   aws-sdk: ^2.1096.0
   body-parser: ^1.19.2
@@ -48,6 +51,7 @@ specifiers:
   css-loader: ^6.7.1
   dotenv: ^16.0.0
   eslint: ^8.11.0
+  express: ^4.17.3
   express-static-gzip: ^2.1.5
   file-loader: ^6.2.0
   graphql: ^16.3.0
@@ -81,6 +85,7 @@ specifiers:
   ts-jest: ^27.1.3
   ts-loader: ^9.2.8
   tsconfig-paths-webpack-plugin: ^3.5.2
+  tslib: ^2.3.1
   typescript: ^4.6.2
   typescript-plugin-styled-components: ^2.0.0
   webpack: ^5.70.0
@@ -92,27 +97,31 @@ specifiers:
 dependencies:
   '@apollo/client': 3.5.10_077b6181ac235ebaf06ab84ccfde8e27
   '@google-cloud/storage': 5.18.2
+  '@plurid/elementql': 0.0.0-1
+  '@plurid/elementql-client-react': 0.0.0-1
   '@plurid/plurid-data': 0.0.0-11_@plurid+plurid-themes@0.0.0-2
   '@plurid/plurid-engine': 0.0.0-9_e9926a3618d9cc43d98928a9df52f25d
   '@plurid/plurid-functions': 0.0.0-21
   '@plurid/plurid-functions-react': 0.0.0-4_react@17.0.2
   '@plurid/plurid-icons-react': 0.0.0-3_e422402e898e42f30c99a50a67f316ca
   '@plurid/plurid-pubsub': 0.0.0-5_@plurid+plurid-data@0.0.0-11
-  '@plurid/plurid-react': 0.0.0-17_3c993be5b9d49e2af1ae7f12be4258d5
-  '@plurid/plurid-react-server': 0.0.0-5_ad064019b2190d788eea725e7584519a
+  '@plurid/plurid-react': 0.0.0-17_2e864af1e9f6db573ecaab45b3082686
+  '@plurid/plurid-react-server': 0.0.0-5_e48d5035799472ad9cb34610f89341d6
   '@plurid/plurid-themes': 0.0.0-2
   '@plurid/plurid-ui-components-react': 0.0.0-11_cd913bb3c854e6810b921825dd0af8ae
   '@plurid/plurid-ui-state-react': 0.0.0-2_@plurid+plurid-themes@0.0.0-2
   '@rollup/plugin-commonjs': 21.0.2_rollup@2.70.1
   '@rollup/plugin-node-resolve': 13.1.3_rollup@2.70.1
   adm-zip: 0.5.9
-  apollo-server-express: 3.6.4_graphql@16.3.0
+  apollo-server-core: 3.6.4_graphql@16.3.0
+  apollo-server-express: 3.6.4_express@4.17.3+graphql@16.3.0
   aws-sdk: 2.1096.0
   body-parser: 1.19.2
   compression: 1.7.4
   cookie-parser: 1.4.6
   cross-fetch: 3.1.5
   dotenv: 16.0.0
+  express: 4.17.3
   graphql: 16.3.0
   graphql-tag: 2.12.6_graphql@16.3.0
   hammerjs: 2.0.8
@@ -172,6 +181,7 @@ devDependencies:
   ts-jest: 27.1.3_60149d457e34ffba7d4e845dde6a1263
   ts-loader: 9.2.8_typescript@4.6.2+webpack@5.70.0
   tsconfig-paths-webpack-plugin: 3.5.2
+  tslib: 2.3.1
   typescript: 4.6.2
   typescript-plugin-styled-components: 2.0.0_typescript@4.6.2
   webpack: 5.70.0_webpack-cli@4.9.2
@@ -1014,6 +1024,23 @@ packages:
       fastq: 1.13.0
     dev: true
 
+  /@plurid/elementql-client-react/0.0.0-1:
+    resolution: {integrity: sha512-Ve+7E1yQGNiNjyz+rC3KskK1f+AR/Ihyu6mPFE8y/raBnNVCB6ghoUZWjbaeVcyH5vWvRrNmp9lIqDDXtac1VQ==}
+    engines: {node: '>=12', npm: '>=6'}
+    dependencies:
+      '@plurid/elementql-client': 0.0.0-1
+    dev: false
+
+  /@plurid/elementql-client/0.0.0-1:
+    resolution: {integrity: sha512-gskixEW98sFNh0wQ7j2eK8peaM7+yyoh6t/yesjnnTqaw69tH11wUmhaUuBL/BWeXhy3BXgCknoXgss5ItHnUQ==}
+    engines: {node: '>=12', npm: '>=6'}
+    dev: false
+
+  /@plurid/elementql/0.0.0-1:
+    resolution: {integrity: sha512-ZhIRA9sGeegviDNFEdA71leocIwPXwU4vK81p+B7UEhBRl0hZ+O9pD1Rr5wuW9rU5FtfjDnEprntmyVi0ZEL4Q==}
+    engines: {node: '>=12', npm: '>=6'}
+    dev: false
+
   /@plurid/plurid-data/0.0.0-11_@plurid+plurid-themes@0.0.0-2:
     resolution: {integrity: sha512-J2kqyw8Lr7Ep3OI0PIS2utU5k2bAUGn5P24RCBQXGRfBaeJ6SbBxw/CWmrbcG1SLeCmIUXE/pu25ZDl5SPkT7w==}
     engines: {node: '>=12', npm: '>=6'}
@@ -1074,7 +1101,7 @@ packages:
       '@plurid/plurid-data': 0.0.0-11_@plurid+plurid-themes@0.0.0-2
     dev: false
 
-  /@plurid/plurid-react-server/0.0.0-5_ad064019b2190d788eea725e7584519a:
+  /@plurid/plurid-react-server/0.0.0-5_e48d5035799472ad9cb34610f89341d6:
     resolution: {integrity: sha512-l89+8ATtHoQxQD+WHvnpHKHFKdBr6WEiSAdTPOt/z8lS34pihw30kaAZ3O+uop6tOGcuSweiGNWLk7e9nuIFjQ==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
@@ -1098,13 +1125,15 @@ packages:
       redux: '>=4'
       styled-components: '>=5'
     dependencies:
+      '@plurid/elementql': 0.0.0-1
+      '@plurid/elementql-client-react': 0.0.0-1
       '@plurid/plurid-data': 0.0.0-11_@plurid+plurid-themes@0.0.0-2
       '@plurid/plurid-engine': 0.0.0-9_e9926a3618d9cc43d98928a9df52f25d
       '@plurid/plurid-functions': 0.0.0-21
       '@plurid/plurid-functions-react': 0.0.0-4_react@17.0.2
       '@plurid/plurid-icons-react': 0.0.0-3_e422402e898e42f30c99a50a67f316ca
       '@plurid/plurid-pubsub': 0.0.0-5_@plurid+plurid-data@0.0.0-11
-      '@plurid/plurid-react': 0.0.0-17_3c993be5b9d49e2af1ae7f12be4258d5
+      '@plurid/plurid-react': 0.0.0-17_2e864af1e9f6db573ecaab45b3082686
       '@plurid/plurid-themes': 0.0.0-2
       '@plurid/plurid-ui-components-react': 0.0.0-11_cd913bb3c854e6810b921825dd0af8ae
       '@plurid/plurid-ui-state-react': 0.0.0-2_@plurid+plurid-themes@0.0.0-2
@@ -1122,7 +1151,7 @@ packages:
       styled-components: 5.3.3_react-dom@17.0.2+react@17.0.2
     dev: false
 
-  /@plurid/plurid-react/0.0.0-17_3c993be5b9d49e2af1ae7f12be4258d5:
+  /@plurid/plurid-react/0.0.0-17_2e864af1e9f6db573ecaab45b3082686:
     resolution: {integrity: sha512-Yaq1aki4A/s8nsylp1rNUWYyJlJCs1GAaohXSfz9i4INs106udOibc+85+G/DDhnK6H0d2JQfaccGJXa4pln4g==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
@@ -1146,6 +1175,8 @@ packages:
       redux-thunk: '>=2'
       styled-components: '>=5'
     dependencies:
+      '@plurid/elementql': 0.0.0-1
+      '@plurid/elementql-client-react': 0.0.0-1
       '@plurid/plurid-data': 0.0.0-11_@plurid+plurid-themes@0.0.0-2
       '@plurid/plurid-engine': 0.0.0-9_e9926a3618d9cc43d98928a9df52f25d
       '@plurid/plurid-functions': 0.0.0-21
@@ -2177,7 +2208,7 @@ packages:
       graphql: 16.3.0
     dev: false
 
-  /apollo-server-express/3.6.4_graphql@16.3.0:
+  /apollo-server-express/3.6.4_express@4.17.3+graphql@16.3.0:
     resolution: {integrity: sha512-lN73Ka7UZJINJzvMeRFIFn7898hGjTxVtRQwAzzmw5XSpWZZHZkTcAkoDxUs0GwU6h2LE14ogu2WJ4G8AZVl1Q==}
     engines: {node: '>=12.0'}
     peerDependencies:
@@ -2194,6 +2225,7 @@ packages:
       apollo-server-types: 3.5.1_graphql@16.3.0
       body-parser: 1.19.2
       cors: 2.8.5
+      express: 4.17.3
       graphql: 16.3.0
       parseurl: 1.3.3
     transitivePeerDependencies:
