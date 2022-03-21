@@ -83,6 +83,7 @@ export const updateImageneManifest = async (
     if (!existingImagene) {
         const imagene: Imagene = {
             id: uuid.generate(),
+            generatedAt: Math.floor(Date.now() / 1000),
             name,
             latest: reference,
             tags: [

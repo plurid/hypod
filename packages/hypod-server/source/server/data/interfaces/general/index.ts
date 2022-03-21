@@ -17,6 +17,7 @@ export interface Project {
 
 export interface Imagene {
     id: string;
+    generatedAt: number;
     name: string;
     latest: string;
     tags: ImageneTag[];
