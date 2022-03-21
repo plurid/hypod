@@ -10,6 +10,7 @@
 export const queries = gql`
     extend type Query {
         getImagenes: ResponseImagenes!
+        identifyImagene(input: InputValueString!): ResponseImagene!
     }
 `;
 
@@ -23,24 +24,17 @@ export const mutations = gql`
 `;
 
 
-export const inputs = gql`
-    input InputObliterateImageneTag {
-        imageneID: String!
-        tagID: String!
-    }
-
-    input InputTogglePublicImagene {
-        id: String!
-        value: Boolean!
-    }
-`;
-
-
 export const types = gql`
     type ResponseImagenes {
         status: Boolean!
         error: Error
         data: [Imagene!]
+    }
+
+    type ResponseImagene {
+        status: Boolean!
+        error: Error
+        data: Imagene
     }
 
     type Imagene {
@@ -59,6 +53,19 @@ export const types = gql`
         digest: String!
     }
 `;
+
+
+export const inputs = gql`
+    input InputObliterateImageneTag {
+        imageneID: String!
+        tagID: String!
+    }
+
+    input InputTogglePublicImagene {
+        id: String!
+        value: Boolean!
+    }
+`;
 // #endregion module
 
 
@@ -67,7 +74,7 @@ export const types = gql`
 export default gql`
     ${queries}
     ${mutations}
-    ${inputs}
     ${types}
+    ${inputs}
 `;
 // #endregion exports

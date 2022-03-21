@@ -2,6 +2,8 @@
     // #region external
     import {
         Context,
+        InputOf,
+        InputValueString,
     } from '~server/data/interfaces';
 
     import {
@@ -19,6 +21,14 @@ const Query = {
         __: any,
         context: Context,
     ) => Imagenes.Query.getImagenes(
+        context,
+    ),
+    identifyImagene: (
+        _: any,
+        { input }: InputOf<InputValueString>,
+        context: Context,
+    ) => Imagenes.Query.identifyImagene(
+        input,
         context,
     ),
 };
