@@ -15,10 +15,16 @@ export const IDENTIFY_IMAGENE = gql`
             status
             data {
                 id
+                name
+                latest
                 tags {
                     id
+                    generatedAt
                     name
+                    size
+                    digest
                 }
+                isPublic
             }
         }
     }

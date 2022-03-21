@@ -1,5 +1,16 @@
 // #region imports
+    // #region libraries
+    import {
+        graphql,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
+
+
     // #region external
+    import {
+        HypodOptions,
+    } from '~data/interfaces';
+
     import {
         IDENTIFY_IMAGENE,
     } from '~services/graphql/query';
@@ -23,10 +34,12 @@
 const HypodTree = (
     endpoint: string,
     token: string,
+    options: HypodOptions,
 ) => {
     const hypod = new Hypod(
         endpoint,
         token,
+        options,
     );
 
     return {
@@ -42,11 +55,11 @@ const HypodTree = (
                     'identifyImagene',
                 );
 
-                if (!result.status) {
+                if (!result || !result.status) {
                     return;
                 }
 
-                return result.data;
+                return graphql.deleteTypenames(result.data);
             },
             obliterate: async (
                 id: string,

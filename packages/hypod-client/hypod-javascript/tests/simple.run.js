@@ -8,13 +8,21 @@ runner(
     async (
         check,
     ) => {
-        const hypod = new Hypod(
-            'localhost:56265',
-            '__TEST_MODE__',
+        const hypod = Hypod(
+            'http://localhost:56265/graphql',
+            'identonym:private-token',
+            {
+                log: true,
+            },
         );
 
-        const obliterated = await hypod.imagene.obliterate('some-imagene');
+        const data = await hypod.imagene.identify('foo/boo');
+        check('identified', !!data, true);
+        if (!data) {
+            return;
+        }
 
-        check(obliterated, true);
+        const obliterated = await hypod.imagene.obliterate(data.id);
+        check('obliterated', obliterated, true);
     },
 );
