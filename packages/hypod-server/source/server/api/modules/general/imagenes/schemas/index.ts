@@ -47,7 +47,7 @@ export const types = gql`
 
     type ImageneTag {
         id: ID!
-        generatedAt: Int!
+        generatedAt: Float!
         name: String!
         size: Float!
         digest: String!
