@@ -77,6 +77,26 @@ class Hypod {
             return;
         }
     }
+
+    public async query<I = any>(
+        input: I,
+        query: DocumentNode,
+        queryName: string,
+    ) {
+        try {
+            const request = await this.client.query({
+                query,
+                variables: {
+                    input,
+                },
+            });
+
+            return request.data[queryName];
+        } catch (error) {
+            this.logError('query failed', error);
+            return;
+        }
+    }
 }
 // #endregion module
 

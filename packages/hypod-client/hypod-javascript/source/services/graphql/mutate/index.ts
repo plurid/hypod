@@ -9,19 +9,27 @@
 
 
 // #region module
-const IMAGENE_OBLITERATE = gql`
-    mutation HypodMutationImageneObliterate($input: InputValueString!) {
-        hypodMutationImageneObliterate(input: $input) {
+export const OBLITERATE_IMAGENE = gql`
+    mutation ObliterateImagene($input: InputValueString!) {
+        obliterateImagene(input: $input) {
+            status
+        }
+    }
+`;
+
+export const OBLITERATE_IMAGENE_TAG = gql`
+    mutation ObliterateImageneTag($input: InputObliterateImageneTag!) {
+        obliterateImageneTag(input: $input) {
+            status
+        }
+    }
+`;
+
+export const TOGGLE_PUBLIC_IMAGENE = gql`
+    mutation TogglePublicImagene($input: InputTogglePublicImagene!) {
+        togglePublicImagene(input: $input) {
             status
         }
     }
 `;
 // #endregion module
-
-
-
-// #region exports
-export {
-    IMAGENE_OBLITERATE,
-};
-// #endregion exports
