@@ -72,6 +72,7 @@
     import {
         StyledImagene,
         StyledHeader,
+        StyledImageneName,
         StyledHeaderProject,
     } from './styled';
     // #endregion internal
@@ -378,11 +379,11 @@ const Imagene: React.FC<ImageneProperties> = (
             {imagene && (
                 <div>
                     <StyledHeader>
-                        <div>
+                        <StyledImageneName>
                             <h1>
                                 {imagene.name}
                             </h1>
-                        </div>
+                        </StyledImageneName>
 
                         <StyledHeaderProject>
                             <PluridDropdown

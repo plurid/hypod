@@ -21,6 +21,11 @@ export const StyledHeader = styled.div`
 `;
 
 
+export const StyledImageneName = styled.div`
+    word-break: break-all;
+`;
+
+
 export const StyledHeaderProject = styled.div`
 
 `;
