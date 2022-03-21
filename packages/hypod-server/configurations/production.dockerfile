@@ -1,5 +1,5 @@
 # Building stage
-FROM node:14.16.1-alpine AS builder
+FROM node:16.14-alpine AS builder
 
 
 ARG HYPOD_DOCKER_SERVICE
@@ -34,7 +34,7 @@ RUN yarn build.production verbose
 
 
 # Launch stage
-FROM node:14.16.1-alpine
+FROM node:16.14-alpine
 
 
 ARG HYPOD_PORT=56565
