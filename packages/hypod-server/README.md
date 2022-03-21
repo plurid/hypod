@@ -1,5 +1,7 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/identity/hypod-logo.png" height="250px">
+    <a target="_blank" href="https://hypod.cloud">
+        <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/identity/hypod-logo.png" height="250px">
+    </a>
     <br />
     <br />
     <a target="_blank" href="https://github.com/plurid/hypod/blob/master/LICENSE">
@@ -171,6 +173,15 @@ as storage:
 [@plurid/hypod][hypod] • the server application
 
 [hypod]: https://github.com/plurid/hypod/tree/master/packages/hypod
+
+
+<a target="_blank" href="https://www.npmjs.com/package/@plurid/hypod-client">
+    <img src="https://img.shields.io/npm/v/@plurid/hypod-client.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
+</a>
+
+[@plurid/hypod-client-javascript][hypod-client-javascript] • `JavaScript` client
+
+[hypod-client-javascript]: https://github.com/plurid/hypod/tree/master/packages/hypod-client/hypod-javascript
 
 
 

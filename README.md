@@ -175,6 +175,15 @@ as storage:
 [hypod]: https://github.com/plurid/hypod/tree/master/packages/hypod
 
 
+<a target="_blank" href="https://www.npmjs.com/package/@plurid/hypod-client">
+    <img src="https://img.shields.io/npm/v/@plurid/hypod-client.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
+</a>
+
+[@plurid/hypod-client-javascript][hypod-client-javascript] • `JavaScript` client
+
+[hypod-client-javascript]: https://github.com/plurid/hypod/tree/master/packages/hypod-client/hypod-javascript
+
+
 
 ## [Codeophon](https://github.com/ly3xqhl8g9/codeophon)
 
