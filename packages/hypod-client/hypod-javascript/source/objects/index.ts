@@ -35,7 +35,7 @@
 const HypodTree = (
     endpoint: string,
     token: string,
-    options: HypodOptions,
+    options?: Partial<HypodOptions>,
 ) => {
     const hypod = new Hypod(
         endpoint,
