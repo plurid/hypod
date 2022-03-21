@@ -4,6 +4,8 @@ FROM node:16.14-alpine AS builder
 ARG NPM_TOKEN
 ARG NPM_REGISTRY=registry.npmjs.org
 
+ARG HYPOD_DOCKER_SERVICE
+
 WORKDIR /app
 
 COPY . .
@@ -18,6 +20,7 @@ ENV PLURID_DEFAULT_VERBOSE true
 ENV NPM_TOKEN $NPM_TOKEN
 ENV NPM_REGISTRY $NPM_REGISTRY
 
+ENV HYPOD_DOCKER_SERVICE=$HYPOD_DOCKER_SERVICE
 
 RUN ( echo "cat <<EOF" ; cat ./configurations/.npmrcx ; echo EOF ) | sh > ./.npmrc
 
