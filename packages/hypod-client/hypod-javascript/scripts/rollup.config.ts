@@ -30,11 +30,11 @@ export default {
         },
     ],
     external: [
-        '@plurid/deon',
+        '@apollo/client',
+        '@apollo/client/core',
         '@plurid/plurid-functions',
         'cross-fetch',
-        'isomorphic-ws',
-        'ws',
+        'graphql',
     ],
     watch: {
         include: 'source/**',
