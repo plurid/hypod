@@ -30,25 +30,44 @@ const hypod = Hypod(
 // );
 
 
+// runner(
+//     async (
+//         check,
+//     ) => {
+//         const data = await hypod.imagene.identifyTag('foo/boo:coo');
+//         check('identified', !!data, true);
+//         if (!data) {
+//             return;
+//         }
+
+//         const {
+//             imageneID,
+//             tagID,
+//         } = data;
+
+//         const obliterated = await hypod.imagene.obliterateTag(
+//             imageneID,
+//             tagID,
+//         );
+//         check('obliterated', obliterated, true);
+//     },
+// );
+
+
 runner(
     async (
         check,
     ) => {
-        const data = await hypod.imagene.identifyTag('foo/boo:coo');
+        const data = await hypod.imagene.identify('foo/boo');
         check('identified', !!data, true);
         if (!data) {
             return;
         }
 
-        const {
-            imageneID,
-            tagID,
-        } = data;
-
-        const obliterated = await hypod.imagene.obliterateTag(
-            imageneID,
-            tagID,
+        const isPublic = await hypod.imagene.togglePublic(
+            data.id,
+            true,
         );
-        check('obliterated', obliterated, true);
+        check('isPublic', isPublic, true);
     },
 );
