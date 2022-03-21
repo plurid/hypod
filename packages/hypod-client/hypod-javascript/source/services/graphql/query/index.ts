@@ -15,6 +15,7 @@ export const IDENTIFY_IMAGENE = gql`
             status
             data {
                 id
+                generatedAt
                 name
                 latest
                 tags {

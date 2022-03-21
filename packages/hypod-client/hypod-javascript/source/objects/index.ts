@@ -9,6 +9,7 @@
     // #region external
     import {
         HypodOptions,
+        Imagene,
     } from '~data/interfaces';
 
     import {
@@ -42,25 +43,27 @@ const HypodTree = (
         options,
     );
 
+    const imageneIdentify = async (
+        name: string,
+    ) => {
+        const result = await hypod.query(
+            {
+                value: name,
+            },
+            IDENTIFY_IMAGENE,
+            'identifyImagene',
+        );
+
+        if (!result || !result.status) {
+            return;
+        }
+
+        return graphql.deleteTypenames(result.data) as Imagene;
+    }
+
     return {
         imagene: {
-            identify: async (
-                name: string,
-            ) => {
-                const result = await hypod.query(
-                    {
-                        value: name,
-                    },
-                    IDENTIFY_IMAGENE,
-                    'identifyImagene',
-                );
-
-                if (!result || !result.status) {
-                    return;
-                }
-
-                return graphql.deleteTypenames(result.data);
-            },
+            identify: imageneIdentify,
             obliterate: async (
                 id: string,
             ) => {
@@ -73,6 +76,30 @@ const HypodTree = (
                 );
 
                 return result.status as boolean;
+            },
+            identifyTag: async (
+                name: string,
+            ) => {
+                const [
+                    imageneName,
+                    imageneTag,
+                ] = name.split(':');
+
+                const imagene = await imageneIdentify(imageneName);
+                if (!imagene) {
+                    return;
+                }
+
+                for (const tag of imagene.tags) {
+                    if (tag.name === imageneTag) {
+                        return {
+                            imageneID: imagene.id,
+                            tagID: tag.id,
+                        };
+                    }
+                }
+
+                return;
             },
             removeTag: async (
                 imageneID: string,
