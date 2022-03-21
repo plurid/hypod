@@ -1,11 +1,11 @@
 // #region imports
-// #region libraries
-import styled from 'styled-components';
+    // #region libraries
+    import styled from 'styled-components';
 
-import {
-    universal,
-} from '@plurid/plurid-ui-components-react';
-// #endregion libraries
+    import {
+        universal,
+    } from '@plurid/plurid-ui-components-react';
+    // #endregion libraries
 // #endregion imports
 
 

@@ -202,6 +202,8 @@ export const getNameManifestsReference = async (
         mediaType,
     );
     response.status(200).send(file);
+
+    return;
 }
 
 

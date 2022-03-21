@@ -13,6 +13,8 @@ const getActiveProviderID = (state: AppState) => state.data.activeProviderID;
 const getNamespaces = (state: AppState) => state.data.namespaces;
 const getProjects = (state: AppState) => state.data.projects;
 const getImagenes = (state: AppState) => state.data.imagenes;
+const getNotFoundFace = (state: AppState) => state.data.notFoundFace;
+
 
 
 const selectors = {
@@ -20,6 +22,7 @@ const selectors = {
     getNamespaces,
     getProjects,
     getImagenes,
+    getNotFoundFace,
 };
 // #endregion module
 

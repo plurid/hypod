@@ -12,6 +12,7 @@ export const initialState: Types.State = {
     namespaces: [],
     projects: [],
     imagenes: [],
+    notFoundFace: '',
 };
 // #endregion module
 

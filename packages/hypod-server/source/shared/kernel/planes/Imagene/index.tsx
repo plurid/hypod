@@ -23,7 +23,7 @@
     } from '@plurid/plurid-icons-react';
 
     import {
-        PluridComponentProperty,
+        PluridPlaneComponentProperty,
     } from '@plurid/plurid-react';
 
     import {
@@ -51,6 +51,7 @@
     import EntityView from '~kernel-components/EntityView';
 
     import { AppState } from '~kernel-services/state/store';
+    import StateContext from '~kernel-services/state/context';
     import selectors from '~kernel-services/state/selectors';
     import actions from '~kernel-services/state/actions';
 
@@ -176,7 +177,7 @@ const createSearchTerms = (
 
 
 export interface ImageneOwnProperties {
-    plurid: PluridComponentProperty;
+    plurid: PluridPlaneComponentProperty;
 }
 
 export interface ImageneStateProperties {
@@ -215,7 +216,7 @@ const Imagene: React.FC<ImageneProperties> = (
         // #endregion dispatch
     } = properties;
 
-    const imageneID = plurid.route.plane.parameters.id;
+    const imageneID = plurid.plane.parameters.id;
 
     const imagene = stateImagenes.find(imagene => imagene.id === imageneID);
     // #endregion properties
@@ -454,5 +455,9 @@ const mapDispatchToProperties = (
 export default connect(
     mapStateToProperties,
     mapDispatchToProperties,
+    null,
+    {
+        context: StateContext,
+    },
 )(Imagene);
 // #endregion exports

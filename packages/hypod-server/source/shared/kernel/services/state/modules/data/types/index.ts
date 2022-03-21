@@ -82,6 +82,7 @@ export interface State {
     namespaces: Namespace[];
     projects: Project[];
     imagenes: Imagene[];
+    notFoundFace: string;
 }
 
 

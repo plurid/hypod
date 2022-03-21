@@ -1,38 +1,77 @@
 // #region imports
     // #region libraries
-    import React, {
-        useRef,
-    } from 'react';
+    import React from 'react';
+
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
+
+
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+
+    import {
+        PluridPlaneComponentProperty,
+    } from '@plurid/plurid-react';
     // #endregion libraries
+
+
+    // #region external
+    import { AppState } from '~kernel-services/state/store';
+    import StateContext from '~kernel-services/state/context';
+    import selectors from '~kernel-services/state/selectors';
+    // import actions from '~kernel-services/state/actions';
+    // #endregion external
 
 
     // #region internal
     import {
         StyledNotFound,
     } from './styled';
-
-    import faces from './faces';
     // #endregion internal
 // #endregion imports
 
 
 
 // #region module
-export interface NotFoundProperties {
+export interface NotFoundOwnProperties {
+    plurid: PluridPlaneComponentProperty;
 }
 
-const NotFound: React.FC<NotFoundProperties> = () => {
+export interface NotFoundStateProperties {
+    stateGeneralTheme: Theme;
+    stateNotFoundFace: string;
+}
+
+export interface NotFoundDispatchProperties {
+}
+
+export type NotFoundProperties =
+    & NotFoundOwnProperties
+    & NotFoundStateProperties
+    & NotFoundDispatchProperties;
+
+const NotFound: React.FC<NotFoundProperties> = (
+    properties,
+) => {
     // #region properties
-    const faceIndex = useRef(Math.floor(Math.random() * faces.length));
-    const face = useRef(faces[faceIndex.current]);
+    const {
+        // #region state
+        stateGeneralTheme,
+        stateNotFoundFace,
+        // #endregion state
+    } = properties;
     // #endregion properties
 
 
     // #region render
     return (
-        <StyledNotFound>
+        <StyledNotFound
+            theme={stateGeneralTheme}
+        >
             <h1>
-                {face.current}
+                {stateNotFoundFace}
             </h1>
 
             <p>
@@ -42,10 +81,34 @@ const NotFound: React.FC<NotFoundProperties> = () => {
     );
     // #endregion render
 }
+
+
+const mapStateToProperties = (
+    state: AppState,
+): NotFoundStateProperties => ({
+    stateGeneralTheme: selectors.themes.getGeneralTheme(state),
+    stateNotFoundFace: selectors.data.getNotFoundFace(state),
+});
+
+
+const mapDispatchToProperties = (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+): NotFoundDispatchProperties => ({
+});
+
+
+const ConnectedNotFound = connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+    null,
+    {
+        context: StateContext,
+    },
+)(NotFound);
 // #endregion module
 
 
 
 // #region exports
-export default NotFound;
+export default ConnectedNotFound;
 // #endregion exports

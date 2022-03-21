@@ -3,7 +3,7 @@
     import React from 'react';
 
     import {
-        PluridComponent,
+        PluridReactComponent,
     } from '@plurid/plurid-react';
     // #endregion libraries
 
@@ -41,10 +41,7 @@ const Shell: React.FC<ShellProperties> = (
 }
 
 
-const shell: PluridComponent = {
-    kind: 'react',
-    element: Shell,
-};
+const shell: PluridReactComponent = Shell;
 // #endregion module
 
 

@@ -1,49 +1,63 @@
 // #region imports
     // #region libraries
+    import express from 'express';
+
     import {
         PluridPreserve,
+        PluridRouteMatch,
     } from '@plurid/plurid-react';
     // #endregion libraries
 
 
     // #region external
+    // import {
+    //     PRIVATE_USAGE,
+    // } from '~server/data/constants';
+
     import {
-        PRIVATE_USAGE,
-    } from '~server/data/constants';
+        getRandomFace,
+    } from '~kernel-planes/NotFound/logic';
+
+    import reduxStore from '~kernel-services/state/store';
+    import * as dataStore from '~kernel-services/state/modules/data';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const preserves: PluridPreserve<any>[] = [
+const preserves: PluridPreserve<
+    PluridRouteMatch | undefined,
+    express.Request,
+    express.Response
+>[] = [
     {
         serve: '*',
-        onServe: async (
-            transmission,
-        ) => {
-            const {
-                response,
-                context,
-            } = transmission;
+        onServe: async () => {
+            const store = reduxStore({
+                data: {
+                    ...dataStore.initialState,
+                    notFoundFace: getRandomFace(),
+                },
+            });
 
-
-            if (PRIVATE_USAGE) {
-                // check if user is logged in
-                // console.log('context', context);
-
-                // response.status(404).end();
-
-                // return {
-                //     responded: true,
-                // };
-            }
-
-            return;
+            return {
+                providers: {
+                    Redux: {
+                        store,
+                    },
+                },
+                globals: {
+                    __PRELOADED_REDUX_STATE__: JSON.stringify(store.getState()),
+                },
+            };
         },
     },
 ];
-
-
-export default preserves;
 // #endregion module
+
+
+
+// #region exports
+export default preserves;
+// #endregion exports
