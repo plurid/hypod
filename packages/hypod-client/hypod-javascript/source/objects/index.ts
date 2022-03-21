@@ -101,7 +101,7 @@ const HypodTree = (
 
                 return;
             },
-            removeTag: async (
+            obliterateTag: async (
                 imageneID: string,
                 tagID: string,
             ) => {
