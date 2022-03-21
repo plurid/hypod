@@ -17,8 +17,12 @@ ENV HYPOD_DOCKER_SERVICE=$HYPOD_DOCKER_SERVICE
 COPY . .
 
 
+ENV NODE_OPTIONS "--max-old-space-size=8192"
+
 ENV ENV_MODE production
 ENV NODE_ENV production
+ENV PLURID_BUILD_DIRECTORY build
+ENV PLURID_DEFAULT_VERBOSE true
 
 ENV NPM_TOKEN $NPM_TOKEN
 ENV NPM_REGISTRY $NPM_REGISTRY
@@ -29,6 +33,8 @@ RUN ( echo "cat <<EOF" ; cat ./configurations/.npmrcx ; echo EOF ) | sh > ./.npm
 RUN yarn install --production false --network-timeout 1000000
 
 RUN yarn build.production verbose
+
+RUN npm prune --production
 
 
 
@@ -100,9 +106,8 @@ ENV HYPOD_PRIVATE_TOKEN=$HYPOD_PRIVATE_TOKEN
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/node_modules ./node_modules
 
-
-RUN yarn install --production --network-timeout 1000000
 
 RUN rm -f .npmrc
 

@@ -49,8 +49,7 @@
         "build.server.production": "node scripts build.server.production",
         "build.local": "node scripts build.local",
         "build.development": "node scripts build.development",
-        "build.production": "node scripts build.production",
-        "prepublish": "pnpm build.production"
+        "build.production": "node scripts build.production"
     },
     "dependencies": {
         "@apollo/client": "^3.5.10",
