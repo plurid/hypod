@@ -1,6 +1,6 @@
 // #region imports
     // #region internal
-    import Hypod from './objects/Hypod';
+    import Hypod from './objects';
     // #endregion internal
 // #endregion imports
 

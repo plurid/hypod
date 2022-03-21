@@ -3,12 +3,8 @@
     import {
         ApolloClient,
         NormalizedCacheObject,
+        DocumentNode,
     } from '@apollo/client/core';
-
-
-    import {
-        time,
-    } from '@plurid/plurid-functions';
     // #endregion libraries
 
 
@@ -58,6 +54,27 @@ class Hypod {
         const messageText = 'hypod > ' + message;
         if (this.options.log) {
             console.log(messageText, error);
+        }
+    }
+
+
+    public async execute<I = any>(
+        input: I,
+        mutation: DocumentNode,
+        mutationName: string,
+    ) {
+        try {
+            const request = await this.client.mutate({
+                mutation,
+                variables: {
+                    input,
+                },
+            });
+
+            return request.data[mutationName];
+        } catch (error) {
+            this.logError('execute failed', error);
+            return;
         }
     }
 }
