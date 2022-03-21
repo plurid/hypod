@@ -19,7 +19,7 @@
 
 
 // #region module
-const getPrivateOwner = (
+const getPrivateOwnerFromCookies = (
     request: Request,
 ) => {
     try {
@@ -34,6 +34,48 @@ const getPrivateOwner = (
         }
 
         return PRIVATE_OWNER_IDENTONYM;
+    } catch (error) {
+        return;
+    }
+}
+
+
+const getPrivateOwnerFromHeader = (
+    request: Request,
+) => {
+    try {
+        const header = request.header('Authorization');
+        if (!header) {
+            return;
+        }
+
+        const tokenValue = header.replace('Bearer ', '');
+        if (tokenValue !== PRIVATE_OWNER_IDENTONYM + ':' + PRIVATE_TOKEN) {
+            return;
+        }
+
+        return PRIVATE_OWNER_IDENTONYM;
+    } catch (error) {
+        return;
+    }
+}
+
+
+const getPrivateOwner = (
+    request: Request,
+) => {
+    try {
+        const cookieOwner = getPrivateOwnerFromCookies(request);
+        if (cookieOwner) {
+            return cookieOwner;
+        }
+
+        const headerOwner = getPrivateOwnerFromHeader(request);
+        if (headerOwner) {
+            return headerOwner;
+        }
+
+        return;
     } catch (error) {
         return;
     }
