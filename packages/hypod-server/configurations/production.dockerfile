@@ -1,21 +1,12 @@
 # Building stage
 FROM node:16.14-alpine AS builder
 
-
-ARG HYPOD_DOCKER_SERVICE
-
 ARG NPM_TOKEN
 ARG NPM_REGISTRY=registry.npmjs.org
 
-
 WORKDIR /app
 
-
-ENV HYPOD_DOCKER_SERVICE=$HYPOD_DOCKER_SERVICE
-
-
 COPY . .
-
 
 ENV NODE_OPTIONS "--max-old-space-size=8192"
 
@@ -42,6 +33,7 @@ RUN npm prune --production
 # Launch stage
 FROM node:16.14-alpine
 
+WORKDIR /app
 
 ARG HYPOD_PORT=56565
 ARG HYPOD_QUIET=true
@@ -68,10 +60,6 @@ ARG GOOGLE_APPLICATION_CREDENTIALS
 
 ARG HYPOD_CUSTOM_LOGIC
 ARG HYPOD_PRIVATE_USAGE
-
-
-WORKDIR /app
-
 
 ENV ENV_MODE production
 ENV NODE_ENV production
@@ -102,14 +90,13 @@ ENV HYPOD_PRIVATE_OWNER_IDENTONYM=$HYPOD_PRIVATE_OWNER_IDENTONYM
 ENV HYPOD_PRIVATE_OWNER_KEY=$HYPOD_PRIVATE_OWNER_KEY
 ENV HYPOD_PRIVATE_TOKEN=$HYPOD_PRIVATE_TOKEN
 
-
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/node_modules ./node_modules
 
-
 RUN rm -f .npmrc
 
+EXPOSE $HYPOD_PORT
 
 CMD ["yarn", "start"]
