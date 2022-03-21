@@ -1,6 +1,6 @@
 {
     "name": "@plurid/hypod-client",
-    "version": "0.0.0-0",
+    "version": "0.0.0-1",
     "description": "Cloud Service Client for Imagene Registry",
     "keywords": [
         "hypod",
