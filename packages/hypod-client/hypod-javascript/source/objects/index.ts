@@ -36,7 +36,7 @@ const HypodTree = (
                     'hypodMutationImageneObliterate',
                 );
 
-                return result.status;
+                return result.status as boolean;
             },
         },
     };
