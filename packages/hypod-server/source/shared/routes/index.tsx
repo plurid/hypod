@@ -58,26 +58,11 @@ const notFoundRoute: PluridReactRoute = {
             title="not found · hypod"
         />
     ),
-    spaces: [
-        {
-            value: 'default',
-            universes: [
-                {
-                    value: 'default',
-                    clusters: [
-                        {
-                            value: 'default',
-                            planes: [
-                                {
-                                    value: '/',
-                                    component: NotFoundPlane,
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
+    planes: [
+        [ '/not-found', NotFoundPlane ],
+    ],
+    view: [
+        '/not-found',
     ],
 };
 
