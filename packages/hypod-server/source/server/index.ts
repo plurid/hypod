@@ -117,6 +117,7 @@ const options: PluridServerPartialOptions = {
         DOCKER_ENDPOINT_IGNORE,
         DOCKER_ENDPOINT_API_TOKEN,
     ],
+    hostname: 'localhost:56265',
 };
 
 
