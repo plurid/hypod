@@ -16,4 +16,18 @@ export interface DockerEntityMatchTypeData {
     digest: DockerEntityMatchDigest;
     uuid: DockerEntityMatchUuid;
 }
+
+
+export interface DockerManifest {
+    schemaVersion: number;
+    mediaType: string;
+    config: DockerManifestLayer;
+    layers: DockerManifestLayer[];
+}
+
+export interface DockerManifestLayer {
+    mediaType: string;
+    size: number;
+    digest: string;
+}
 // #endregion module

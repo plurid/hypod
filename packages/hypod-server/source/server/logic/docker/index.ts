@@ -27,6 +27,7 @@
     import {
         HypodRequest,
         Imagene,
+        DockerManifest,
     } from '~server/data/interfaces';
 
     import database from '~server/services/database';
@@ -49,6 +50,7 @@
     // #region internal
     import {
         getFromMatch,
+        normalizeSize,
     } from './utilities';
     // #endregion internal
 // #endregion imports
@@ -64,7 +66,7 @@ const BASE_PATH = path.join(
 
 /** GET */
 export const getNameTagsList = async (
-    request: HypodRequest,
+    _request: HypodRequest,
     response: Response,
     match: RegExpMatchArray,
 ) => {
@@ -95,7 +97,7 @@ export const getNameTagsList = async (
 
 
 export const getNameManifestsReference = async (
-    request: HypodRequest,
+    _request: HypodRequest,
     response: Response,
     match: RegExpMatchArray,
 ) => {
@@ -143,15 +145,14 @@ export const getNameManifestsReference = async (
         const imageLocation = BASE_PATH_IMAGENES_MANIFEST + name + '/';
         // console.log('imageLocation', imageLocation);
 
-        const referenceFilesData = await storage.downloadAll(imageLocation);
+        const referenceFilesData: DockerManifest[] | undefined = await storage.downloadAll(imageLocation);
         // console.log('referenceFilesData', referenceFilesData);
-
         if (!referenceFilesData) {
             response.status(400).end();
             return;
         }
 
-        let matchData;
+        let matchData: DockerManifest | undefined;
         for (const fileData of referenceFilesData) {
             const stringedValue = JSON.stringify(fileData, null, 3);
             // console.log('stringedValue', stringedValue);
@@ -194,7 +195,7 @@ export const getNameManifestsReference = async (
         return response.status(404).end();
     }
 
-    const parsedData = JSON.parse(file);
+    const parsedData = JSON.parse(file) as DockerManifest;
     const mediaType = parsedData.mediaType || '';
 
     response.setHeader(
@@ -276,7 +277,7 @@ export const getNameBlobsDigest = async (
 
 
 export const getNameBlobsUploadsUuid = async (
-    request: HypodRequest,
+    _request: HypodRequest,
     response: Response,
     match: RegExpMatchArray,
 ) => {
@@ -343,7 +344,7 @@ export const getNameBlobsUploadsUuid = async (
 
 /** POST */
 export const postNameBlobsUploads = async (
-    request: HypodRequest,
+    _request: HypodRequest,
     response: Response,
     match: RegExpMatchArray,
 ) => {
@@ -479,12 +480,14 @@ export const putNameManifestsReference = async (
     const data = (request as any).rawBody;
     const location = BASE_PATH_IMAGENES_MANIFEST + name + '/' + reference;
 
-    const parsedData = JSON.parse(data);
+
+    const parsedData = JSON.parse(data) as DockerManifest;
+    parsedData.layers = normalizeSize(parsedData.layers);
     const digest = parsedData?.config?.digest || '';
 
     await storage.upload(
         location,
-        data,
+        JSON.stringify(parsedData, null, 3) as any,
     );
 
     registerImageneManifest(
@@ -607,7 +610,7 @@ export const putNameBlobsUploadsUuid = async (
 
 /** DELETE */
 export const deleteNameManifestsReference = async (
-    request: HypodRequest,
+    _request: HypodRequest,
     response: Response,
     match: RegExpMatchArray,
 ) => {
@@ -639,7 +642,7 @@ export const deleteNameManifestsReference = async (
 
 
 export const deleteNameBlobsUploadsUuid = async (
-    request: HypodRequest,
+    _request: HypodRequest,
     response: Response,
     match: RegExpMatchArray,
 ) => {
@@ -671,7 +674,7 @@ export const deleteNameBlobsUploadsUuid = async (
 
 
 export const deleteNameBlobsDigest = async (
-    request: HypodRequest,
+    _request: HypodRequest,
     response: Response,
     match: RegExpMatchArray,
 ) => {

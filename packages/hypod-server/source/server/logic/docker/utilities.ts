@@ -6,6 +6,7 @@
 
     import {
         DockerEntityMatchType,
+        DockerManifestLayer,
     } from '~server/data/interfaces';
     // #endregion external
 // #endregion imports
@@ -29,5 +30,21 @@ export const getFromMatch = (
         default:
             return;
     }
+}
+
+
+export const normalizeSize = (
+    layers: DockerManifestLayer[],
+) => {
+    return layers.map(layer => {
+        const {
+            size,
+        } = layer;
+
+        return {
+            ...layer,
+            size: size - 1,
+        };
+    });
 }
 // #endregion module
