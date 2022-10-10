@@ -6,6 +6,14 @@
         PluridServerPartialOptions,
         PluridServerTemplateConfiguration,
     } from '@plurid/plurid-react-server';
+
+    import {
+        ApolloProvider,
+    } from '@apollo/client';
+
+    import {
+        Provider as ReduxProvider,
+    } from 'react-redux';
     // #endregion libraries
 
 
@@ -83,16 +91,14 @@ const middleware: PluridServerMiddleware[] = [
 const services: PluridServerService[] = [
     {
         name: 'Apollo',
-        package: '@apollo/client',
-        provider: 'ApolloProvider',
+        Provider: ApolloProvider,
         properties: {
             client: apolloClient,
         },
     },
     {
         name: 'Redux',
-        package: 'react-redux',
-        provider: 'Provider',
+        Provider: ReduxProvider,
         properties: {
             store: reduxStore({}),
             context: reduxContext,

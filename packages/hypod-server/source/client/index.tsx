@@ -1,7 +1,10 @@
 // #region imports
     // #region libraries
     import React from 'react';
-    import ReactDOM from 'react-dom';
+
+    import {
+        hydrateRoot,
+    } from 'react-dom/client';
     // #endregion libraries
 
     // #region internal
@@ -17,11 +20,10 @@
 //     navigator.serviceWorker.register('/service-worker.js');
 // }
 
-const hypodApplication = document.getElementById('hypod-application');
+const hypodApplication = document.getElementById('hypod-application')!;
 
-
-ReactDOM.hydrate(
-    <Client />,
+hydrateRoot(
     hypodApplication,
+    <Client />,
 );
 // #endregion module
