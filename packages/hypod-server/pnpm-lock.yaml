@@ -77,6 +77,7 @@ specifiers:
   rollup-plugin-node-externals: ^5.0.0
   rollup-plugin-postcss: ^4.0.2
   rollup-plugin-sourcemaps: ^0.6.3
+  rollup-plugin-terser: ^7.0.2
   rollup-plugin-typescript2: ^0.34.1
   source-map-loader: ^4.0.1
   style-loader: ^3.3.1
@@ -176,6 +177,7 @@ devDependencies:
   rollup-plugin-node-externals: 5.0.0_rollup@2.79.1
   rollup-plugin-postcss: 4.0.2_postcss@8.4.17
   rollup-plugin-sourcemaps: 0.6.3_3pblcpi325b6butcoo5dorvnb4
+  rollup-plugin-terser: 7.0.2_rollup@2.79.1
   rollup-plugin-typescript2: 0.34.1_gypgyaqhine6mwjfvh7icfhviq
   source-map-loader: 4.0.1_webpack@5.74.0
   style-loader: 3.3.1_webpack@5.74.0
@@ -5218,6 +5220,15 @@ packages:
       string-length: 4.0.2
     dev: true
 
+  /jest-worker/26.6.2:
+    resolution: {integrity: sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ==}
+    engines: {node: '>= 10.13.0'}
+    dependencies:
+      '@types/node': 18.8.3
+      merge-stream: 2.0.0
+      supports-color: 7.2.0
+    dev: true
+
   /jest-worker/27.5.1:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
@@ -6683,6 +6694,18 @@ packages:
       source-map-resolve: 0.6.0
     dev: true
 
+  /rollup-plugin-terser/7.0.2_rollup@2.79.1:
+    resolution: {integrity: sha512-w3iIaU4OxcF52UUXiZNsNeuXIMDvFrr+ZXK6bFZ0Q60qyVfq4uLptoS4bbq3paG3x216eQllFZX7zt6TIImguQ==}
+    peerDependencies:
+      rollup: ^2.0.0
+    dependencies:
+      '@babel/code-frame': 7.16.7
+      jest-worker: 26.6.2
+      rollup: 2.79.1
+      serialize-javascript: 4.0.0
+      terser: 5.15.0
+    dev: true
+
   /rollup-plugin-typescript2/0.34.1_gypgyaqhine6mwjfvh7icfhviq:
     resolution: {integrity: sha512-P4cHLtGikESmqi1CA+tdMDUv8WbQV48mzPYt77TSTOPJpERyZ9TXdDgjSDix8Fkqce6soYz3+fa4lrC93IEkcw==}
     peerDependencies:
@@ -6853,6 +6876,12 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+
+  /serialize-javascript/4.0.0:
+    resolution: {integrity: sha512-GaNA54380uFefWghODBWEGisLZFj00nS5ACs6yHa9nLqlLpVLO8ChDGeKRjZnV4Nh4n0Qi7nhYZD/9fCPzEqkw==}
+    dependencies:
+      randombytes: 2.1.0
+    dev: true
 
   /serialize-javascript/6.0.0:
     resolution: {integrity: sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==}
