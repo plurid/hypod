@@ -19,6 +19,7 @@
 
 // #region module
 export interface ShellProperties {
+    children: React.ReactNode;
 }
 
 const Shell: React.FC<ShellProperties> = (
