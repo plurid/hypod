@@ -36,6 +36,7 @@
     import {
         DOCKER_ENDPOINT_IGNORE,
         DOCKER_ENDPOINT_API_TOKEN,
+        DOCKER_SERVICE,
     } from './data/constants';
 
     import {
@@ -59,6 +60,7 @@ const watchMode = process.env.PLURID_WATCH_MODE === 'true';
 const isProduction = process.env.ENV_MODE === 'production';
 const buildDirectory = process.env.PLURID_BUILD_DIRECTORY || 'build';
 const port = process.env.PORT || 56565;
+const serverHostname = DOCKER_SERVICE || `localhost:${port}`;
 // #endregion environment
 
 
@@ -117,7 +119,7 @@ const options: PluridServerPartialOptions = {
         DOCKER_ENDPOINT_IGNORE,
         DOCKER_ENDPOINT_API_TOKEN,
     ],
-    hostname: 'localhost:56265',
+    hostname: serverHostname,
 };
 
 
