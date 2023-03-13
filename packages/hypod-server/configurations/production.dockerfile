@@ -1,5 +1,5 @@
 # Building stage
-FROM node:16.14-alpine AS builder
+FROM node:18.15-alpine AS builder
 
 ARG NPM_TOKEN
 ARG NPM_REGISTRY=registry.npmjs.org
@@ -34,7 +34,7 @@ RUN npm prune --production
 
 
 # Launch stage
-FROM node:16.14-alpine
+FROM node:18.15-alpine
 
 WORKDIR /app
 
