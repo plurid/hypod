@@ -10,13 +10,8 @@ const common = {
         '.gif': 'file',
         '.mov': 'file',
     },
-    watch: {
-        onRebuild(error, result) {
-            if (error) console.error('watch build failed:', error)
-            else console.log('watch build succeeded')
-        },
-    },
 };
+
 
 
 module.exports = common;

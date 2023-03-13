@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 
 const postcss = require('rollup-plugin-postcss');
 const url = require('@rollup/plugin-url');
@@ -9,7 +9,7 @@ const resolve = require('@rollup/plugin-node-resolve').default;
 const commonjs = require('@rollup/plugin-commonjs');
 const sourceMaps = require('rollup-plugin-sourcemaps');
 const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
-const { terser } = require('rollup-plugin-terser');
+const terser = require('@rollup/plugin-terser');
 
 
 const {
@@ -20,8 +20,10 @@ const {
 } = require ('./shared');
 
 const {
-    esModules,
-} = require('../custom');
+    resolvedESModules: esModules,
+    resolvedExternals: externals,
+} = require('../logic');
+
 
 
 const input = 'source/server/index.ts';
@@ -31,6 +33,7 @@ const output = [
         file: `./${BUILD_DIRECTORY}/index.js`,
         format: 'cjs',
         exports: 'named',
+        interop: 'auto',
     },
 ];
 
@@ -80,8 +83,10 @@ const plugins = {
 };
 
 
+
 module.exports = {
     input,
     output,
+    external: externals,
     plugins,
 };
