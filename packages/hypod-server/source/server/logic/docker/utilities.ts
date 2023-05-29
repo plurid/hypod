@@ -43,7 +43,8 @@ export const normalizeSize = (
 
         return {
             ...layer,
-            size: size - 1,
+            // size: size - 1,
+            size,
         };
     });
 }

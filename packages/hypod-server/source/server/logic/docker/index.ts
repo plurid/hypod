@@ -482,7 +482,8 @@ export const putNameManifestsReference = async (
 
 
     const parsedData = JSON.parse(data) as DockerManifest;
-    parsedData.layers = normalizeSize(parsedData.layers);
+    // console.log('parsedData', parsedData);
+    // parsedData.layers = normalizeSize(parsedData.layers);
     const digest = parsedData?.config?.digest || '';
 
     await storage.upload(
