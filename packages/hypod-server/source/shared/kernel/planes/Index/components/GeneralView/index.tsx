@@ -257,7 +257,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
                         <ul>
                             {generalSelectors.map(selector => {
-                                const Icon = generalSelectorsIcons[selector];
+                                const Icon = (generalSelectorsIcons as any)[selector];
 
                                 return (
                                     <StyledGeneralSelectorItem

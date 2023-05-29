@@ -1,8 +1,6 @@
 // #region imports
     // #region libraries
-    import {
-        gql,
-    } from 'apollo-server-express';
+    import gql from 'graphql-tag';
     // #endregion libraries
 
     // #region internal

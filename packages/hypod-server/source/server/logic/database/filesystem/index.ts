@@ -87,19 +87,19 @@ const query: DatabaseQuery = async (
     switch (entity) {
         case 'namespace': {
             const namespaces: Imagene[] = await filesystemStorage.downloadAll(BASE_PATH_METADATA_NAMESPACES) || [];
-            const namespace = namespaces.find(namespace => namespace[field] === value);
+            const namespace = namespaces.find(namespace => (namespace as any)[field] === value);
 
             return namespace;
         }
         case 'project': {
             const projects: Imagene[] = await filesystemStorage.downloadAll(BASE_PATH_METADATA_PROJECTS) || [];
-            const project = projects.find(project => project[field] === value);
+            const project = projects.find(project => (project as any)[field] === value);
 
             return project;
         }
         case 'imagene': {
             const imagenes: Imagene[] = await filesystemStorage.downloadAll(BASE_PATH_METADATA_IMAGENES) || [];
-            const imagene = imagenes.find(imagene => imagene[field] === value);
+            const imagene = imagenes.find(imagene => (imagene as any)[field] === value);
 
             return imagene;
         }
