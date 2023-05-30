@@ -28,7 +28,7 @@ RUN yarn install --production false --network-timeout 1000000
 
 RUN yarn build.production verbose
 
-RUN npm prune --production
+# RUN npm prune --production
 
 
 
