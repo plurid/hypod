@@ -428,13 +428,17 @@ export const patchNameBlobsUploadsUuid = async (
     }
 
     stream.on('finish', () => {
+        const rangeEnd = stream.bytesWritten > 0
+            ? stream.bytesWritten - 1
+            : 0;
+
         response.setHeader(
             'Location',
             location,
         );
         response.setHeader(
             'Range',
-            '0-' + stream.bytesWritten,
+            '0-' + rangeEnd,
         );
         response.setHeader(
             'Content-Length',
