@@ -1,191 +1,92 @@
-<p align="center">
-    <a target="_blank" href="https://hypod.cloud">
-        <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/identity/hypod-logo.png" height="250px">
-    </a>
-    <br />
-    <br />
-    <a target="_blank" href="https://github.com/plurid/hypod/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/license-DEL-blue.svg?colorB=1380C3&style=for-the-badge" alt="License: DEL">
-    </a>
-</p>
+# `@plurid/hypod`
 
-
-
-<h1 align="center">
-    hypod
-</h1>
-
-
-<h3 align="center">
-    Cloud Service for Imagene Registry
-</h3>
-
-
-
-<br />
-
-
-
-`hypod` is an imagene registry.
-
-An `imagene registry` is a renaming of the `container registry` because, in fact, the registry is one of 'images', a runnable package, not of 'containers', a running package, and because a software 'image' is a bad name since there is nothing visual about it's nature.
-
-The name `hypod` comes from the appropriation of the greek `hupodochê`, receptacle, as discussed in Plato's [`Timaeus`](https://plato.stanford.edu/entries/plato-timaeus/).
-
-`hypod` uses [plurid](https://github.com/plurid/plurid) to explore information as a 3D structure.
-
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/screenshots/ss-1.png" height="500px">
-</p>
-
-
-### Contents
-
-+ [Install](#install)
-+ [Usage](#usage)
-+ [Building](#building)
-+ [Configuration](#configuration)
-+ [Packages](#packages)
-+ [Codeophon](#codeophon)
-
-
+Hypod 0.2.0 is a self-hosted OCI Distribution registry for Node.js 24. It includes a GraphQL administration API and a responsive Plurid administration interface.
 
 ## Install
 
-run
-
-``` bash
-npm install @plurid/hypod
+```sh
+pnpm add @plurid/hypod
 ```
 
-or
+The package publishes ESM, CommonJS, TypeScript declarations, and a `hypod` executable.
 
-``` bash
-yarn add @plurid/hypod
+## Programmatic API
+
+```ts
+import { createHypod } from '@plurid/hypod';
+
+const application = await createHypod({
+  mode: 'private',
+  host: '127.0.0.1',
+  port: 56565,
+  externalUrl: 'https://registry.example.com',
+  dataRoot: '/var/lib/hypod',
+  owner: {
+    identonym: 'owner',
+    key: process.env.HYPOD_OWNER_KEY!,
+  },
+  tokenSecret: process.env.HYPOD_TOKEN_SECRET!,
+});
+
+const address = await application.start();
+console.log(address.url);
+
+// Stop accepting work, close HTTP and SQLite, then release the data lock.
+await application.stop();
 ```
 
-create a `server.js` file
+`createHypod()` returns explicit lifecycle methods: `ready()`, `start()`, `address()`, and idempotent `stop()`. Importing the package has no listening or filesystem side effects. The default `hypodServer` export and `hypodSetup(logic?)` remain compatibility wrappers for 0.2 consumers.
 
-``` typescript
-// server.js
-import hypodServer, {
-    hypodSetup,
-} from '@plurid/hypod';
+Custom identity and authorization systems implement the exported `AccessPolicy` and use `{ mode: 'custom', accessPolicy }`. Custom Usage has no environment-only equivalent because the policy is executable code.
 
+## CLI
 
-hypodSetup();
-hypodServer.start();
+```sh
+hypod serve
+hypod migrate --data-root /var/lib/hypod --dry-run
+hypod migrate --data-root /var/lib/hypod
+hypod doctor --data-root /var/lib/hypod
+hypod gc --data-root /var/lib/hypod --dry-run
+hypod gc --data-root /var/lib/hypod
 ```
 
-and run it
+`serve` owns the data-root lock until graceful shutdown. `migrate`, `doctor`, and `gc` are offline commands; stop the server first. Run migration and garbage collection in dry-run mode before applying them.
 
-``` bash
-node server.js
-```
+## Access modes
 
-`hypod` starts a server listening on port `56565` serving the hypod UI on `/`, or which can receive GraphQL API requests on `/graphql`.
+- `public`: anonymous catalog access and pulls for repositories marked public. With no complete owner configuration, the whole registry is read-only.
+- `private`: owner authentication is required for reads and writes; incomplete credentials fail startup.
+- `custom`: an application-provided `AccessPolicy` decides authentication, authorization, and optional token issuance.
 
+Built-in credentials require `owner.identonym`, `owner.key`, and a `tokenSecret` of at least 32 UTF-8 bytes. Tokens are short-lived HMAC-SHA256 JWTs scoped by repository and action.
 
+## Environment
 
-## Usage
+The canonical variables are `HYPOD_MODE`, `HYPOD_HOST`, `HYPOD_PORT`, `HYPOD_EXTERNAL_URL`, `HYPOD_DATA_ROOT`, `HYPOD_TRUST_PROXY`, `HYPOD_OWNER_IDENTONYM`, `HYPOD_OWNER_KEY`, `HYPOD_TOKEN_SECRET`, `HYPOD_TOKEN_TTL_SECONDS`, `HYPOD_LOG_LEVEL`, and `HYPOD_SERVE_ADMIN`.
 
-`hypod` can be used as
+See [`environment/.env.example`](environment/.env.example) for a safe template and the repository [`docs/operations.md`](../../docs/operations.md) for exact semantics, proxying, backups, migration, tokens, healthchecks, and container hardening.
 
-+ a completely public registry;
-+ a completely private registry (with only one owner);
-+ a registry with multiple owning accounts (requires custom logic);
+## Supported scope
 
-In order to use `hypod` as a multi-owned registry the custom logic needs to implement the [`HypodLogic` interface](https://github.com/plurid/hypod/blob/84661ba76a53ad72abea712c4938fa8db0eea6b2/packages/hypod/source/server/data/interfaces/index.ts#L108z) and pass the methods to `hypodSetup` before starting the `hypodServer`
+- SQLite metadata and local content-addressed files
+- one writer per data root
+- OCI Distribution 1.1 core pulls, pushes, resumable and monolithic Blob uploads, mounts, Manifests and indexes, tags, catalog pagination, HEAD, and deletion by digest
+- GraphQL compatibility operations and typed shared contracts
+- streamed Blob uploads/downloads and exact SHA-256 verification
 
+OCI referrers, SHA-512, S3/GCS, and multiple processes writing a shared volume are not supported in 0.2.
 
-``` typescript
-// server.js
-import hypodServer, {
-    hypodSetup,
-    HypodLogic,
-} from '@plurid/hypod';
+## Routes
 
+| Route           | Purpose                    |
+| --------------- | -------------------------- |
+| `/`             | Admin interface            |
+| `/graphql`      | GraphQL administration API |
+| `/v2/`          | OCI Distribution API       |
+| `/v2/token`     | OCI bearer token service   |
+| `/health/live`  | Liveness probe             |
+| `/health/ready` | Readiness probe            |
 
-const hypodLogic: HypodLogic = {
-    // ...
-};
+## License
 
-hypodSetup(hypodLogic);
-hypodServer.start();
-```
-
-
-
-## Building
-
-``` bash
-docker build --file ./configurations/production.dockerfile \
-    --tag hypod \
-    --build-arg HYPOD_PORT= \
-    --build-arg HYPOD_QUIET= \
-    --build-arg HYPOD_DOCKER_REALM_BASE= \
-    --build-arg HYPOD_DOCKER_SERVICE= \
-    --build-arg HYPOD_DATABASE_TYPE= \
-    --build-arg HYPOD_STORAGE_TYPE= \
-    --build-arg HYPOD_STORAGE_BUCKET= \
-    --build-arg HYPOD_STORAGE_ROOT_PATH= \
-    --build-arg HYPOD_AWS_API_VERSION= \
-    --build-arg HYPOD_AWS_REGION= \
-    --build-arg HYPOD_AWS_ACCESS_KEY_ID= \
-    --build-arg HYPOD_AWS_SECRET_ACCESS_KEY= \
-    --build-arg GOOGLE_APPLICATION_CREDENTIALS= \
-    --build-arg HYPOD_CUSTOM_LOGIC= \
-    --build-arg HYPOD_PRIVATE_USAGE= \
-    --build-arg HYPOD_PRIVATE_OWNER_IDENTONYM= \
-    --build-arg HYPOD_PRIVATE_OWNER_KEY= \
-    --build-arg HYPOD_PRIVATE_TOKEN= \
-    .
-```
-
-
-
-## Configuration
-
-`hypod` can be configured to use
-
-as a database:
-
-+ the `filesystem`
-+ `amazon` database
-+ `google` database
-
-as storage:
-
-+ the `filesystem`
-+ `amazon` storage
-+ `google` storage
-
-
-
-## Packages
-
-
-<a target="_blank" href="https://www.npmjs.com/package/@plurid/hypod">
-    <img src="https://img.shields.io/npm/v/@plurid/hypod.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
-</a>
-
-[@plurid/hypod][hypod] • the server application
-
-[hypod]: https://github.com/plurid/hypod/tree/master/packages/hypod
-
-
-<a target="_blank" href="https://www.npmjs.com/package/@plurid/hypod-client">
-    <img src="https://img.shields.io/npm/v/@plurid/hypod-client.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
-</a>
-
-[@plurid/hypod-client-javascript][hypod-client-javascript] • `JavaScript` client
-
-[hypod-client-javascript]: https://github.com/plurid/hypod/tree/master/packages/hypod-client/hypod-javascript
-
-
-
-## [Codeophon](https://github.com/ly3xqhl8g9/codeophon)
-
-+ licensing: [delicense](https://github.com/ly3xqhl8g9/delicense)
-+ versioning: [αver](https://github.com/ly3xqhl8g9/alpha-versioning)
+See [`LICENSE`](LICENSE).

@@ -1,63 +1,60 @@
 {
-    "name": "@plurid/hypod-client",
-    "version": "0.0.0-4",
-    "description": "Cloud Service Client for Imagene Registry",
-    "keywords": [
-        "hypod",
-        "client"
-    ],
-    "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
-    "license": "SEE LICENSE IN LICENSE",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/plurid/hypod"
-    },
-    "bugs": {
-        "email": "source@plurid.com",
-        "url": "https://github.com/plurid/hypod/issues"
-    },
-    "homepage": "https://github.com/plurid/hypod/tree/master/packages/hypod-client/hypod-javascript",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/",
-        "access": "public"
-    },
-    "engines": {
-        "node": ">=18",
-        "npm": ">=8"
-    },
-    "main": "distribution/index.js",
-    "typings": "distribution/index.d.ts",
-    "files": [
-        "distribution"
-    ],
-    "scripts": {
-        "runner": "runner tests",
-        "build": "pnpm prebuild && tsup source/index.ts",
-        "prebuild": "rm -rf distribution",
-        "prepublishOnly": "pnpm build"
-    },
-    "peerDependencies": {
-        "@apollo/client": ">=3.5",
-        "@plurid/plurid-functions": "*",
-        "cross-fetch": ">=3.1",
-        "graphql": ">=16.3"
-    },
-    "devDependencies": {
-        "@apollo/client": "^3.7.15",
-        "@plurid/plurid-functions": "0.0.0-31",
-        "@plurid/runner": "^0.0.0-9",
-        "@types/node": "^20.3.1",
-        "cross-fetch": "^3.1.6",
-        "graphql": "^16.6.0",
-        "tsup": "^7.0.0",
-        "typescript": "^5.1.3"
-    },
-    "tsup": {
-        "outDir": "distribution",
-        "format": [
-            "cjs"
-        ],
-        "dts": true,
-        "clean": true
+  "name": "@plurid/hypod-client",
+  "version": "0.2.0",
+  "description": "Typed JavaScript client for Hypod",
+  "keywords": [
+    "hypod",
+    "oci",
+    "registry",
+    "graphql"
+  ],
+  "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plurid/hypod"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "type": "module",
+  "main": "./distribution/index.cjs",
+  "module": "./distribution/index.mjs",
+  "types": "./distribution/index.d.mts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./distribution/index.d.mts",
+        "default": "./distribution/index.mjs"
+      },
+      "require": {
+        "types": "./distribution/index.d.cts",
+        "default": "./distribution/index.cjs"
+      }
     }
+  },
+  "files": [
+    "distribution",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@plurid/hypod-contracts": "workspace:*",
+    "graphql": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
 }

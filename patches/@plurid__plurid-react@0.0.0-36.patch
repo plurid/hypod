@@ -1,0 +1,26 @@
+diff --git a/distribution/index.js b/distribution/index.js
+index a3866ea3f6582480fa9ed136735afb0019955863..d07eedbeeb81386bb88429daf35468bcbba7ec9b 100644
+--- a/distribution/index.js
++++ b/distribution/index.js
+@@ -10317,7 +10317,7 @@ var PluridLink = (properties) => {
+   }, [
+     showLink,
+     JSON.stringify(stateViewSize),
+-    stateTree
++    JSON.stringify(stateTree)
+   ]);
+   React45.useEffect(() => {
+     const openClosedPlaneIndex = defaultPubSub.subscribe({
+diff --git a/distribution/index.mjs b/distribution/index.mjs
+index 3611c888b5b59168ad4e6d6e697d7a06520225a4..4e2e1d0efc142b8a2993244ceb71390921eee934 100644
+--- a/distribution/index.mjs
++++ b/distribution/index.mjs
+@@ -10307,7 +10307,7 @@ var PluridLink = (properties) => {
+   }, [
+     showLink,
+     JSON.stringify(stateViewSize),
+-    stateTree
++    JSON.stringify(stateTree)
+   ]);
+   useEffect(() => {
+     const openClosedPlaneIndex = defaultPubSub.subscribe({

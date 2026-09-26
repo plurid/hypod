@@ -1,0 +1,43 @@
+{
+  "name": "hypod-workspace",
+  "version": "0.2.0",
+  "private": true,
+  "description": "OCI Distribution registry, administration interface, and SDK",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24.15.0"
+  },
+  "scripts": {
+    "build": "pnpm --recursive --if-present build",
+    "typecheck": "pnpm --recursive --if-present typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "pnpm --recursive --if-present test",
+    "test:integration": "pnpm --filter @plurid/hypod test:integration",
+    "test:e2e": "playwright test",
+    "test:oci": "pnpm --filter @plurid/hypod test:oci",
+    "test:container": "node scripts/container-smoke.mjs",
+    "test:oci:conformance": "node scripts/oci-conformance.mjs",
+    "deps:check": "ncu --workspaces --packageManager pnpm",
+    "deps:update": "ncu --workspaces --packageManager pnpm --upgrade",
+    "pack:check": "node scripts/check-packages.mjs",
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration && pnpm test:oci && pnpm build && pnpm test:e2e && pnpm pack:check"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@playwright/test": "catalog:",
+    "@typescript/native": "catalog:",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "globals": "catalog:",
+    "npm-check-updates": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
+  }
+}

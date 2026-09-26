@@ -1,86 +1,141 @@
-<p align="center">
-    <a target="_blank" href="https://hypod.cloud">
-        <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/identity/hypod-logo.png" height="250px">
-    </a>
-    <br />
-    <br />
-    <a target="_blank" href="https://github.com/plurid/hypod/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/license-DEL-blue.svg?colorB=1380C3&style=for-the-badge" alt="License: DEL">
-    </a>
-</p>
+# Hypod
 
+Hypod 0.2.0 is a self-hosted OCI Distribution registry with a GraphQL administration API, a responsive Plurid administration interface, and a typed JavaScript client.
 
+The 0.2 runtime is deliberately focused: it stores metadata in SQLite and exact content bytes on the local filesystem, permits one writer per data root, and targets core OCI Distribution 1.1 workflows. S3/GCS storage, shared-volume multi-process operation, and OCI referrer discovery are not supported.
 
-<h1 align="center">
-    hypod
-</h1>
+## Requirements
 
+- Node.js 24.15 or newer for repository development
+- pnpm 11.25.0, pinned by `packageManager`
+- Docker or another OCI client when exercising registry workflows
 
-<h3 align="center">
-    Cloud Service for Imagene Registry
-</h3>
+## Quick start
 
+Install and build all workspaces:
 
+```sh
+corepack enable
+pnpm install --frozen-lockfile
+pnpm build
+```
 
-<br />
+Start a local read-only Public Usage registry:
 
+```sh
+HYPOD_DATA_ROOT=./data \
+HYPOD_EXTERNAL_URL=http://127.0.0.1:56565 \
+node packages/hypod-server/build/cli.mjs serve
+```
 
+The admin interface is at `http://127.0.0.1:56565/`, GraphQL is at `/graphql`, and the OCI API is below `/v2/`. Liveness and readiness probes are `/health/live` and `/health/ready`.
 
-`hypod` is an imagene registry.
+Public Usage is read-only until all owner credentials are configured. To enable authenticated writes, set `HYPOD_OWNER_IDENTONYM`, `HYPOD_OWNER_KEY`, and a random `HYPOD_TOKEN_SECRET` containing at least 32 UTF-8 bytes. Private Usage additionally requires authentication for reads:
 
-An `imagene registry` is a renaming of the `container registry` because, in fact, the registry is one of 'images', a runnable package, not of 'containers', a running package, and because a software 'image' is a bad name since there is nothing visual about it's nature.
+```sh
+export HYPOD_MODE=private
+export HYPOD_OWNER_IDENTONYM=owner
+export HYPOD_OWNER_KEY='replace-with-a-long-random-password'
+export HYPOD_TOKEN_SECRET="$(openssl rand -hex 32)"
+export HYPOD_EXTERNAL_URL=http://127.0.0.1:56565
+node packages/hypod-server/build/cli.mjs serve
+```
 
-The name `hypod` comes from the appropriation of the greek `hupodochê`, receptacle, as discussed in Plato's [`Timaeus`](https://plato.stanford.edu/entries/plato-timaeus/).
+Do not place real credentials in committed environment files. The canonical, secret-free template is [`packages/hypod-server/environment/.env.example`](packages/hypod-server/environment/.env.example).
 
-`hypod` uses [plurid](https://github.com/plurid/plurid) to explore information as a 3D structure.
+## Container
 
+Build the Node 24 image from the repository root:
 
-<p align="center">
-    <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/screenshots/ss-1.png" height="500px">
-</p>
+```sh
+docker build --tag hypod:0.2.0 .
+```
 
+Run it as the built-in unprivileged user with an immutable root filesystem and a writable data volume:
 
-### Contents
+```sh
+docker volume create hypod-data
+docker run --name hypod --read-only --tmpfs /tmp:size=16m \
+  --mount type=volume,source=hypod-data,target=/var/lib/hypod \
+  --publish 56565:56565 \
+  --env HYPOD_EXTERNAL_URL=http://127.0.0.1:56565 \
+  hypod:0.2.0
+```
 
-+ [Usage](#usage)
-+ [Packages](#packages)
-+ [Codeophon](#codeophon)
+Supply owner secrets with a runtime secret mechanism or an untracked `--env-file`, never as image build arguments. The image includes a readiness healthcheck and uses the Node process directly so `SIGTERM` reaches Hypod's graceful-shutdown handler.
 
+## Programmatic server
 
+```ts
+import { createHypod } from '@plurid/hypod';
 
-## Usage
+const hypod = await createHypod({
+  mode: 'private',
+  owner: { identonym: 'owner', key: process.env.HYPOD_OWNER_KEY! },
+  tokenSecret: process.env.HYPOD_TOKEN_SECRET!,
+  externalUrl: 'https://registry.example.com',
+  dataRoot: '/var/lib/hypod',
+});
 
-`hypod` can be used as
+await hypod.start();
+// Later: await hypod.stop();
+```
 
-+ a completely public registry;
-+ a completely private registry (with only one owner);
-+ a registry with multiple owning accounts (requires custom logic);
+The old default server export and `hypodSetup()` remain as compatibility wrappers in 0.2. New integrations should use `createHypod()` and an `AccessPolicy` for custom identity systems.
 
+## Workspace
 
+| Package                   | Purpose                                                            |
+| ------------------------- | ------------------------------------------------------------------ |
+| `@plurid/hypod`           | Registry server, CLI, GraphQL API, and admin interface             |
+| `@plurid/hypod-client`    | Typed Fetch-based GraphQL client plus the legacy default factory   |
+| `@plurid/hypod-contracts` | Private shared GraphQL schema, documents, and TypeScript contracts |
 
-## Packages
+Useful root commands:
 
+```sh
+pnpm test
+pnpm test:integration
+pnpm test:oci
+pnpm typecheck
+pnpm lint
+pnpm build
+pnpm pack:check
+pnpm verify
+```
 
-<a target="_blank" href="https://www.npmjs.com/package/@plurid/hypod">
-    <img src="https://img.shields.io/npm/v/@plurid/hypod.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
-</a>
+Dependency updates are reproducible through npm-check-updates:
 
-[@plurid/hypod][hypod] • the server application
+```sh
+pnpm deps:check
+pnpm deps:update
+pnpm install
+```
 
-[hypod]: https://github.com/plurid/hypod/tree/master/packages/hypod
+`.ncurc.mjs` retains GraphQL 16 for Apollo Server 5 peer compatibility and Node 24 typings for the supported runtime. These are compatibility ceilings, not missed updates.
 
+## OCI conformance
 
-<a target="_blank" href="https://www.npmjs.com/package/@plurid/hypod-client">
-    <img src="https://img.shields.io/npm/v/@plurid/hypod-client.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
-</a>
+Start a disposable, write-enabled Hypod, obtain a local checkout of `opencontainers/distribution-spec`, then run:
 
-[@plurid/hypod-client-javascript][hypod-client-javascript] • `JavaScript` client
+```sh
+OCI_CONFORMANCE_ROOT=/path/to/distribution-spec \
+OCI_REGISTRY=127.0.0.1:56565 \
+OCI_REPO1=conformance/repository-one \
+OCI_REPO2=conformance/repository-two \
+OCI_USERNAME=owner \
+OCI_PASSWORD="$HYPOD_OWNER_KEY" \
+pnpm test:oci:conformance
+```
 
-[hypod-client-javascript]: https://github.com/plurid/hypod/tree/master/packages/hypod-client/hypod-javascript
+The wrapper defaults to OCI 1.1 with TLS, referrer discovery, and SHA-512 content disabled for the supported 0.2 scope, and enables every other capability Hypod implements — blob and manifest digest headers, upload cancellation, byte-range blob pulls, cross-repository mounting, tag deletion, and manifest tag parameters — so a regression in one of them fails the run rather than being reported as unsupported. Results are written to `.artifacts/oci-conformance`. It does not download or modify the upstream suite.
 
+## Operations and compatibility
 
+See [`docs/operations.md`](docs/operations.md) for reverse-proxy TLS, access modes, token handling, backups, migration, rollback, diagnostics, garbage collection, and conformance testing. The supported legacy surface is recorded in [`docs/compatibility/current-contract.md`](docs/compatibility/current-contract.md), and architectural decisions live in [`docs/adr`](docs/adr).
 
-## [Codeophon](https://github.com/ly3xqhl8g9/codeophon)
+Project work is tracked as local Markdown under [`docs/issues/modernization`](docs/issues/modernization); this repository does not depend on GitHub Issues.
 
-+ licensing: [delicense](https://github.com/ly3xqhl8g9/delicense)
-+ versioning: [αver](https://github.com/ly3xqhl8g9/alpha-versioning)
+## License
+
+See [`LICENSE`](LICENSE).

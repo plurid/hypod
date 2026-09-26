@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "rootDir": ".",
+    "outDir": "build",
+    "types": ["node", "vitest/globals"]
+  },
+  "include": ["source/**/*.ts", "tsdown.config.ts"],
+  "exclude": ["build", "node_modules"]
+}

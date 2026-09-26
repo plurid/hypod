@@ -1,123 +1,64 @@
-<p align="center">
-    <a target="_blank" href="https://hypod.cloud">
-        <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/identity/hypod-logo.png" height="250px">
-    </a>
-    <br />
-    <br />
-    <a target="_blank" href="https://github.com/plurid/hypod/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/license-DEL-blue.svg?colorB=1380C3&style=for-the-badge" alt="License: DEL">
-    </a>
-</p>
+# `@plurid/hypod-client`
 
-
-
-<h1 align="center">
-    hypod
-</h1>
-
-
-<h3 align="center">
-    Cloud Service Client for Imagene Registry
-</h3>
-
-
-
-<br />
-
-
-
-`hypod` is an imagene registry.
-
-An `imagene registry` is a renaming of the `container registry` because, in fact, the registry is one of 'images', a runnable package, not of 'containers', a running package, and because a software 'image' is a bad name since there is nothing visual about it's nature.
-
-The name `hypod` comes from the appropriation of the greek `hupodochê`, receptacle, as discussed in Plato's [`Timaeus`](https://plato.stanford.edu/entries/plato-timaeus/).
-
-`hypod` uses [plurid](https://github.com/plurid/plurid) to explore information as a 3D structure.
-
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/plurid/hypod/master/about/screenshots/ss-1.png" height="500px">
-</p>
-
-
-### Contents
-
-+ [Install](#install)
-+ [Usage](#usage)
-+ [Packages](#packages)
-+ [Codeophon](#codeophon)
-
-
+A typed, Fetch-based GraphQL client for Hypod 0.2.0. It publishes ESM, CommonJS, and TypeScript declarations and works with Node.js 24 or modern browsers.
 
 ## Install
 
-run
-
-``` bash
-npm install @plurid/hypod-client
+```sh
+pnpm add @plurid/hypod-client
 ```
 
-or
+## Preferred API
 
-``` bash
-yarn add @plurid/hypod-client
-```
+```ts
+import { createHypodClient } from '@plurid/hypod-client';
 
+const hypod = createHypodClient({
+  endpoint: 'https://registry.example.com/graphql',
+  tokenProvider: () => sessionStorage.getItem('hypod-token') ?? undefined,
+});
 
-
-## Usage
-
-Generate the `hypod` client, identify an imagene, use the imagene metadata.
-
-``` typescript
-import Hypod from '@plurid/hypod-client';
-
-
-const hypod = Hypod(
-    'https://hypod.registry/graphql',
-    'identonym:private-token',
-    {
-        log: true,
-    },
-);
-
-const main = async () => {
-    const data = await hypod.imagene.identify('foo/boo');
-    if (!data) {
-        return;
-    }
-
-    await hypod.imagene.obliterate(data.id);
+const response = await hypod.identifyImagene('team/application');
+if (!response.status || !response.data) {
+  throw new Error(response.error?.message ?? 'Imagene was not found.');
 }
 
-main();
+console.log(response.data.tags);
 ```
 
+If the endpoint has no path, the client appends `/graphql`. Pass a static `token`, an asynchronous `tokenProvider`, or neither for anonymous public queries. You can also inject a compatible `fetch` implementation.
 
+Every convenience method returns Hypod's stable `{ status, data, error }` contract envelope. Available methods include:
 
-## Packages
+- `getImagenes`, `identifyImagene`, `getNamespaces`, `getProjects`, `getCurrentOwner`, and `getUsageType`;
+- `login` and `logout`;
+- `setProjectNamespace`, `setImageneProject`, `togglePublicImagene`, `obliterateImagene`, and `obliterateImageneTag`;
+- `request` for another GraphQL document or operation string.
 
+All requests accept an optional `{ signal }` for cancellation.
 
-<a target="_blank" href="https://www.npmjs.com/package/@plurid/hypod">
-    <img src="https://img.shields.io/npm/v/@plurid/hypod.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
-</a>
+```ts
+const controller = new AbortController();
+const pending = hypod.getImagenes({ signal: controller.signal });
+controller.abort();
+await pending;
+```
 
-[@plurid/hypod][hypod] • the server application
+Transport failures are typed as `HypodAbortError`, `HypodNetworkError`, `HypodHttpError`, `HypodGraphqlError`, or `HypodResponseError`, all extending `HypodClientError`.
 
-[hypod]: https://github.com/plurid/hypod/tree/master/packages/hypod
+## Legacy factory
 
+The original default factory remains available for 0.2 compatibility:
 
-<a target="_blank" href="https://www.npmjs.com/package/@plurid/hypod-client">
-    <img src="https://img.shields.io/npm/v/@plurid/hypod-client.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
-</a>
+```ts
+import Hypod from '@plurid/hypod-client';
 
-[@plurid/hypod-client-javascript][hypod-client-javascript] • `JavaScript` client
+const hypod = Hypod('https://registry.example.com/graphql', token, { log: true });
+const imagene = await hypod.imagene.identify('team/application');
+```
 
-[hypod-client-javascript]: https://github.com/plurid/hypod/tree/master/packages/hypod-client/hypod-javascript
+It preserves the legacy behavior of returning `undefined` or `false` when a request fails. New code should prefer `createHypodClient()`, which keeps errors observable and exposes the complete typed response.
 
+## License
 
-
-## [Codeophon](https://github.com/ly3xqhl8g9/codeophon)
-
-+ licensing: [delicense](https://github.com/ly3xqhl8g9/delicense)
-+ versioning: [αver](https://github.com/ly3xqhl8g9/alpha-versioning)
+See [`LICENSE`](LICENSE).

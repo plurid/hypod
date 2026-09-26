@@ -45,6 +45,10 @@ build
 # Dependency directories
 node_modules/
 node_modules
+.pnpm-store/
+.artifacts/
+playwright-report/
+test-results/
 jspm_packages/
 
 # TypeScript cache

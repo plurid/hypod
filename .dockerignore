@@ -1,0 +1,12 @@
+.artifacts
+.git
+.pnpm-store
+**/.env*
+!**/.env.example
+**/build
+**/coverage
+**/distribution
+**/node_modules
+data
+packages/hypod-server/source
+packages/hypod-server/configurations

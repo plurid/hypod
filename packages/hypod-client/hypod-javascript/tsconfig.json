@@ -1,18 +1,20 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "node",
-
-        "baseUrl": ".",
-        "paths": {
-            "~data/*": [
-                "source/data/*"
-            ],
-            "~objects/*": [
-                "source/objects/*"
-            ],
-            "~services/*": [
-                "source/services/*"
-            ]
-        }
-    }
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "rootDir": ".",
+    "outDir": "distribution",
+    "types": ["node", "vitest/globals"]
+  },
+  "include": [
+    "source/index.ts",
+    "source/client.ts",
+    "source/errors.ts",
+    "source/legacy.ts",
+    "source/*.test.ts",
+    "tsdown.config.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": ["distribution", "node_modules"]
 }

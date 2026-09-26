@@ -1,0 +1,62 @@
+packages:
+  - packages/hypod-server
+  - packages/hypod-client/hypod-javascript
+  - packages/hypod-contracts
+
+confirmModulesPurge: false
+engineStrict: true
+linkWorkspacePackages: true
+injectWorkspacePackages: true
+syncInjectedDepsAfterScripts:
+  - build
+saveExact: false
+sharedWorkspaceLockfile: true
+storeDir: .pnpm-store
+strictPeerDependencies: true
+
+allowBuilds:
+  '@apollo/protobufjs': false
+  esbuild: true
+
+catalog:
+  '@apollo/client': ^4.2.12
+  '@apollo/server': ^5.5.1
+  '@as-integrations/express5': ^1.1.2
+  '@eslint/js': ^10.0.1
+  '@playwright/test': ^1.62.1
+  '@plurid/plurid-react': ^0.0.0-36
+  '@plurid/plurid-react-server': ^0.0.0-17
+  '@testing-library/jest-dom': ^7.0.1
+  '@testing-library/react': ^16.3.3
+  '@typescript/native': npm:typescript@^7.0.2
+  '@types/express': ^5.0.6
+  '@types/node': ^24.13.3
+  '@types/react': ^19.2.18
+  '@types/react-dom': ^19.2.7
+  '@types/supertest': ^7.2.1
+  '@vitejs/plugin-react': ^6.1.1
+  eslint: ^10.10.0
+  eslint-config-prettier: ^10.1.8
+  express: ^5.2.1
+  globals: ^17.12.0
+  # Apollo Server 5.5 currently declares GraphQL ^16.11 as its supported peer.
+  graphql: ^16.14.2
+  jsdom: ^30.0.1
+  prettier: ^3.9.6
+  react: ^19.2.8
+  react-dom: ^19.2.8
+  styled-components: ^6.5.3
+  supertest: ^7.2.2
+  tsdown: ^0.23.0
+  npm-check-updates: ^23.1.0
+  typescript: npm:@typescript/typescript6@^6.0.2
+  typescript-eslint: ^8.69.0
+  vite: ^8.2.2
+  vitest: ^5.0.0
+
+minimumReleaseAgeExclude:
+  - eslint@10.10.0
+
+patchedDependencies:
+  # 0.0.0-36 otherwise loops on reference-only tree updates and reopens closed child planes.
+  '@plurid/plurid-react@0.0.0-36': patches/@plurid__plurid-react@0.0.0-36.patch
